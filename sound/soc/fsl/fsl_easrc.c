@@ -1508,6 +1508,12 @@ static int fsl_easrc_hw_params(struct snd_pcm_substream *substream,
 		return ret;
 	}
 
+	ret = fsl_easrc_m2m_init(easrc);
+	if (ret) {
+		dev_err(&pdev->dev, "failed to init m2m device %d\n", ret);
+		return ret;
+	}
+
 	return 0;
 }
 
@@ -1750,6 +1756,8 @@ static const struct regmap_config fsl_easrc_regmap_config = {
 	.volatile_table = &fsl_easrc_volatileable_table,
 	.cache_type = REGCACHE_RBTREE,
 };
+
+#include "fsl_easrc_m2m.c"
 
 #ifdef DEBUG
 static void fsl_easrc_dump_firmware(struct fsl_asrc *easrc)
@@ -2087,12 +2095,38 @@ disable_mem_clk:
 	return ret;
 }
 
+#ifdef CONFIG_PM_SLEEP
+static int fsl_easrc_suspend(struct device *dev)
+{
+	struct fsl_asrc *easrc = dev_get_drvdata(dev);
+	int ret;
+
+	fsl_easrc_m2m_suspend(easrc);
+
+	ret = pm_runtime_force_suspend(dev);
+
+	return ret;
+}
+
+static int fsl_easrc_resume(struct device *dev)
+{
+	struct fsl_asrc *easrc = dev_get_drvdata(dev);
+	int ret;
+
+	ret = pm_runtime_force_resume(dev);
+
+	fsl_easrc_m2m_resume(easrc);
+
+	return ret;
+}
+#endif /*CONFIG_PM_SLEEP*/
+
 static const struct dev_pm_ops fsl_easrc_pm_ops = {
 	SET_RUNTIME_PM_OPS(fsl_easrc_runtime_suspend,
 			   fsl_easrc_runtime_resume,
 			   NULL)
-	SET_SYSTEM_SLEEP_PM_OPS(pm_runtime_force_suspend,
-				pm_runtime_force_resume)
+	SET_SYSTEM_SLEEP_PM_OPS(fsl_easrc_suspend,
+				fsl_easrc_resume)
 };
 
 static struct platform_driver fsl_easrc_driver = {
