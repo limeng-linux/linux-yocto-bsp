@@ -853,6 +853,8 @@ static void dwc3_core_exit(struct dwc3 *dwc)
 
 	dwc3_clk_disable(dwc);
 	reset_control_assert(dwc->reset);
+
+	dwc->core_inited = false;
 }
 
 static bool dwc3_core_is_valid(struct dwc3 *dwc)
@@ -1405,6 +1407,8 @@ static int dwc3_core_init(struct dwc3 *dwc)
 	}
 
 	dwc3_config_threshold(dwc);
+
+	dwc->core_inited = true;
 
 	return 0;
 
@@ -2225,6 +2229,15 @@ static int dwc3_resume_common(struct dwc3 *dwc, pm_message_t msg)
 
 	switch (dwc->current_dr_role) {
 	case DWC3_GCTL_PRTCAP_DEVICE:
+		/*
+		 * system resume may come after runtime resume
+		 * e.g. rpm suspend -> pm suspend -> wakeup
+		 * -> rpm resume -> system resume, so if already
+		 *  runtime resumed, system resume should skip it.
+		 */
+		if (dwc->core_inited)
+			break;
+
 		ret = dwc3_core_init_for_resume(dwc);
 		if (ret)
 			return ret;
