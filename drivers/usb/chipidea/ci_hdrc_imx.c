@@ -73,8 +73,7 @@ static const struct ci_hdrc_imx_platform_flag imx7ulp_usb_data = {
 };
 
 static const struct ci_hdrc_imx_platform_flag imx8ulp_usb_data = {
-	.flags = CI_HDRC_SUPPORTS_RUNTIME_PM |
-		CI_HDRC_HAS_PORTSC_PEC_MISSED,
+	.flags = CI_HDRC_SUPPORTS_RUNTIME_PM,
 };
 
 static const struct of_device_id ci_hdrc_imx_dt_ids[] = {
