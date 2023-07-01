@@ -1128,6 +1128,8 @@ linux (6.1.63-1) UNRELEASED; urgency=medium
     troubleshooting"
   * [rt] Update to 6.1.59-rt16
   * Do not enable DEBUG_PREEMPT (not enabled by default since 6.1.60)
+  * [x86] drivers/platform/x86/hp: Enable X86_PLATFORM_DRIVERS_HP
+    (Closes: #1038799)
 
  -- Salvatore Bonaccorso <carnil@debian.org>  Sat, 07 Oct 2023 11:21:28 +0200
 
