@@ -37,6 +37,7 @@ linux (6.1.38-3) UNRELEASED; urgency=medium
     - x86/srso: Add IBPB on VMEXIT
     - x86/srso: Fix return thunks in generated code
     - x86/srso: Add a forgotten NOENDBR annotation
+  * Bump ABI to 11
 
  -- Salvatore Bonaccorso <carnil@debian.org>  Wed, 02 Aug 2023 22:19:58 +0200
 
