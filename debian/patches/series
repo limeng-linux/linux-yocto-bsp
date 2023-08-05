@@ -154,6 +154,14 @@ bugfix/x86/gds/x86-mm-fix-poking_init-for-xen-pv-guests.patch
 bugfix/x86/gds/x86-mm-use-mm_alloc-in-poking_init.patch
 bugfix/x86/gds/mm-move-mm_cachep-initialization-to-mm_init.patch
 bugfix/x86/gds/x86-mm-initialize-text-poking-earlier.patch
+bugfix/x86/srso/0001-x86-bugs-Increase-the-x86-bugs-vector-size-to-two-u3.patch
+bugfix/x86/srso/0002-x86-srso-Add-a-Speculative-RAS-Overflow-mitigation.patch
+bugfix/x86/srso/0003-x86-srso-Add-IBPB_BRTYPE-support.patch
+bugfix/x86/srso/0004-x86-srso-Add-SRSO_NO-support.patch
+bugfix/x86/srso/0005-x86-srso-Add-IBPB.patch
+bugfix/x86/srso/0006-x86-srso-Add-IBPB-on-VMEXIT.patch
+bugfix/x86/srso/0007-x86-srso-Fix-return-thunks-in-generated-code.patch
+bugfix/x86/srso/0008-x86-srso-Add-a-forgotten-NOENDBR-annotation.patch
 
 # Fix exported symbol versions
 bugfix/all/module-disable-matching-missing-version-crc.patch

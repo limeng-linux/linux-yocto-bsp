@@ -28,6 +28,15 @@ linux (6.1.38-3) UNRELEASED; urgency=medium
     - x86/mm: Use mm_alloc() in poking_init()
     - mm: Move mm_cachep initialization to mm_init()
     - x86/mm: Initialize text poking earlier
+  * [x86] Add a Speculative RAS Overflow (SRSO) mitigation (CVE-2023-20569)
+    - x86/bugs: Increase the x86 bugs vector size to two u32s
+    - x86/srso: Add a Speculative RAS Overflow mitigation
+    - x86/srso: Add IBPB_BRTYPE support
+    - x86/srso: Add SRSO_NO support
+    - x86/srso: Add IBPB
+    - x86/srso: Add IBPB on VMEXIT
+    - x86/srso: Fix return thunks in generated code
+    - x86/srso: Add a forgotten NOENDBR annotation
 
  -- Salvatore Bonaccorso <carnil@debian.org>  Wed, 02 Aug 2023 22:19:58 +0200
 
