@@ -1,4 +1,4 @@
-linux (6.1.40-1) UNRELEASED; urgency=medium
+linux (6.1.41-1) UNRELEASED; urgency=medium
 
   * New upstream stable update:
     https://www.kernel.org/pub/linux/kernel/v6.x/ChangeLog-6.1.39
@@ -821,6 +821,7 @@ linux (6.1.40-1) UNRELEASED; urgency=medium
     - drm/atomic: Fix potential use-after-free in nonblocking commits
     - net/ncsi: make one oem_gma function for all mfr id
     - net/ncsi: change from ndo_set_mac_address to dev_set_mac_address
+    https://www.kernel.org/pub/linux/kernel/v6.x/ChangeLog-6.1.41
 
   [ Salvatore Bonaccorso ]
   * drivers/ptp: Make PTP_1588_CLOCK builtin (except armel/marvell)
