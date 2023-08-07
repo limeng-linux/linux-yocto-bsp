@@ -1,6 +1,9 @@
+From 25633de10d576ba7b91d35fc74095b90b2bb8bc8 Mon Sep 17 00:00:00 2001
 From: Kim Phillips <kim.phillips@amd.com>
 Date: Tue, 10 Jan 2023 16:46:37 -0600
 Subject: x86/cpu, kvm: Add support for CPUID_80000021_EAX
+
+From: Kim Phillips <kim.phillips@amd.com>
 
 commit 8415a74852d7c24795007ee9862d25feb519007c upstream.
 
@@ -17,13 +20,14 @@ Acked-by: Sean Christopherson <seanjc@google.com>
 Link: https://lore.kernel.org/r/20230124163319.2277355-2-kim.phillips@amd.com
 [bwh: Backported to 6.1: adjust context]
 Signed-off-by: Ben Hutchings <benh@debian.org>
+Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- arch/x86/include/asm/cpufeature.h        | 7 +++++--
- arch/x86/include/asm/cpufeatures.h       | 2 +-
- arch/x86/include/asm/disabled-features.h | 3 ++-
- arch/x86/include/asm/required-features.h | 3 ++-
- arch/x86/kernel/cpu/common.c             | 3 +++
- arch/x86/kvm/reverse_cpuid.h             | 1 +
+ arch/x86/include/asm/cpufeature.h        |    7 +++++--
+ arch/x86/include/asm/cpufeatures.h       |    2 +-
+ arch/x86/include/asm/disabled-features.h |    3 ++-
+ arch/x86/include/asm/required-features.h |    3 ++-
+ arch/x86/kernel/cpu/common.c             |    3 +++
+ arch/x86/kvm/reverse_cpuid.h             |    1 +
  6 files changed, 14 insertions(+), 5 deletions(-)
 
 --- a/arch/x86/include/asm/cpufeature.h

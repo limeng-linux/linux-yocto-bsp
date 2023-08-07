@@ -1,7 +1,9 @@
-From 293111099d3d1f6670659ba68d96b09dd0a2db05 Mon Sep 17 00:00:00 2001
+From 346ee6c88c4d2b2902a35d2b84521d88186c32ea Mon Sep 17 00:00:00 2001
 From: "Borislav Petkov (AMD)" <bp@alien8.de>
 Date: Thu, 29 Jun 2023 17:43:40 +0200
-Subject: [PATCH 4/8] x86/srso: Add SRSO_NO support
+Subject: x86/srso: Add SRSO_NO support
+
+From: "Borislav Petkov (AMD)" <bp@alien8.de>
 
 Upstream commit: 1b5277c0ea0b247393a9c426769fde18cff5e2f6
 
@@ -9,14 +11,15 @@ Add support for the CPUID flag which denotes that the CPU is not
 affected by SRSO.
 
 Signed-off-by: Borislav Petkov (AMD) <bp@alien8.de>
+Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- arch/x86/include/asm/cpufeatures.h   |  2 ++
- arch/x86/include/asm/msr-index.h     |  1 +
- arch/x86/include/asm/nospec-branch.h |  6 +++---
- arch/x86/kernel/cpu/amd.c            | 12 ++++++------
- arch/x86/kernel/cpu/bugs.c           | 24 ++++++++++++++++++++----
- arch/x86/kernel/cpu/common.c         |  6 ++++--
- arch/x86/kvm/cpuid.c                 |  3 +++
+ arch/x86/include/asm/cpufeatures.h   |    2 ++
+ arch/x86/include/asm/msr-index.h     |    1 +
+ arch/x86/include/asm/nospec-branch.h |    6 +++---
+ arch/x86/kernel/cpu/amd.c            |   12 ++++++------
+ arch/x86/kernel/cpu/bugs.c           |   24 ++++++++++++++++++++----
+ arch/x86/kernel/cpu/common.c         |    6 ++++--
+ arch/x86/kvm/cpuid.c                 |    3 +++
  7 files changed, 39 insertions(+), 15 deletions(-)
 
 --- a/arch/x86/include/asm/cpufeatures.h
@@ -147,7 +150,7 @@ Signed-off-by: Borislav Petkov (AMD) <bp@alien8.de>
  #undef pr_fmt
 --- a/arch/x86/kernel/cpu/common.c
 +++ b/arch/x86/kernel/cpu/common.c
-@@ -1411,8 +1411,10 @@ static void __init cpu_set_bug_bits(stru
+@@ -1414,8 +1414,10 @@ static void __init cpu_set_bug_bits(stru
  	    boot_cpu_has(X86_FEATURE_AVX))
  		setup_force_cpu_bug(X86_BUG_GDS);
  

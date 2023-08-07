@@ -1,7 +1,9 @@
-From bd65ffc389a45be2d65405845f1af2ba3145dbb5 Mon Sep 17 00:00:00 2001
+From b68e2e6932c74a8d467a494691ece4b174d71fdd Mon Sep 17 00:00:00 2001
 From: "Borislav Petkov (AMD)" <bp@alien8.de>
 Date: Thu, 6 Jul 2023 15:04:35 +0200
-Subject: [PATCH 5/8] x86/srso: Add IBPB
+Subject: x86/srso: Add IBPB
+
+From: "Borislav Petkov (AMD)" <bp@alien8.de>
 
 Upstream commit: 233d6f68b98d480a7c42ebe78c38f79d44741ca9
 
@@ -11,13 +13,12 @@ if Retbleed mitigation is done using IBPB, the same mitigation can and
 must be used here.
 
 Signed-off-by: Borislav Petkov (AMD) <bp@alien8.de>
+Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- arch/x86/include/asm/nospec-branch.h |  3 ++-
- arch/x86/kernel/cpu/bugs.c           | 23 +++++++++++++++++++++++
+ arch/x86/include/asm/nospec-branch.h |    3 ++-
+ arch/x86/kernel/cpu/bugs.c           |   23 +++++++++++++++++++++++
  2 files changed, 25 insertions(+), 1 deletion(-)
 
-diff --git a/arch/x86/include/asm/nospec-branch.h b/arch/x86/include/asm/nospec-branch.h
-index 573a137f5ac3..31fa631c8587 100644
 --- a/arch/x86/include/asm/nospec-branch.h
 +++ b/arch/x86/include/asm/nospec-branch.h
 @@ -185,7 +185,8 @@
@@ -30,11 +31,9 @@ index 573a137f5ac3..31fa631c8587 100644
  	ANNOTATE_UNRET_END
  	ALTERNATIVE_2 "",						\
  	              CALL_ZEN_UNTRAIN_RET, X86_FEATURE_UNRET,		\
-diff --git a/arch/x86/kernel/cpu/bugs.c b/arch/x86/kernel/cpu/bugs.c
-index 907cc1beba9b..ae5bc2055520 100644
 --- a/arch/x86/kernel/cpu/bugs.c
 +++ b/arch/x86/kernel/cpu/bugs.c
-@@ -2219,18 +2219,21 @@ enum srso_mitigation {
+@@ -2315,18 +2315,21 @@ enum srso_mitigation {
  	SRSO_MITIGATION_NONE,
  	SRSO_MITIGATION_MICROCODE,
  	SRSO_MITIGATION_SAFE_RET,
@@ -56,7 +55,7 @@ index 907cc1beba9b..ae5bc2055520 100644
  };
  
  static enum srso_mitigation srso_mitigation __ro_after_init = SRSO_MITIGATION_NONE;
-@@ -2247,6 +2250,8 @@ static int __init srso_parse_cmdline(char *str)
+@@ -2343,6 +2346,8 @@ static int __init srso_parse_cmdline(cha
  		srso_cmd = SRSO_CMD_MICROCODE;
  	else if (!strcmp(str, "safe-ret"))
  		srso_cmd = SRSO_CMD_SAFE_RET;
@@ -65,7 +64,7 @@ index 907cc1beba9b..ae5bc2055520 100644
  	else
  		pr_err("Ignoring unknown SRSO option (%s).", str);
  
-@@ -2288,6 +2293,14 @@ static void __init srso_select_mitigation(void)
+@@ -2384,6 +2389,14 @@ static void __init srso_select_mitigatio
  			setup_force_cpu_cap(X86_FEATURE_SRSO_NO);
  	}
  
@@ -80,7 +79,7 @@ index 907cc1beba9b..ae5bc2055520 100644
  	switch (srso_cmd) {
  	case SRSO_CMD_OFF:
  		return;
-@@ -2312,6 +2325,16 @@ static void __init srso_select_mitigation(void)
+@@ -2408,6 +2421,16 @@ static void __init srso_select_mitigatio
  		}
  		break;
  
@@ -97,6 +96,3 @@ index 907cc1beba9b..ae5bc2055520 100644
  	default:
  		break;
  	}
--- 
-2.40.1
-
