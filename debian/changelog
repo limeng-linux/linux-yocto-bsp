@@ -1,4 +1,4 @@
-linux (6.1.38-3) UNRELEASED; urgency=medium
+linux (6.1.38-3) bookworm-security; urgency=high
 
   [ Salvatore Bonaccorso ]
   * [x86] Add mitigations for Gather Data Sampling (GDS) (CVE-2022-40982)
@@ -46,7 +46,7 @@ linux (6.1.38-3) UNRELEASED; urgency=medium
     - x86/cpu, kvm: Add support for CPUID_80000021_EAX
     - x86/srso: Tie SBPB bit setting to microcode patch detection
 
- -- Salvatore Bonaccorso <carnil@debian.org>  Wed, 02 Aug 2023 22:19:58 +0200
+ -- Salvatore Bonaccorso <carnil@debian.org>  Mon, 07 Aug 2023 23:01:57 +0200
 
 linux (6.1.38-2) bookworm-security; urgency=high
 
