@@ -162,6 +162,8 @@ bugfix/x86/srso/0005-x86-srso-Add-IBPB.patch
 bugfix/x86/srso/0006-x86-srso-Add-IBPB-on-VMEXIT.patch
 bugfix/x86/srso/0007-x86-srso-Fix-return-thunks-in-generated-code.patch
 bugfix/x86/srso/0008-x86-srso-Add-a-forgotten-NOENDBR-annotation.patch
+bugfix/x86/srso/0009-x86-cpu-kvm-Add-support-for-CPUID_80000021_EAX.patch
+bugfix/x86/srso/0010-x86-srso-Fix-SBPB-feature-detection.patch
 
 # Fix exported symbol versions
 bugfix/all/module-disable-matching-missing-version-crc.patch

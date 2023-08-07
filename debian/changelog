@@ -1,5 +1,6 @@
 linux (6.1.38-3) UNRELEASED; urgency=medium
 
+  [ Salvatore Bonaccorso ]
   * [x86] Add mitigations for Gather Data Sampling (GDS) (CVE-2022-40982)
     - init: Provide arch_cpu_finalize_init()
     - x86/cpu: Switch to arch_cpu_finalize_init()
@@ -38,6 +39,11 @@ linux (6.1.38-3) UNRELEASED; urgency=medium
     - x86/srso: Fix return thunks in generated code
     - x86/srso: Add a forgotten NOENDBR annotation
   * Bump ABI to 11
+
+  [ Ben Hutchings ]
+  * [x86] Add missing pieces of SRSO mitigation:
+    - x86/cpu, kvm: Add support for CPUID_80000021_EAX
+    - x86/srso: Fix SBPB feature detection
 
  -- Salvatore Bonaccorso <carnil@debian.org>  Wed, 02 Aug 2023 22:19:58 +0200
 
