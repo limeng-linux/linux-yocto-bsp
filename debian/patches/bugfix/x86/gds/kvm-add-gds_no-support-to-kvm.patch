@@ -57,7 +57,7 @@ Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
  /*
   * When called, it means the previous get/set msr reached an invalid msr.
   * Return true if we want to ignore/silent this failed msr access.
-@@ -1604,7 +1606,7 @@ static unsigned int num_msr_based_featur
+@@ -1613,7 +1615,7 @@ static unsigned int num_msr_based_featur
  	 ARCH_CAP_SKIP_VMENTRY_L1DFLUSH | ARCH_CAP_SSB_NO | ARCH_CAP_MDS_NO | \
  	 ARCH_CAP_PSCHANGE_MC_NO | ARCH_CAP_TSX_CTRL_MSR | ARCH_CAP_TAA_NO | \
  	 ARCH_CAP_SBDR_SSDP_NO | ARCH_CAP_FBSDP_NO | ARCH_CAP_PSDP_NO | \
@@ -66,7 +66,7 @@ Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
  
  static u64 kvm_get_arch_capabilities(void)
  {
-@@ -1661,6 +1663,9 @@ static u64 kvm_get_arch_capabilities(voi
+@@ -1670,6 +1672,9 @@ static u64 kvm_get_arch_capabilities(voi
  		 */
  	}
  

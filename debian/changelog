@@ -29,6 +29,7 @@ linux (6.1.38-3) UNRELEASED; urgency=medium
     - x86/mm: Use mm_alloc() in poking_init()
     - mm: Move mm_cachep initialization to mm_init()
     - x86/mm: Initialize text poking earlier
+    - Documentation/x86: Fix backwards on/off logic about YMM support
   * [x86] Add a Speculative RAS Overflow (SRSO) mitigation (CVE-2023-20569)
     - x86/bugs: Increase the x86 bugs vector size to two u32s
     - x86/srso: Add a Speculative RAS Overflow mitigation
