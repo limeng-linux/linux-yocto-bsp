@@ -1,4 +1,4 @@
-linux (6.1.43-1) UNRELEASED; urgency=medium
+linux (6.1.44-1) UNRELEASED; urgency=medium
 
   * New upstream stable update:
     https://www.kernel.org/pub/linux/kernel/v6.x/ChangeLog-6.1.39
@@ -1249,6 +1249,10 @@ linux (6.1.43-1) UNRELEASED; urgency=medium
     - mptcp: ensure subflow is unhashed before cleaning the backlog
     - dma-buf: keep the signaling time of merged fences v3
     - dma-buf: fix an error pointer vs NULL bug
+    https://www.kernel.org/pub/linux/kernel/v6.x/ChangeLog-6.1.44
+    - xen/netback: Fix buffer overrun triggered by unusual packet
+      (CVE-2023-34319)
+    - [x86] fix backwards merge of GDS/SRSO bit
 
   [ Salvatore Bonaccorso ]
   * drivers/ptp: Make PTP_1588_CLOCK builtin (except armel/marvell)
