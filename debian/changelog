@@ -1,4 +1,4 @@
-linux (6.1.45-1) UNRELEASED; urgency=medium
+linux (6.1.46-1) UNRELEASED; urgency=medium
 
   * New upstream stable update:
     https://www.kernel.org/pub/linux/kernel/v6.x/ChangeLog-6.1.39
@@ -1377,6 +1377,141 @@ linux (6.1.45-1) UNRELEASED; urgency=medium
       (Closes: #1043564)
     - [x86] CPU/AMD: Do not leak quotient data after a division by 0
       (CVE-2023-20588)
+    https://www.kernel.org/pub/linux/kernel/v6.x/ChangeLog-6.1.46
+    - Revert "loongarch/cpu: Switch to arch_cpu_finalize_init()"
+    - tpm: Disable RNG for all AMD fTPMs
+    - tpm: Add a helper for checking hwrng enabled
+    - ksmbd: validate command request size
+    - ksmbd: fix wrong next length validation of ea buffer in smb2_set_ea()
+    - [x86] KVM: SEV: snapshot the GHCB before accessing it
+    - [x86] KVM: SEV: only access GHCB fields once (CVE-2023-4155)
+    - wifi: nl80211: fix integer overflow in nl80211_parse_mbssid_elems()
+    - wifi: rtw89: fix 8852AE disconnection caused by RX full flags
+    - wireguard: allowedips: expand maximum node depth
+    - ipv6: adjust ndisc_is_useropt() to also return true for PIO
+    - mptcp: avoid bogus reset on fallback close
+    - mptcp: fix disconnect vs accept race
+    - [arm64,armhf] dmaengine: pl330: Return DMA_PAUSED when transaction is
+      paused
+    - [amd64] net: mana: Fix MANA VF unload when hardware is unresponsive
+    - nvme-pci: add NVME_QUIRK_BOGUS_NID for Samsung PM9B1 256G and 512G
+    - drm/nouveau/gr: enable memory loads on helper invocation on all channels
+    - drm/nouveau/nvkm/dp: Add workaround to fix DP 1.3+ DPCD issues
+    - drm/shmem-helper: Reset vma->vm_ops before calling dma_buf_mmap()
+    - drm/amdgpu: fix possible UAF in amdgpu_cs_pass1()
+    - drm/amd/display: check attr flag before set cursor degamma on DCN3+
+    - drm/amdgpu: add S/G display parameter
+    - drm/amd: Disable S/G for APUs when 64GB or more host memory
+    - drm/amd/display: limit DPIA link rate to HBR3
+    - cpuidle: dt_idle_genpd: Add helper function to remove genpd topology
+    - hwmon: (pmbus/bel-pfe) Enable PMBUS_SKIP_STATUS_CHECK for pfe1100
+    - nilfs2: fix use-after-free of nilfs_root in dirtying inodes via iput
+    - drm/amd/pm: fulfill swsmu peak profiling mode shader/memory clock settings
+    - drm/amd/pm: expose swctf threshold setting for legacy powerplay
+    - drm/amd/pm: fulfill powerplay peak profiling mode shader/memory clock
+      settings
+    - drm/amd/pm: avoid unintentional shutdown due to temperature momentary
+      fluctuation
+    - drm/amd/display: Handle virtual hardware detect
+    - drm/amd/display: Add function for validate and update new stream
+    - drm/amd/display: Handle seamless boot stream
+    - drm/amd/display: Update OTG instance in the commit stream
+    - drm/amd/display: Avoid ABM when ODM combine is enabled for eDP
+    - drm/amd/display: Use update plane and stream routine for DCN32x
+    - drm/amd/display: Disable phantom OTG after enable for plane disable
+    - drm/amd/display: Retain phantom plane/stream if validation fails
+    - drm/amd/display: fix the build when DRM_AMD_DC_DCN is not set
+    - drm/amd/display: trigger timing sync only if TG is running
+    - io_uring: correct check for O_TMPFILE
+    - [arm64] iio: cros_ec: Fix the allocation size for cros_ec_command
+    - iio: adc: ad7192: Fix ac excitation feature
+    - iio: adc: ina2xx: avoid NULL pointer dereference on OF device match
+    - [arm*] binder: fix memory leak in binder_init()
+    - misc: rtsx: judge ASPM Mode to set PETXCFG Reg
+    - usb-storage: alauda: Fix uninit-value in alauda_check_media()
+    - [arm64,armhf] usb: dwc3: Properly handle processing of pending events
+    - USB: Gadget: core: Help prevent panic during UVC unconfigure
+    - usb: common: usb-conn-gpio: Prevent bailing out if initial role is none
+    - usb: typec: tcpm: Fix response to vsafe0V event
+    - usb: typec: altmodes/displayport: Signal hpd when configuring pin
+      assignment
+    - [x86] cpu/amd: Enable Zenbleed fix for AMD Custom APU 0405
+    - [x86] mm: Fix VDSO and VVAR placement on 5-level paging machines
+    - [x86] sev: Do not try to parse for the CC blob on non-AMD hardware
+    - [x86] speculation: Add cpu_show_gds() prototype
+    - [x86] Move gds_ucode_mitigated() declaration to header
+    - drm/nouveau/disp: Revert a NULL check inside nouveau_connector_get_modes
+      (Closes: #1042753)
+    - iio: core: Prevent invalid memory access when there is no parent
+    - interconnect: qcom: Add support for mask-based BCMs
+    - interconnect: qcom: sm8450: add enable_mask for bcm nodes
+    - net: core: remove unnecessary frame_sz check in bpf_xdp_adjust_tail()
+    - bpf, sockmap: Fix map type error in sock_map_del_link
+    - bpf, sockmap: Fix bug that strp_done cannot be called
+    - mISDN: Update parameter type of dsp_cmx_send()
+    - macsec: use DEV_STATS_INC()
+    - mptcp: fix the incorrect judgment for msk->cb_flags
+    - net/packet: annotate data-races around tp->status
+    - net/smc: Use correct buffer sizes when switching between TCP and SMC
+    - tcp: add missing family to tcp_set_ca_state() tracepoint
+    - tunnels: fix kasan splat when generating ipv4 pmtu error
+    - xsk: fix refcount underflow in error path
+    - bonding: Fix incorrect deletion of ETH_P_8021AD protocol vid from slaves
+    - dccp: fix data-race around dp->dccps_mss_cache
+    - drivers: net: prevent tun_build_skb() to exceed the packet size limit
+    - drivers: vxlan: vnifilter: free percpu vni stats on error path
+    - iavf: fix potential races for FDIR filters
+    - [amd64] IB/hfi1: Fix possible panic during hotplug remove
+    - drm/rockchip: Don't spam logs in atomic check
+    - wifi: cfg80211: fix sband iftype data lookup for AP_VLAN
+    - RDMA/umem: Set iova in ODP flow
+    - net: tls: avoid discarding data on record close
+    - net: phy: at803x: remove set/get wol callbacks for AR8032
+    - [arm64] net: dsa: ocelot: call dsa_tag_8021q_unregister() under
+      rtnl_lock() on driver remove
+    - [arm64] net: hns3: refactor hclge_mac_link_status_wait for interface reuse
+    - [arm64] net: hns3: add wait until mac link down
+    - [arm64] net: hns3: fix deadlock issue when externel_lb and reset are
+      executed together
+    - nexthop: Fix infinite nexthop dump when using maximum nexthop ID
+    - nexthop: Make nexthop bucket dump more efficient
+    - nexthop: Fix infinite nexthop bucket dump when using maximum nexthop ID
+    - [arm64] net: hns3: fix strscpy causing content truncation issue
+    - dmaengine: owl-dma: Modify mismatched function name
+    - net/mlx5: Allow 0 for total host VFs
+    - net/mlx5: LAG, Check correct bucket when modifying LAG
+    - net/mlx5: Skip clock update work when device is in error state
+    - net/mlx5: Reload auxiliary devices in pci error handlers
+    - ibmvnic: Enforce stronger sanity checks on login response
+    - ibmvnic: Unmap DMA login rsp buffer on send login fail
+    - ibmvnic: Handle DMA unmapping of login buffs in release functions
+    - ibmvnic: Do partial reset on login failure
+    - ibmvnic: Ensure login failure recovery is safe from other resets
+    - gpio: ws16c48: Fix off-by-one error in WS16C48 resource region extent
+    - gpio: sim: mark the GPIO chip as a one that can sleep
+    - btrfs: wait for actual caching progress during allocation
+    - btrfs: don't stop integrity writeback too early
+    - btrfs: properly clear end of the unreserved range in cow_file_range
+    - btrfs: exit gracefully if reloc roots don't match
+    - btrfs: reject invalid reloc tree root keys with stack dump
+    - btrfs: set cache_block_group_error if we find an error
+    - nvme-tcp: fix potential unbalanced freeze & unfreeze
+    - nvme-rdma: fix potential unbalanced freeze & unfreeze
+    - netfilter: nf_tables: report use refcount overflow
+    - scsi: core: Fix legacy /proc parsing buffer overflow
+    - [x86] scsi: storvsc: Fix handling of virtual Fibre Channel timeouts
+    - scsi: ufs: renesas: Fix private allocation
+    - scsi: 53c700: Check that command slot is not NULL
+    - scsi: snic: Fix possible memory leak if device_add() fails
+    - scsi: core: Fix possible memory leak if device_add() fails
+    - scsi: fnic: Replace return codes in fnic_clean_pending_aborts()
+    - scsi: qedi: Fix firmware halt over suspend and resume
+    - scsi: qedf: Fix firmware halt over suspend and resume
+    - [x86] platform/x86: serial-multi-instantiate: Auto detect IRQ resource for
+      CSC3551
+    - ACPI: scan: Create platform device for CS35L56
+    - sch_netem: fix issues in netem_change() vs get_dist_table()
+    - drm/amd/pm/smu7: move variables to where they are used
 
   [ Salvatore Bonaccorso ]
   * drivers/ptp: Make PTP_1588_CLOCK builtin (except armel/marvell)
