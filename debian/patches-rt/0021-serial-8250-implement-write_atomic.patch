@@ -1,8 +1,8 @@
-From 8cd0b733f1670d5b847a0f3d50b2fee4f2ebc9f6 Mon Sep 17 00:00:00 2001
+From ef639064c25a7d876c8e58f84f6d8ef642db58c2 Mon Sep 17 00:00:00 2001
 From: John Ogness <john.ogness@linutronix.de>
 Date: Fri, 4 Feb 2022 16:01:17 +0106
 Subject: [PATCH 21/52] serial: 8250: implement write_atomic
-Origin: https://www.kernel.org/pub/linux/kernel/projects/rt/6.1/older/patches-6.1.33-rt11.tar.xz
+Origin: https://www.kernel.org/pub/linux/kernel/projects/rt/6.1/older/patches-6.1.46-rt13.tar.xz
 
 Implement a non-sleeping NMI-safe write_atomic() console function in
 order to support atomic console printing during a panic.
@@ -29,15 +29,17 @@ Signed-off-by: Sebastian Andrzej Siewior <bigeasy@linutronix.de>
  drivers/tty/serial/8250/8250_fsl.c          |   3 +-
  drivers/tty/serial/8250/8250_ingenic.c      |   3 +-
  drivers/tty/serial/8250/8250_mtk.c          |  32 +++-
- drivers/tty/serial/8250/8250_omap.c         |  20 +--
+ drivers/tty/serial/8250/8250_omap.c         |  18 +--
  drivers/tty/serial/8250/8250_port.c         | 158 ++++++++++++++++----
  drivers/tty/serial/8250/Kconfig             |   1 +
  include/linux/serial_8250.h                 |   5 +
- 12 files changed, 262 insertions(+), 52 deletions(-)
+ 12 files changed, 261 insertions(+), 51 deletions(-)
 
+diff --git a/drivers/tty/serial/8250/8250.h b/drivers/tty/serial/8250/8250.h
+index eeb7b43ebe53..b17715d340c3 100644
 --- a/drivers/tty/serial/8250/8250.h
 +++ b/drivers/tty/serial/8250/8250.h
-@@ -177,12 +177,49 @@
+@@ -176,12 +176,49 @@ static inline void serial_dl_write(struct uart_8250_port *up, int value)
  	up->dl_write(up, value);
  }
  
@@ -88,7 +90,7 @@ Signed-off-by: Sebastian Andrzej Siewior <bigeasy@linutronix.de>
  	return true;
  }
  
-@@ -191,7 +228,7 @@
+@@ -190,7 +227,7 @@ static inline bool serial8250_clear_THRI(struct uart_8250_port *up)
  	if (!(up->ier & UART_IER_THRI))
  		return false;
  	up->ier &= ~UART_IER_THRI;
@@ -97,9 +99,11 @@ Signed-off-by: Sebastian Andrzej Siewior <bigeasy@linutronix.de>
  	return true;
  }
  
+diff --git a/drivers/tty/serial/8250/8250_aspeed_vuart.c b/drivers/tty/serial/8250/8250_aspeed_vuart.c
+index 9d2a7856784f..7cc6b527c088 100644
 --- a/drivers/tty/serial/8250/8250_aspeed_vuart.c
 +++ b/drivers/tty/serial/8250/8250_aspeed_vuart.c
-@@ -278,7 +278,7 @@
+@@ -278,7 +278,7 @@ static void __aspeed_vuart_set_throttle(struct uart_8250_port *up,
  	up->ier &= ~irqs;
  	if (!throttle)
  		up->ier |= irqs;
@@ -108,9 +112,11 @@ Signed-off-by: Sebastian Andrzej Siewior <bigeasy@linutronix.de>
  }
  static void aspeed_vuart_set_throttle(struct uart_port *port, bool throttle)
  {
+diff --git a/drivers/tty/serial/8250/8250_bcm7271.c b/drivers/tty/serial/8250/8250_bcm7271.c
+index ffc7f67e27e3..8b211e668bc0 100644
 --- a/drivers/tty/serial/8250/8250_bcm7271.c
 +++ b/drivers/tty/serial/8250/8250_bcm7271.c
-@@ -609,7 +609,7 @@
+@@ -609,7 +609,7 @@ static int brcmuart_startup(struct uart_port *port)
  	 * will handle this.
  	 */
  	up->ier &= ~UART_IER_RDI;
@@ -119,7 +125,7 @@ Signed-off-by: Sebastian Andrzej Siewior <bigeasy@linutronix.de>
  
  	priv->tx_running = false;
  	priv->dma.rx_dma = NULL;
-@@ -775,10 +775,12 @@
+@@ -775,10 +775,12 @@ static int brcmuart_handle_irq(struct uart_port *p)
  	unsigned int iir = serial_port_in(p, UART_IIR);
  	struct brcmuart_priv *priv = p->private_data;
  	struct uart_8250_port *up = up_to_u8250p(p);
@@ -132,7 +138,7 @@ Signed-off-by: Sebastian Andrzej Siewior <bigeasy@linutronix.de>
  	int handled = 0;
  
  	/*
-@@ -789,6 +791,10 @@
+@@ -789,6 +791,10 @@ static int brcmuart_handle_irq(struct uart_port *p)
  		spin_lock_irqsave(&p->lock, flags);
  		status = serial_port_in(p, UART_LSR);
  		if ((status & UART_LSR_DR) == 0) {
@@ -143,7 +149,7 @@ Signed-off-by: Sebastian Andrzej Siewior <bigeasy@linutronix.de>
  
  			ier = serial_port_in(p, UART_IER);
  			/*
-@@ -809,6 +815,9 @@
+@@ -809,6 +815,9 @@ static int brcmuart_handle_irq(struct uart_port *p)
  				serial_port_in(p, UART_RX);
  			}
  
@@ -153,7 +159,7 @@ Signed-off-by: Sebastian Andrzej Siewior <bigeasy@linutronix.de>
  			handled = 1;
  		}
  		spin_unlock_irqrestore(&p->lock, flags);
-@@ -823,8 +832,10 @@
+@@ -823,8 +832,10 @@ static enum hrtimer_restart brcmuart_hrtimer_func(struct hrtimer *t)
  	struct brcmuart_priv *priv = container_of(t, struct brcmuart_priv, hrt);
  	struct uart_port *p = priv->up;
  	struct uart_8250_port *up = up_to_u8250p(p);
@@ -164,7 +170,7 @@ Signed-off-by: Sebastian Andrzej Siewior <bigeasy@linutronix.de>
  
  	if (priv->shutdown)
  		return HRTIMER_NORESTART;
-@@ -846,12 +857,20 @@
+@@ -846,12 +857,20 @@ static enum hrtimer_restart brcmuart_hrtimer_func(struct hrtimer *t)
  	/* re-enable receive unless upper layer has disabled it */
  	if ((up->ier & (UART_IER_RLSI | UART_IER_RDI)) ==
  	    (UART_IER_RLSI | UART_IER_RDI)) {
@@ -185,9 +191,11 @@ Signed-off-by: Sebastian Andrzej Siewior <bigeasy@linutronix.de>
  	}
  	spin_unlock_irqrestore(&p->lock, flags);
  	return HRTIMER_NORESTART;
+diff --git a/drivers/tty/serial/8250/8250_core.c b/drivers/tty/serial/8250/8250_core.c
+index 81a5dab1a828..536f639ff56c 100644
 --- a/drivers/tty/serial/8250/8250_core.c
 +++ b/drivers/tty/serial/8250/8250_core.c
-@@ -255,8 +255,11 @@
+@@ -255,8 +255,11 @@ static void serial8250_timeout(struct timer_list *t)
  static void serial8250_backup_timeout(struct timer_list *t)
  {
  	struct uart_8250_port *up = from_timer(up, t, timer);
@@ -199,7 +207,7 @@ Signed-off-by: Sebastian Andrzej Siewior <bigeasy@linutronix.de>
  
  	spin_lock_irqsave(&up->port.lock, flags);
  
-@@ -265,8 +268,16 @@
+@@ -265,8 +268,16 @@ static void serial8250_backup_timeout(struct timer_list *t)
  	 * based handler.
  	 */
  	if (up->port.irq) {
@@ -216,7 +224,7 @@ Signed-off-by: Sebastian Andrzej Siewior <bigeasy@linutronix.de>
  	}
  
  	iir = serial_in(up, UART_IIR);
-@@ -289,7 +300,7 @@
+@@ -289,7 +300,7 @@ static void serial8250_backup_timeout(struct timer_list *t)
  		serial8250_tx_chars(up);
  
  	if (up->port.irq)
@@ -225,7 +233,7 @@ Signed-off-by: Sebastian Andrzej Siewior <bigeasy@linutronix.de>
  
  	spin_unlock_irqrestore(&up->port.lock, flags);
  
-@@ -575,6 +586,14 @@
+@@ -575,6 +586,14 @@ serial8250_register_ports(struct uart_driver *drv, struct device *dev)
  
  #ifdef CONFIG_SERIAL_8250_CONSOLE
  
@@ -240,7 +248,7 @@ Signed-off-by: Sebastian Andrzej Siewior <bigeasy@linutronix.de>
  static void univ8250_console_write(struct console *co, const char *s,
  				   unsigned int count)
  {
-@@ -668,6 +687,7 @@
+@@ -668,6 +687,7 @@ static int univ8250_console_match(struct console *co, char *name, int idx,
  
  static struct console univ8250_console = {
  	.name		= "ttyS",
@@ -248,7 +256,7 @@ Signed-off-by: Sebastian Andrzej Siewior <bigeasy@linutronix.de>
  	.write		= univ8250_console_write,
  	.device		= uart_console_device,
  	.setup		= univ8250_console_setup,
-@@ -961,7 +981,7 @@
+@@ -961,7 +981,7 @@ static void serial_8250_overrun_backoff_work(struct work_struct *work)
  	spin_lock_irqsave(&port->lock, flags);
  	up->ier |= UART_IER_RLSI | UART_IER_RDI;
  	up->port.read_status_mask |= UART_LSR_DR;
@@ -257,9 +265,11 @@ Signed-off-by: Sebastian Andrzej Siewior <bigeasy@linutronix.de>
  	spin_unlock_irqrestore(&port->lock, flags);
  }
  
+diff --git a/drivers/tty/serial/8250/8250_exar.c b/drivers/tty/serial/8250/8250_exar.c
+index b406cba10b0e..246c32c75a4c 100644
 --- a/drivers/tty/serial/8250/8250_exar.c
 +++ b/drivers/tty/serial/8250/8250_exar.c
-@@ -189,6 +189,8 @@
+@@ -189,6 +189,8 @@ static void xr17v35x_set_divisor(struct uart_port *p, unsigned int baud,
  
  static int xr17v35x_startup(struct uart_port *port)
  {
@@ -268,7 +278,7 @@ Signed-off-by: Sebastian Andrzej Siewior <bigeasy@linutronix.de>
  	/*
  	 * First enable access to IER [7:5], ISR [5:4], FCR [5:4],
  	 * MCR [7:5] and MSR [7:0]
-@@ -199,7 +201,7 @@
+@@ -199,7 +201,7 @@ static int xr17v35x_startup(struct uart_port *port)
  	 * Make sure all interrups are masked until initialization is
  	 * complete and the FIFOs are cleared
  	 */
@@ -277,9 +287,11 @@ Signed-off-by: Sebastian Andrzej Siewior <bigeasy@linutronix.de>
  
  	return serial8250_do_startup(port);
  }
+diff --git a/drivers/tty/serial/8250/8250_fsl.c b/drivers/tty/serial/8250/8250_fsl.c
+index 8adfaa183f77..eaf148245a10 100644
 --- a/drivers/tty/serial/8250/8250_fsl.c
 +++ b/drivers/tty/serial/8250/8250_fsl.c
-@@ -58,7 +58,8 @@
+@@ -58,7 +58,8 @@ int fsl8250_handle_irq(struct uart_port *port)
  	if ((orig_lsr & UART_LSR_OE) && (up->overrun_backoff_time_ms > 0)) {
  		unsigned long delay;
  
@@ -289,9 +301,11 @@ Signed-off-by: Sebastian Andrzej Siewior <bigeasy@linutronix.de>
  		if (up->ier & (UART_IER_RLSI | UART_IER_RDI)) {
  			port->ops->stop_rx(port);
  		} else {
+diff --git a/drivers/tty/serial/8250/8250_ingenic.c b/drivers/tty/serial/8250/8250_ingenic.c
+index 2b2f5d8d24b9..2b78e6c394fb 100644
 --- a/drivers/tty/serial/8250/8250_ingenic.c
 +++ b/drivers/tty/serial/8250/8250_ingenic.c
-@@ -146,6 +146,7 @@
+@@ -146,6 +146,7 @@ OF_EARLYCON_DECLARE(x1000_uart, "ingenic,x1000-uart",
  
  static void ingenic_uart_serial_out(struct uart_port *p, int offset, int value)
  {
@@ -299,7 +313,7 @@ Signed-off-by: Sebastian Andrzej Siewior <bigeasy@linutronix.de>
  	int ier;
  
  	switch (offset) {
-@@ -167,7 +168,7 @@
+@@ -167,7 +168,7 @@ static void ingenic_uart_serial_out(struct uart_port *p, int offset, int value)
  		 * If we have enabled modem status IRQs we should enable
  		 * modem mode.
  		 */
@@ -308,9 +322,11 @@ Signed-off-by: Sebastian Andrzej Siewior <bigeasy@linutronix.de>
  
  		if (ier & UART_IER_MSI)
  			value |= UART_MCR_MDCE | UART_MCR_FCM;
+diff --git a/drivers/tty/serial/8250/8250_mtk.c b/drivers/tty/serial/8250/8250_mtk.c
+index fb1d5ec0940e..3e7203909d6a 100644
 --- a/drivers/tty/serial/8250/8250_mtk.c
 +++ b/drivers/tty/serial/8250/8250_mtk.c
-@@ -222,12 +222,40 @@
+@@ -222,12 +222,40 @@ static void mtk8250_shutdown(struct uart_port *port)
  
  static void mtk8250_disable_intrs(struct uart_8250_port *up, int mask)
  {
@@ -353,9 +369,11 @@ Signed-off-by: Sebastian Andrzej Siewior <bigeasy@linutronix.de>
  }
  
  static void mtk8250_set_flow_ctrl(struct uart_8250_port *up, int mode)
+diff --git a/drivers/tty/serial/8250/8250_omap.c b/drivers/tty/serial/8250/8250_omap.c
+index adc85e250822..7cd4f7fa63c0 100644
 --- a/drivers/tty/serial/8250/8250_omap.c
 +++ b/drivers/tty/serial/8250/8250_omap.c
-@@ -328,7 +328,7 @@
+@@ -328,7 +328,7 @@ static void omap8250_restore_regs(struct uart_8250_port *up)
  	/* drop TCR + TLR access, we setup XON/XOFF later */
  	serial8250_out_MCR(up, mcr);
  
@@ -364,7 +382,7 @@ Signed-off-by: Sebastian Andrzej Siewior <bigeasy@linutronix.de>
  
  	serial_out(up, UART_LCR, UART_LCR_CONF_MODE_B);
  	serial_dl_write(up, priv->quot);
-@@ -518,7 +518,7 @@
+@@ -518,7 +518,7 @@ static void omap_8250_pm(struct uart_port *port, unsigned int state,
  	serial_out(up, UART_EFR, efr | UART_EFR_ECB);
  	serial_out(up, UART_LCR, 0);
  
@@ -373,16 +391,7 @@ Signed-off-by: Sebastian Andrzej Siewior <bigeasy@linutronix.de>
  	serial_out(up, UART_LCR, UART_LCR_CONF_MODE_B);
  	serial_out(up, UART_EFR, efr);
  	serial_out(up, UART_LCR, 0);
-@@ -641,7 +641,7 @@
- 
- 		/* Synchronize UART_IER access against the console. */
- 		spin_lock(&port->lock);
--		up->ier = port->serial_in(port, UART_IER);
-+		up->ier = serial8250_in_IER(up);
- 		if (up->ier & (UART_IER_RLSI | UART_IER_RDI)) {
- 			port->ops->stop_rx(port);
- 		} else {
-@@ -701,7 +701,7 @@
+@@ -701,7 +701,7 @@ static int omap_8250_startup(struct uart_port *port)
  		goto err;
  
  	up->ier = UART_IER_RLSI | UART_IER_RDI;
@@ -391,7 +400,7 @@ Signed-off-by: Sebastian Andrzej Siewior <bigeasy@linutronix.de>
  
  #ifdef CONFIG_PM
  	up->capabilities |= UART_CAP_RPM;
-@@ -742,7 +742,7 @@
+@@ -742,7 +742,7 @@ static void omap_8250_shutdown(struct uart_port *port)
  		serial_out(up, UART_OMAP_EFR2, 0x0);
  
  	up->ier = 0;
@@ -400,7 +409,7 @@ Signed-off-by: Sebastian Andrzej Siewior <bigeasy@linutronix.de>
  
  	if (up->dma)
  		serial8250_release_dma(up);
-@@ -790,7 +790,7 @@
+@@ -790,7 +790,7 @@ static void omap_8250_unthrottle(struct uart_port *port)
  		up->dma->rx_dma(up);
  	up->ier |= UART_IER_RLSI | UART_IER_RDI;
  	port->read_status_mask |= UART_LSR_DR;
@@ -409,7 +418,7 @@ Signed-off-by: Sebastian Andrzej Siewior <bigeasy@linutronix.de>
  	spin_unlock_irqrestore(&port->lock, flags);
  
  	pm_runtime_mark_last_busy(port->dev);
-@@ -881,7 +881,7 @@
+@@ -881,7 +881,7 @@ static void __dma_rx_complete(void *param)
  	__dma_rx_do_complete(p);
  	if (!priv->throttled) {
  		p->ier |= UART_IER_RLSI | UART_IER_RDI;
@@ -418,7 +427,7 @@ Signed-off-by: Sebastian Andrzej Siewior <bigeasy@linutronix.de>
  		if (!(priv->habit & UART_HAS_EFR2))
  			omap_8250_rx_dma(p);
  	}
-@@ -938,7 +938,7 @@
+@@ -938,7 +938,7 @@ static int omap_8250_rx_dma(struct uart_8250_port *p)
  			 * callback to run.
  			 */
  			p->ier &= ~(UART_IER_RLSI | UART_IER_RDI);
@@ -427,7 +436,7 @@ Signed-off-by: Sebastian Andrzej Siewior <bigeasy@linutronix.de>
  		}
  		goto out;
  	}
-@@ -1151,12 +1151,12 @@
+@@ -1151,12 +1151,12 @@ static void am654_8250_handle_rx_dma(struct uart_8250_port *up, u8 iir,
  		 * periodic timeouts, re-enable interrupts.
  		 */
  		up->ier &= ~(UART_IER_RLSI | UART_IER_RDI);
@@ -442,9 +451,11 @@ Signed-off-by: Sebastian Andrzej Siewior <bigeasy@linutronix.de>
  	}
  }
  
+diff --git a/drivers/tty/serial/8250/8250_port.c b/drivers/tty/serial/8250/8250_port.c
+index acf578aa9930..17b3d57839ae 100644
 --- a/drivers/tty/serial/8250/8250_port.c
 +++ b/drivers/tty/serial/8250/8250_port.c
-@@ -744,7 +744,7 @@
+@@ -744,7 +744,7 @@ static void serial8250_set_sleep(struct uart_8250_port *p, int sleep)
  			serial_out(p, UART_EFR, UART_EFR_ECB);
  			serial_out(p, UART_LCR, 0);
  		}
@@ -453,7 +464,7 @@ Signed-off-by: Sebastian Andrzej Siewior <bigeasy@linutronix.de>
  		if (p->capabilities & UART_CAP_EFR) {
  			serial_out(p, UART_LCR, UART_LCR_CONF_MODE_B);
  			serial_out(p, UART_EFR, efr);
-@@ -755,12 +755,29 @@
+@@ -755,12 +755,29 @@ static void serial8250_set_sleep(struct uart_8250_port *p, int sleep)
  	serial8250_rpm_put(p);
  }
  
@@ -487,7 +498,7 @@ Signed-off-by: Sebastian Andrzej Siewior <bigeasy@linutronix.de>
  }
  
  #ifdef CONFIG_SERIAL_8250_RSA
-@@ -1026,8 +1043,11 @@
+@@ -1026,8 +1043,11 @@ static int broken_efr(struct uart_8250_port *up)
   */
  static void autoconfig_16550a(struct uart_8250_port *up)
  {
@@ -499,7 +510,7 @@ Signed-off-by: Sebastian Andrzej Siewior <bigeasy@linutronix.de>
  
  	up->port.type = PORT_16550A;
  	up->capabilities |= UART_CAP_FIFO;
-@@ -1139,6 +1159,11 @@
+@@ -1139,6 +1159,11 @@ static void autoconfig_16550a(struct uart_8250_port *up)
  		return;
  	}
  
@@ -511,7 +522,7 @@ Signed-off-by: Sebastian Andrzej Siewior <bigeasy@linutronix.de>
  	/*
  	 * Try writing and reading the UART_IER_UUE bit (b6).
  	 * If it works, this is probably one of the Xscale platform's
-@@ -1174,6 +1199,9 @@
+@@ -1174,6 +1199,9 @@ static void autoconfig_16550a(struct uart_8250_port *up)
  	}
  	serial_out(up, UART_IER, iersave);
  
@@ -521,7 +532,7 @@ Signed-off-by: Sebastian Andrzej Siewior <bigeasy@linutronix.de>
  	/*
  	 * We distinguish between 16550A and U6 16550A by counting
  	 * how many bytes are in the FIFO.
-@@ -1196,8 +1224,10 @@
+@@ -1196,8 +1224,10 @@ static void autoconfig(struct uart_8250_port *up)
  	unsigned char status1, scratch, scratch2, scratch3;
  	unsigned char save_lcr, save_mcr;
  	struct uart_port *port = &up->port;
@@ -532,7 +543,7 @@ Signed-off-by: Sebastian Andrzej Siewior <bigeasy@linutronix.de>
  
  	if (!port->iobase && !port->mapbase && !port->membase)
  		return;
-@@ -1215,6 +1245,11 @@
+@@ -1215,6 +1245,11 @@ static void autoconfig(struct uart_8250_port *up)
  	up->bugs = 0;
  
  	if (!(port->flags & UPF_BUGGY_UART)) {
@@ -544,7 +555,7 @@ Signed-off-by: Sebastian Andrzej Siewior <bigeasy@linutronix.de>
  		/*
  		 * Do a simple existence test first; if we fail this,
  		 * there's no point trying anything else.
-@@ -1244,6 +1279,10 @@
+@@ -1244,6 +1279,10 @@ static void autoconfig(struct uart_8250_port *up)
  #endif
  		scratch3 = serial_in(up, UART_IER) & 0x0f;
  		serial_out(up, UART_IER, scratch);
@@ -555,7 +566,7 @@ Signed-off-by: Sebastian Andrzej Siewior <bigeasy@linutronix.de>
  		if (scratch2 != 0 || scratch3 != 0x0F) {
  			/*
  			 * We failed; there's nothing here
-@@ -1367,7 +1406,9 @@
+@@ -1367,7 +1406,9 @@ static void autoconfig_irq(struct uart_8250_port *up)
  	unsigned char save_mcr, save_ier;
  	unsigned char save_ICP = 0;
  	unsigned int ICP = 0;
@@ -565,7 +576,7 @@ Signed-off-by: Sebastian Andrzej Siewior <bigeasy@linutronix.de>
  	int irq;
  
  	if (port->flags & UPF_FOURPORT) {
-@@ -1377,8 +1418,12 @@
+@@ -1377,8 +1418,12 @@ static void autoconfig_irq(struct uart_8250_port *up)
  		inb_p(ICP);
  	}
  
@@ -579,7 +590,7 @@ Signed-off-by: Sebastian Andrzej Siewior <bigeasy@linutronix.de>
  
  	/* forget possible initially masked and pending IRQ */
  	probe_irq_off(probe_irq_on());
-@@ -1410,8 +1455,10 @@
+@@ -1410,8 +1455,10 @@ static void autoconfig_irq(struct uart_8250_port *up)
  	if (port->flags & UPF_FOURPORT)
  		outb_p(save_ICP, ICP);
  
@@ -591,7 +602,7 @@ Signed-off-by: Sebastian Andrzej Siewior <bigeasy@linutronix.de>
  
  	port->irq = (irq > 0) ? irq : 0;
  }
-@@ -1424,7 +1471,7 @@
+@@ -1424,7 +1471,7 @@ static void serial8250_stop_rx(struct uart_port *port)
  
  	up->ier &= ~(UART_IER_RLSI | UART_IER_RDI);
  	up->port.read_status_mask &= ~UART_LSR_DR;
@@ -600,7 +611,7 @@ Signed-off-by: Sebastian Andrzej Siewior <bigeasy@linutronix.de>
  
  	serial8250_rpm_put(up);
  }
-@@ -1454,7 +1501,7 @@
+@@ -1454,7 +1501,7 @@ void serial8250_em485_stop_tx(struct uart_8250_port *p)
  		serial8250_clear_and_reinit_fifos(p);
  
  		p->ier |= UART_IER_RLSI | UART_IER_RDI;
@@ -609,7 +620,7 @@ Signed-off-by: Sebastian Andrzej Siewior <bigeasy@linutronix.de>
  	}
  }
  EXPORT_SYMBOL_GPL(serial8250_em485_stop_tx);
-@@ -1703,7 +1750,7 @@
+@@ -1703,7 +1750,7 @@ static void serial8250_disable_ms(struct uart_port *port)
  	mctrl_gpio_disable_ms(up->gpios);
  
  	up->ier &= ~UART_IER_MSI;
@@ -618,7 +629,7 @@ Signed-off-by: Sebastian Andrzej Siewior <bigeasy@linutronix.de>
  }
  
  static void serial8250_enable_ms(struct uart_port *port)
-@@ -1719,7 +1766,7 @@
+@@ -1719,7 +1766,7 @@ static void serial8250_enable_ms(struct uart_port *port)
  	up->ier |= UART_IER_MSI;
  
  	serial8250_rpm_get(up);
@@ -627,7 +638,7 @@ Signed-off-by: Sebastian Andrzej Siewior <bigeasy@linutronix.de>
  	serial8250_rpm_put(up);
  }
  
-@@ -2171,8 +2218,7 @@
+@@ -2171,8 +2218,7 @@ static void serial8250_put_poll_char(struct uart_port *port,
  	/*
  	 *	First save the IER then disable the interrupts
  	 */
@@ -637,7 +648,7 @@ Signed-off-by: Sebastian Andrzej Siewior <bigeasy@linutronix.de>
  
  	wait_for_xmitr(up, UART_LSR_BOTH_EMPTY);
  	/*
-@@ -2185,7 +2231,7 @@
+@@ -2185,7 +2231,7 @@ static void serial8250_put_poll_char(struct uart_port *port,
  	 *	and restore the IER
  	 */
  	wait_for_xmitr(up, UART_LSR_BOTH_EMPTY);
@@ -646,7 +657,7 @@ Signed-off-by: Sebastian Andrzej Siewior <bigeasy@linutronix.de>
  	serial8250_rpm_put(up);
  }
  
-@@ -2194,8 +2240,10 @@
+@@ -2194,8 +2240,10 @@ static void serial8250_put_poll_char(struct uart_port *port,
  int serial8250_do_startup(struct uart_port *port)
  {
  	struct uart_8250_port *up = up_to_u8250p(port);
@@ -657,7 +668,7 @@ Signed-off-by: Sebastian Andrzej Siewior <bigeasy@linutronix.de>
  	int retval;
  	u16 lsr;
  
-@@ -2216,7 +2264,7 @@
+@@ -2216,7 +2264,7 @@ int serial8250_do_startup(struct uart_port *port)
  		up->acr = 0;
  		serial_port_out(port, UART_LCR, UART_LCR_CONF_MODE_B);
  		serial_port_out(port, UART_EFR, UART_EFR_ECB);
@@ -666,7 +677,7 @@ Signed-off-by: Sebastian Andrzej Siewior <bigeasy@linutronix.de>
  		serial_port_out(port, UART_LCR, 0);
  		serial_icr_write(up, UART_CSR, 0); /* Reset the UART */
  		serial_port_out(port, UART_LCR, UART_LCR_CONF_MODE_B);
-@@ -2226,7 +2274,7 @@
+@@ -2226,7 +2274,7 @@ int serial8250_do_startup(struct uart_port *port)
  
  	if (port->type == PORT_DA830) {
  		/* Reset the port */
@@ -675,7 +686,7 @@ Signed-off-by: Sebastian Andrzej Siewior <bigeasy@linutronix.de>
  		serial_port_out(port, UART_DA830_PWREMU_MGMT, 0);
  		mdelay(10);
  
-@@ -2325,6 +2373,8 @@
+@@ -2325,6 +2373,8 @@ int serial8250_do_startup(struct uart_port *port)
  	if (retval)
  		goto out;
  
@@ -684,7 +695,7 @@ Signed-off-by: Sebastian Andrzej Siewior <bigeasy@linutronix.de>
  	if (port->irq && !(up->port.flags & UPF_NO_THRE_TEST)) {
  		unsigned char iir1;
  
-@@ -2341,6 +2391,9 @@
+@@ -2341,6 +2391,9 @@ int serial8250_do_startup(struct uart_port *port)
  		 */
  		spin_lock_irqsave(&port->lock, flags);
  
@@ -694,7 +705,7 @@ Signed-off-by: Sebastian Andrzej Siewior <bigeasy@linutronix.de>
  		wait_for_xmitr(up, UART_LSR_THRE);
  		serial_port_out_sync(port, UART_IER, UART_IER_THRI);
  		udelay(1); /* allow THRE to set */
-@@ -2351,6 +2404,9 @@
+@@ -2351,6 +2404,9 @@ int serial8250_do_startup(struct uart_port *port)
  		iir = serial_port_in(port, UART_IIR);
  		serial_port_out(port, UART_IER, 0);
  
@@ -704,7 +715,7 @@ Signed-off-by: Sebastian Andrzej Siewior <bigeasy@linutronix.de>
  		spin_unlock_irqrestore(&port->lock, flags);
  
  		if (port->irqflags & IRQF_SHARED)
-@@ -2405,10 +2461,14 @@
+@@ -2405,10 +2461,14 @@ int serial8250_do_startup(struct uart_port *port)
  	 * Do a quick test to see if we receive an interrupt when we enable
  	 * the TX irq.
  	 */
@@ -719,7 +730,7 @@ Signed-off-by: Sebastian Andrzej Siewior <bigeasy@linutronix.de>
  
  	if (lsr & UART_LSR_TEMT && iir & UART_IIR_NO_INT) {
  		if (!(up->bugs & UART_BUG_TXEN)) {
-@@ -2440,7 +2500,7 @@
+@@ -2440,7 +2500,7 @@ int serial8250_do_startup(struct uart_port *port)
  	if (up->dma) {
  		const char *msg = NULL;
  
@@ -728,7 +739,7 @@ Signed-off-by: Sebastian Andrzej Siewior <bigeasy@linutronix.de>
  			msg = "forbid DMA for kernel console";
  		else if (serial8250_request_dma(up))
  			msg = "failed to request DMA";
-@@ -2491,7 +2551,7 @@
+@@ -2491,7 +2551,7 @@ void serial8250_do_shutdown(struct uart_port *port)
  	 */
  	spin_lock_irqsave(&port->lock, flags);
  	up->ier = 0;
@@ -737,7 +748,7 @@ Signed-off-by: Sebastian Andrzej Siewior <bigeasy@linutronix.de>
  	spin_unlock_irqrestore(&port->lock, flags);
  
  	synchronize_irq(port->irq);
-@@ -2857,7 +2917,7 @@
+@@ -2853,7 +2913,7 @@ serial8250_do_set_termios(struct uart_port *port, struct ktermios *termios,
  	if (up->capabilities & UART_CAP_RTOIE)
  		up->ier |= UART_IER_RTOIE;
  
@@ -746,7 +757,7 @@ Signed-off-by: Sebastian Andrzej Siewior <bigeasy@linutronix.de>
  
  	if (up->capabilities & UART_CAP_EFR) {
  		unsigned char efr = 0;
-@@ -3322,7 +3382,7 @@
+@@ -3317,7 +3377,7 @@ EXPORT_SYMBOL_GPL(serial8250_set_defaults);
  
  #ifdef CONFIG_SERIAL_8250_CONSOLE
  
@@ -755,7 +766,7 @@ Signed-off-by: Sebastian Andrzej Siewior <bigeasy@linutronix.de>
  {
  	struct uart_8250_port *up = up_to_u8250p(port);
  
-@@ -3330,6 +3390,18 @@
+@@ -3325,6 +3385,18 @@ static void serial8250_console_putchar(struct uart_port *port, unsigned char ch)
  	serial_port_out(port, UART_TX, ch);
  }
  
@@ -774,7 +785,7 @@ Signed-off-by: Sebastian Andrzej Siewior <bigeasy@linutronix.de>
  /*
   *	Restore serial console when h/w power-off detected
   */
-@@ -3356,6 +3428,32 @@
+@@ -3351,6 +3423,32 @@ static void serial8250_console_restore(struct uart_8250_port *up)
  	serial8250_out_MCR(up, up->mcr | UART_MCR_DTR | UART_MCR_RTS);
  }
  
@@ -807,7 +818,7 @@ Signed-off-by: Sebastian Andrzej Siewior <bigeasy@linutronix.de>
  /*
   * Print a string to the serial port using the device FIFO
   *
-@@ -3401,20 +3499,15 @@
+@@ -3396,20 +3494,15 @@ void serial8250_console_write(struct uart_8250_port *up, const char *s,
  	struct uart_port *port = &up->port;
  	unsigned long flags;
  	unsigned int ier, use_fifo;
@@ -830,7 +841,7 @@ Signed-off-by: Sebastian Andrzej Siewior <bigeasy@linutronix.de>
  
  	/* check scratch reg to see if port powered off during system sleep */
  	if (up->canary && (up->canary != serial_port_in(port, UART_SCR))) {
-@@ -3448,10 +3541,12 @@
+@@ -3443,10 +3536,12 @@ void serial8250_console_write(struct uart_8250_port *up, const char *s,
  		 */
  		!(up->port.flags & UPF_CONS_FLOW);
  
@@ -843,7 +854,7 @@ Signed-off-by: Sebastian Andrzej Siewior <bigeasy@linutronix.de>
  
  	/*
  	 *	Finally, wait for transmitter to become empty
-@@ -3464,8 +3559,7 @@
+@@ -3459,8 +3554,7 @@ void serial8250_console_write(struct uart_8250_port *up, const char *s,
  		if (em485->tx_stopped)
  			up->rs485_stop_tx(up);
  	}
@@ -853,7 +864,7 @@ Signed-off-by: Sebastian Andrzej Siewior <bigeasy@linutronix.de>
  
  	/*
  	 *	The receive handling will happen properly because the
-@@ -3477,8 +3571,7 @@
+@@ -3472,8 +3566,7 @@ void serial8250_console_write(struct uart_8250_port *up, const char *s,
  	if (up->msr_saved_flags)
  		serial8250_modem_status(up);
  
@@ -863,7 +874,7 @@ Signed-off-by: Sebastian Andrzej Siewior <bigeasy@linutronix.de>
  }
  
  static unsigned int probe_baud(struct uart_port *port)
-@@ -3498,6 +3591,7 @@
+@@ -3493,6 +3586,7 @@ static unsigned int probe_baud(struct uart_port *port)
  
  int serial8250_console_setup(struct uart_port *port, char *options, bool probe)
  {
@@ -871,7 +882,7 @@ Signed-off-by: Sebastian Andrzej Siewior <bigeasy@linutronix.de>
  	int baud = 9600;
  	int bits = 8;
  	int parity = 'n';
-@@ -3507,6 +3601,8 @@
+@@ -3502,6 +3596,8 @@ int serial8250_console_setup(struct uart_port *port, char *options, bool probe)
  	if (!port->iobase && !port->membase)
  		return -ENODEV;
  
@@ -880,9 +891,11 @@ Signed-off-by: Sebastian Andrzej Siewior <bigeasy@linutronix.de>
  	if (options)
  		uart_parse_options(options, &baud, &parity, &bits, &flow);
  	else if (probe)
+diff --git a/drivers/tty/serial/8250/Kconfig b/drivers/tty/serial/8250/Kconfig
+index 583a340f9934..1f31320820a6 100644
 --- a/drivers/tty/serial/8250/Kconfig
 +++ b/drivers/tty/serial/8250/Kconfig
-@@ -9,6 +9,7 @@
+@@ -9,6 +9,7 @@ config SERIAL_8250
  	depends on !S390
  	select SERIAL_CORE
  	select SERIAL_MCTRL_GPIO if GPIOLIB
@@ -890,6 +903,8 @@ Signed-off-by: Sebastian Andrzej Siewior <bigeasy@linutronix.de>
  	help
  	  This selects whether you want to include the driver for the standard
  	  serial ports.  The standard answer is Y.  People who might say N
+diff --git a/include/linux/serial_8250.h b/include/linux/serial_8250.h
+index 79b328861c5f..35f44352e641 100644
 --- a/include/linux/serial_8250.h
 +++ b/include/linux/serial_8250.h
 @@ -7,6 +7,7 @@
@@ -900,7 +915,7 @@ Signed-off-by: Sebastian Andrzej Siewior <bigeasy@linutronix.de>
  #include <linux/serial_core.h>
  #include <linux/serial_reg.h>
  #include <linux/platform_device.h>
-@@ -125,6 +126,8 @@
+@@ -124,6 +125,8 @@ struct uart_8250_port {
  #define MSR_SAVE_FLAGS UART_MSR_ANY_DELTA
  	unsigned char		msr_saved_flags;
  
@@ -909,7 +924,7 @@ Signed-off-by: Sebastian Andrzej Siewior <bigeasy@linutronix.de>
  	struct uart_8250_dma	*dma;
  	const struct uart_8250_ops *ops;
  
-@@ -180,6 +183,8 @@
+@@ -179,6 +182,8 @@ void serial8250_init_port(struct uart_8250_port *up);
  void serial8250_set_defaults(struct uart_8250_port *up);
  void serial8250_console_write(struct uart_8250_port *up, const char *s,
  			      unsigned int count);
@@ -918,3 +933,6 @@ Signed-off-by: Sebastian Andrzej Siewior <bigeasy@linutronix.de>
  int serial8250_console_setup(struct uart_port *port, char *options, bool probe);
  int serial8250_console_exit(struct uart_port *port);
  
+-- 
+2.41.0
+
