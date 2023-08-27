@@ -839,6 +839,10 @@ linux (6.1.55-1) UNRELEASED; urgency=medium
   * [rt] Drop "kernel/fork: beware of __put_task_struct() calling context"
     (applied upstream)
 
+  [ Vincent Blut ]
+  * drivers/char/hw_random: Change HW_RANDOM from module to built-in
+    (Closes: #1041007)
+
  -- Bastian Blank <waldi@debian.org>  Thu, 07 Sep 2023 11:54:00 +0200
 
 linux (6.1.52-1) bookworm-security; urgency=high
