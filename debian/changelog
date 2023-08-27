@@ -842,6 +842,7 @@ linux (6.1.55-1) UNRELEASED; urgency=medium
   [ Vincent Blut ]
   * drivers/char/hw_random: Change HW_RANDOM from module to built-in
     (Closes: #1041007)
+  * drivers/char/tpm: Do not explicitly set HW_RANDOM_TPM
 
  -- Bastian Blank <waldi@debian.org>  Thu, 07 Sep 2023 11:54:00 +0200
 
