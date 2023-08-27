@@ -1,4 +1,4 @@
-linux (6.1.47-1) UNRELEASED; urgency=medium
+linux (6.1.48-1) UNRELEASED; urgency=medium
 
   * New upstream stable update:
     https://www.kernel.org/pub/linux/kernel/v6.x/ChangeLog-6.1.39
@@ -1692,6 +1692,24 @@ linux (6.1.47-1) UNRELEASED; urgency=medium
     - net: fix the RTO timer retransmitting skb every 1ms if linear option is
       enabled
     - [arm64] mmc: f-sdh30: fix order of function calls in sdhci_f_sdh30_remove
+    https://www.kernel.org/pub/linux/kernel/v6.x/ChangeLog-6.1.48
+    - [x86] cpu: Fix __x86_return_thunk symbol type
+    - [x86] cpu: Fix up srso_safe_ret() and __x86_return_thunk()
+    - [x86] alternative: Make custom return thunk unconditional
+    - [x86] cpu: Clean up SRSO return thunk mess
+    - [x86] cpu: Rename original retbleed methods
+    - [x86] cpu: Rename srso_(.*)_alias to srso_alias_\1
+    - [x86] cpu: Cleanup the untrain mess
+    - [x86] srso: Explain the untraining sequences a bit more
+    - [x86] static_call: Fix __static_call_fixup()
+    - [x86] retpoline: Don't clobber RFLAGS during srso_safe_ret()
+      (Closes: #1043585)
+    - [x86] CPU/AMD: Fix the DIV(0) initial fix attempt (CVE-2023-20588)
+    - [x86] srso: Disable the mitigation on unaffected configurations
+    - [x86] retpoline,kprobes: Fix position of thunk sections with
+      CONFIG_LTO_CLANG
+    - [x86] objtool/x86: Fixup frame-pointer vs rethunk
+    - [x86] srso: Correct the mitigation status when SMT is disabled
 
   [ Salvatore Bonaccorso ]
   * drivers/ptp: Make PTP_1588_CLOCK builtin (except armel/marvell)
