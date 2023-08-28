@@ -1,4 +1,4 @@
-linux (6.1.48-1) UNRELEASED; urgency=medium
+linux (6.1.49-1) UNRELEASED; urgency=medium
 
   * New upstream stable update:
     https://www.kernel.org/pub/linux/kernel/v6.x/ChangeLog-6.1.39
@@ -1710,6 +1710,11 @@ linux (6.1.48-1) UNRELEASED; urgency=medium
       CONFIG_LTO_CLANG
     - [x86] objtool/x86: Fixup frame-pointer vs rethunk
     - [x86] srso: Correct the mitigation status when SMT is disabled
+    https://www.kernel.org/pub/linux/kernel/v6.x/ChangeLog-6.1.49
+    - [x86] objtool/x86: Fix SRSO mess
+    - Revert "f2fs: don't reset unchangable mount option in f2fs_remount()"
+    - Revert "f2fs: fix to set flush_merge opt and show noflush_merge"
+    - Revert "f2fs: fix to do sanity check on direct node in truncate_dnode()"
 
   [ Salvatore Bonaccorso ]
   * drivers/ptp: Make PTP_1588_CLOCK builtin (except armel/marvell)
