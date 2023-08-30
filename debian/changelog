@@ -1,4 +1,4 @@
-linux (6.1.49-1) UNRELEASED; urgency=medium
+linux (6.1.50-1) UNRELEASED; urgency=medium
 
   * New upstream stable update:
     https://www.kernel.org/pub/linux/kernel/v6.x/ChangeLog-6.1.39
@@ -1715,6 +1715,126 @@ linux (6.1.49-1) UNRELEASED; urgency=medium
     - Revert "f2fs: don't reset unchangable mount option in f2fs_remount()"
     - Revert "f2fs: fix to set flush_merge opt and show noflush_merge"
     - Revert "f2fs: fix to do sanity check on direct node in truncate_dnode()"
+    https://www.kernel.org/pub/linux/kernel/v6.x/ChangeLog-6.1.50
+    - NFSv4.2: fix error handling in nfs42_proc_getxattr
+    - NFSv4: fix out path in __nfs4_get_acl_uncached
+    - xprtrdma: Remap Receive buffers after a reconnect
+    - drm/ast: Use drm_aperture_remove_conflicting_pci_framebuffers
+    - fbdev/radeon: use pci aperture helpers
+    - [x86] drm/gma500: Use drm_aperture_remove_conflicting_pci_framebuffers
+    - drm/aperture: Remove primary argument
+    - video/aperture: Only kick vgacon when the pdev is decoding vga
+    - video/aperture: Move vga handling to pci function
+    - PCI: acpiphp: Reassign resources on bridge if necessary
+    - [mips*]: cpu-features: Enable octeon_cache by cpu_type
+    - [mips*] cpu-features: Use boot_cpu_type for CPU type based features
+    - jbd2: remove t_checkpoint_io_list
+    - jbd2: remove journal_clean_one_cp_list()
+    - jbd2: fix a race when checking checkpoint buffer busy
+    - can: raw: fix receiver memory leak
+    - can: raw: fix lockdep issue in raw_release()
+    - [s390x] zcrypt: remove unnecessary (void *) conversions
+    - [s390x] zcrypt: fix reply buffer calculations for CCA replies
+    - [x86] drm/i915: Add the gen12_needs_ccs_aux_inv helper
+    - [x86] drm/i915/gt: Ensure memory quiesced before invalidation
+    - [x86] drm/i915/gt: Poll aux invalidation register bit on invalidation
+    - [x86] drm/i915/gt: Support aux invalidation on all engines
+    - tracing: Fix cpu buffers unavailable due to 'record_disabled' missed
+    - tracing: Fix memleak due to race between current_tracer and trace
+    - devlink: move code to a dedicated directory
+    - devlink: add missing unregister linecard notification
+    - [arm64] net: dsa: felix: fix oversize frame dropping for always closed
+      tc-taprio gates
+    - sock: annotate data-races around prot->memory_pressure
+    - dccp: annotate data-races in dccp_poll()
+    - ipvlan: Fix a reference count leak warning in ipvlan_ns_exit()
+    - mlxsw: pci: Set time stamp fields also when its type is MIRROR_UTC
+    - mlxsw: reg: Fix SSPR register layout
+    - mlxsw: Fix the size of 'VIRT_ROUTER_MSB'
+    - net: bgmac: Fix return value check for fixed_phy_register()
+    - net: bcmgenet: Fix return value check for fixed_phy_register()
+    - net: validate veth and vxcan peer ifindexes
+    - ipv4: fix data-races around inet->inet_id
+    - ice: fix receive buffer size miscalculation
+    - Revert "ice: Fix ice VF reset during iavf initialization"
+    - ice: Fix NULL pointer deref during VF reset
+    - can: isotp: fix support for transmission of SF without flow control
+    - igb: Avoid starting unnecessary workqueues
+    - igc: Fix the typo in the PTM Control macro
+    - net/sched: fix a qdisc modification with ambiguous command request
+    - i40e: fix potential NULL pointer dereferencing of pf->vf
+      i40e_sync_vsi_filters()
+    - netfilter: nf_tables: flush pending destroy work before netlink notifier
+    - netfilter: nf_tables: fix out of memory error handling
+    - rtnetlink: Reject negative ifindexes in RTM_NEWLINK
+    - bonding: fix macvlan over alb bond support
+    - [x86] KVM: x86: Preserve TDP MMU roots until they are explicitly
+      invalidated
+    - [x86] KVM: x86/mmu: Fix an sign-extension bug with mmu_seq that hangs
+      vCPUs
+    - io_uring: get rid of double locking
+    - io_uring: extract a io_msg_install_complete helper
+    - io_uring/msg_ring: move double lock/unlock helpers higher up
+    - io_uring/msg_ring: fix missing lock on overflow for IOPOLL (CVE-2023-2430)
+    - [x86] ASoC: amd: yc: Add VivoBook Pro 15 to quirks list for acp6x
+    - [x86] ASoC: cs35l41: Correct amp_gain_tlv values
+    - ibmveth: Use dcbf rather than dcbfl
+    - wifi: mac80211: limit reorder_buf_filtered to avoid UBSAN warning
+    - [x86] platform/x86: ideapad-laptop: Add support for new hotkeys found on
+      ThinkBook 14s Yoga ITL
+    - NFSv4: Fix dropped lock for racing OPEN and delegation return
+    - clk: Fix slab-out-of-bounds error in devm_clk_release()
+    - mm,ima,kexec,of: use memblock_free_late from ima_free_kexec_buffer
+    - shmem: fix smaps BUG sleeping while atomic
+    - ALSA: ymfpci: Fix the missing snd_card_free() call at probe error
+    - mm/gup: handle cont-PTE hugetlb pages correctly in gup_must_unshare() via
+      GUP-fast
+    - mm: add a call to flush_cache_vmap() in vmap_pfn()
+    - mm: memory-failure: fix unexpected return value in soft_offline_page()
+    - NFS: Fix a use after free in nfs_direct_join_group()
+    - nfsd: Fix race to FREE_STATEID and cl_revoked
+    - selinux: set next pointer before attaching to list
+    - batman-adv: Trigger events for auto adjusted MTU
+    - batman-adv: Don't increase MTU when set by user
+    - batman-adv: Do not get eth header before batadv_check_management_packet
+    - batman-adv: Fix TT global entry leak when client roamed back
+    - batman-adv: Fix batadv_v_ogm_aggr_send memory leak
+    - batman-adv: Hold rtnl lock during MTU update via netlink
+    - lib/clz_ctz.c: Fix __clzdi2() and __ctzdi2() for 32-bit kernels
+    - of: dynamic: Refactor action prints to not use "%pOF" inside devtree_lock
+    - pinctrl: amd: Mask wake bits on probe again
+    - media: vcodec: Fix potential array out-of-bounds in encoder queue_setup
+    - PCI: acpiphp: Use pci_assign_unassigned_bridge_resources() only for
+      non-root bus
+    - drm/vmwgfx: Fix shader stage validation
+    - [x86] drm/i915/dgfx: Enable d3cold at s2idle
+    - drm/display/dp: Fix the DP DSC Receiver cap size
+    - [x86] fpu: Invalidate FPU state correctly on exec()
+    - [x86] fpu: Set X86_FEATURE_OSXSAVE feature after enabling OSXSAVE in CR4
+      (Closes: #1050622)
+    - hwmon: (aquacomputer_d5next) Add selective 200ms delay after sending ctrl
+      report
+    - nfs: use vfs setgid helper
+    - nfsd: use vfs setgid helper
+    - cgroup/cpuset: Rename functions dealing with DEADLINE accounting
+    - sched/cpuset: Bring back cpuset_mutex
+    - sched/cpuset: Keep track of SCHED_DEADLINE task in cpusets
+    - cgroup/cpuset: Iterate only if DEADLINE tasks are present
+    - sched/deadline: Create DL BW alloc, free & check overflow interface
+    - cgroup/cpuset: Free DL BW in case can_attach() fails
+    - [x86] thunderbolt: Fix Thunderbolt 3 display flickering issue on 2nd hot
+      plug onwards
+    - can: raw: add missing refcount for memory leak fix
+    - madvise:madvise_free_pte_range(): don't use mapcount() against large folio
+      for sharing check
+    - scsi: snic: Fix double free in snic_tgt_create()
+    - scsi: core: raid_class: Remove raid_component_add()
+    - clk: Fix undefined reference to `clk_rate_exclusive_{get,put}'
+    - dma-buf/sw_sync: Avoid recursive lock during fence signal
+    - gpio: sim: dispose of irq mappings before destroying the irq_sim domain
+    - gpio: sim: pass the GPIO device's software node to irq domain
+    - [x86] ASoC: amd: yc: Fix a non-functional mic on Lenovo 82SJ
+    - maple_tree: disable mas_wr_append() when other readers are possible
 
   [ Salvatore Bonaccorso ]
   * drivers/ptp: Make PTP_1588_CLOCK builtin (except armel/marvell)
