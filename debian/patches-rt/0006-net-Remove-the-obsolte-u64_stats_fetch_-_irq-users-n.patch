@@ -18,7 +18,7 @@ Acked-by: Peter Zijlstra (Intel) <peterz@infradead.org>
  net/bridge/br_multicast.c      |  4 ++--
  net/bridge/br_vlan.c           |  4 ++--
  net/core/dev.c                 |  4 ++--
- net/core/devlink.c             |  4 ++--
+ net/devlink/leftover.c         |  4 ++--
  net/core/drop_monitor.c        |  8 ++++----
  net/core/gen_stats.c           | 16 ++++++++--------
  net/dsa/slave.c                |  4 ++--
@@ -106,10 +106,10 @@ index a2e3c6470ab3..75139898dfec 100644
  
  		s->rx_packets += rx_packets;
  		s->rx_bytes   += rx_bytes;
-diff --git a/net/core/devlink.c b/net/core/devlink.c
+diff --git a/net/devlink/leftover.c b/net/devlink/leftover.c
 index 5a4a4b34ac15..f0c6fcdb7a3a 100644
---- a/net/core/devlink.c
-+++ b/net/core/devlink.c
+--- a/net/devlink/leftover.c
++++ b/net/devlink/leftover.c
 @@ -8307,10 +8307,10 @@ static void devlink_trap_stats_read(struct devlink_stats __percpu *trap_stats,
  
  		cpu_stats = per_cpu_ptr(trap_stats, i);

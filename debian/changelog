@@ -1842,6 +1842,7 @@ linux (6.1.50-1) UNRELEASED; urgency=medium
   * [rt] Refresh "serial: 8250: implement write_atomic"
   * Bump ABI to 12
   * [rt] Update to 6.1.46-rt13
+  * [rt] Refresh "net: Remove the obsolte u64_stats_fetch_*_irq() users (net)."
 
  -- Salvatore Bonaccorso <carnil@debian.org>  Mon, 24 Jul 2023 13:44:00 +0200
 
