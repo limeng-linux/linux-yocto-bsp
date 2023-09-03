@@ -1,4 +1,4 @@
-linux (6.1.50-1) UNRELEASED; urgency=medium
+linux (6.1.51-1) UNRELEASED; urgency=medium
 
   * New upstream stable update:
     https://www.kernel.org/pub/linux/kernel/v6.x/ChangeLog-6.1.39
@@ -1835,6 +1835,14 @@ linux (6.1.50-1) UNRELEASED; urgency=medium
     - gpio: sim: pass the GPIO device's software node to irq domain
     - [x86] ASoC: amd: yc: Fix a non-functional mic on Lenovo 82SJ
     - maple_tree: disable mas_wr_append() when other readers are possible
+    https://www.kernel.org/pub/linux/kernel/v6.x/ChangeLog-6.1.51
+    - ACPI: thermal: Drop nocrt parameter
+    - module: Expose module_init_layout_section()
+    - [arm64] module-plts: inline linux/moduleloader.h
+    - [arm64] module: Use module_init_layout_section() to spot init sections
+    - [armel,armhf] module: Use module_init_layout_section() to spot init
+      sections
+    - [x86] thunderbolt: Fix a backport error for display flickering issue
 
   [ Salvatore Bonaccorso ]
   * drivers/ptp: Make PTP_1588_CLOCK builtin (except armel/marvell)
