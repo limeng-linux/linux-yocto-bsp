@@ -1851,6 +1851,7 @@ linux (6.1.51-1) UNRELEASED; urgency=medium
   * Bump ABI to 12
   * [rt] Update to 6.1.46-rt13
   * [rt] Refresh "net: Remove the obsolte u64_stats_fetch_*_irq() users (net)."
+  * [x86] tpm: Enable hwrng only for Pluton on AMD CPUs
 
  -- Salvatore Bonaccorso <carnil@debian.org>  Mon, 24 Jul 2023 13:44:00 +0200
 
