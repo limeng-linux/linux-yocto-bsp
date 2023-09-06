@@ -1303,7 +1303,7 @@ linux (6.1.51-1) UNRELEASED; urgency=medium
     - ice: Fix RDMA VSI removal during queue rebuild
     - bpf, cpumap: Handle skb as well when clean up ptr_ring
     - net/sched: cls_u32: No longer copy tcf_result on update to avoid
-      use-after-free (CVE-2023-4128)
+      use-after-free (CVE-2023-4128, CVE-2023-4208)
     - net/sched: cls_fw: No longer copy tcf_result on update to avoid
       use-after-free (CVE-2023-4128, CVE-2023-4207)
     - net/sched: cls_route: No longer copy tcf_result on update to avoid
