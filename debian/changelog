@@ -1305,7 +1305,7 @@ linux (6.1.51-1) UNRELEASED; urgency=medium
     - net/sched: cls_u32: No longer copy tcf_result on update to avoid
       use-after-free (CVE-2023-4128)
     - net/sched: cls_fw: No longer copy tcf_result on update to avoid
-      use-after-free (CVE-2023-4128)
+      use-after-free (CVE-2023-4128, CVE-2023-4207)
     - net/sched: cls_route: No longer copy tcf_result on update to avoid
       use-after-free (CVE-2023-4128, CVE-2023-4206)
     - bpf: sockmap: Remove preempt_disable in sock_map_sk_acquire
