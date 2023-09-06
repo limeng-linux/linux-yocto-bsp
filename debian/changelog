@@ -1,4 +1,4 @@
-linux (6.1.51-1) UNRELEASED; urgency=medium
+linux (6.1.52-1) UNRELEASED; urgency=medium
 
   * New upstream stable update:
     https://www.kernel.org/pub/linux/kernel/v6.x/ChangeLog-6.1.39
@@ -1843,6 +1843,36 @@ linux (6.1.51-1) UNRELEASED; urgency=medium
     - [armel,armhf] module: Use module_init_layout_section() to spot init
       sections
     - [x86] thunderbolt: Fix a backport error for display flickering issue
+    https://www.kernel.org/pub/linux/kernel/v6.x/ChangeLog-6.1.52
+    - erofs: ensure that the post-EOF tails are all zeroed
+    - ksmbd: fix wrong DataOffset validation of create context
+    - ksmbd: fix slub overflow in ksmbd_decode_ntlmssp_auth_blob()
+    - ksmbd: replace one-element array with flex-array member in struct
+      smb2_ea_info
+    - ksmbd: reduce descriptor size if remaining bytes is less than request size
+    - [arm64] net: enetc: use EXPORT_SYMBOL_GPL for enetc_phc_index
+    - modules: only allow symbol_get of EXPORT_SYMBOL_GPL modules
+    - USB: serial: option: add Quectel EM05G variant (0x030e)
+    - USB: serial: option: add FOXCONN T99W368/T99W373 product
+    - ALSA: usb-audio: Fix init call orders for UAC1
+    - [arm64,armhf] usb: dwc3: meson-g12a: do post init to fix broken usb after
+      resumption
+    - [arm64,armhf] usb: chipidea: imx: improve logic if samsung,picophy-*
+      parameter is 0
+    - HID: wacom: remove the battery when the EKR is off
+    - staging: rtl8712: fix race condition
+    - Bluetooth: btsdio: fix use after free bug in btsdio_remove due to race
+      condition (CVE-2023-1989)
+    - wifi: mt76: mt7921: do not support one stream on secondary antenna only
+    - wifi: mt76: mt7921: fix skb leak by txs missing in AMSDU
+    - [arm64] serial: qcom-geni: fix opp vote on shutdown
+    - firmware: stratix10-svc: Fix an NULL vs IS_ERR() bug in probe
+    - tcpm: Avoid soft reset when partner does not support get_status
+    - dt-bindings: sc16is7xx: Add property to change GPIO function
+    - nilfs2: fix general protection fault in nilfs_lookup_dirty_data_buffers()
+    - nilfs2: fix WARNING in mark_buffer_dirty due to discarded buffer reuse
+    - [arm64] usb: typec: tcpci: clear the fault status bit
+    - pinctrl: amd: Don't show `Invalid config param` errors
 
   [ Salvatore Bonaccorso ]
   * drivers/ptp: Make PTP_1588_CLOCK builtin (except armel/marvell)
