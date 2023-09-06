@@ -1686,7 +1686,7 @@ linux (6.1.51-1) UNRELEASED; urgency=medium
       state
     - drm/amd/pm: skip the RLC stop when S0i3 suspend for SMU v13.0.4/11
     - drm/amdgpu: keep irq count in amdgpu_irq_disable_all
-    - af_unix: Fix null-ptr-deref in unix_stream_sendpage().
+    - af_unix: Fix null-ptr-deref in unix_stream_sendpage(). (CVE-2023-4622)
     - drm/nouveau/disp: fix use-after-free in error handling of
       nouveau_connector_create
     - net: fix the RTO timer retransmitting skb every 1ms if linear option is
