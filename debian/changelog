@@ -1,4 +1,4 @@
-linux (6.1.52-1) UNRELEASED; urgency=medium
+linux (6.1.52-1) bookworm-security; urgency=high
 
   * New upstream stable update:
     https://www.kernel.org/pub/linux/kernel/v6.x/ChangeLog-6.1.39
@@ -1883,7 +1883,7 @@ linux (6.1.52-1) UNRELEASED; urgency=medium
   * [rt] Refresh "net: Remove the obsolte u64_stats_fetch_*_irq() users (net)."
   * [x86] tpm: Enable hwrng only for Pluton on AMD CPUs
 
- -- Salvatore Bonaccorso <carnil@debian.org>  Mon, 24 Jul 2023 13:44:00 +0200
+ -- Salvatore Bonaccorso <carnil@debian.org>  Thu, 07 Sep 2023 09:39:52 +0200
 
 linux (6.1.38-4) bookworm-security; urgency=high
 
