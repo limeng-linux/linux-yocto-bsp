@@ -1,7 +1,13 @@
 linux (6.1.52-2) UNRELEASED; urgency=medium
 
+  [ Bastian Blank ]
   * Backport changes in Microsoft Azure Network Adapter up to 6.4.
     (closes: #1035378)
+
+  [ Salvatore Bonaccorso ]
+  * [armel/marvell] Disable features to shrink kernel image (fixes FTBFS):
+    - tcp: Disable MPTCP
+    - tracing: Disable FUNCTION_TRACER
 
  -- Bastian Blank <waldi@debian.org>  Thu, 07 Sep 2023 11:54:00 +0200
 
