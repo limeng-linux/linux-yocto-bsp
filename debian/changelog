@@ -505,6 +505,7 @@ linux (6.1.53-1) UNRELEASED; urgency=medium
   * [armel/marvell] Disable features to shrink kernel image (fixes FTBFS):
     - tcp: Disable MPTCP
     - tracing: Disable FUNCTION_TRACER
+  * Bump ABI to 13
 
  -- Bastian Blank <waldi@debian.org>  Thu, 07 Sep 2023 11:54:00 +0200
 
