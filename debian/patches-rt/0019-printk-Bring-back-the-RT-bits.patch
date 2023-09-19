@@ -1,8 +1,8 @@
-From b2252036197232c673f3024dc577fcf14ee8854c Mon Sep 17 00:00:00 2001
+From 9a952b320d3ddfb609b0ff33bb492708430ca639 Mon Sep 17 00:00:00 2001
 From: Sebastian Andrzej Siewior <bigeasy@linutronix.de>
 Date: Tue, 19 Jul 2022 20:08:01 +0200
-Subject: [PATCH 19/52] printk: Bring back the RT bits.
-Origin: https://www.kernel.org/pub/linux/kernel/projects/rt/6.1/older/patches-6.1.46-rt13.tar.xz
+Subject: [PATCH 19/64] printk: Bring back the RT bits.
+Origin: https://www.kernel.org/pub/linux/kernel/projects/rt/6.1/older/patches-6.1.54-rt15.tar.xz
 
 This is a revert of the commits:
 | 07a22b61946f0 Revert "printk: add functions to prefer direct printing"

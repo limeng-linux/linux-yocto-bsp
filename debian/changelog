@@ -696,6 +696,7 @@ linux (6.1.54-1) UNRELEASED; urgency=medium
     - tcp: Disable MPTCP
     - tracing: Disable FUNCTION_TRACER
   * Bump ABI to 13
+  * [rt] Update to 6.1.54-rt15
 
  -- Bastian Blank <waldi@debian.org>  Thu, 07 Sep 2023 11:54:00 +0200
 
