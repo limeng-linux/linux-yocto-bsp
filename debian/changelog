@@ -832,6 +832,8 @@ linux (6.1.55-1) UNRELEASED; urgency=medium
     - tracing: Disable FUNCTION_TRACER
   * Bump ABI to 13
   * [rt] Update to 6.1.54-rt15
+  * Drop now unknown config options for IPv4 and IPv6 Resource Reservation
+    Protocol (RSVP, RSVP6)
 
  -- Bastian Blank <waldi@debian.org>  Thu, 07 Sep 2023 11:54:00 +0200
 
