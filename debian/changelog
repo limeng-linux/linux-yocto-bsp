@@ -834,6 +834,7 @@ linux (6.1.55-1) UNRELEASED; urgency=medium
   * [rt] Update to 6.1.54-rt15
   * Drop now unknown config options for IPv4 and IPv6 Resource Reservation
     Protocol (RSVP, RSVP6)
+  * [rt] Refresh "printk: Bring back the RT bits."
 
  -- Bastian Blank <waldi@debian.org>  Thu, 07 Sep 2023 11:54:00 +0200
 
