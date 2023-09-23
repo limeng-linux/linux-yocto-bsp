@@ -1,4 +1,4 @@
-linux (6.1.54-1) UNRELEASED; urgency=medium
+linux (6.1.55-1) UNRELEASED; urgency=medium
 
   * New upstream stable update:
     https://www.kernel.org/pub/linux/kernel/v6.x/ChangeLog-6.1.53
@@ -686,6 +686,141 @@ linux (6.1.54-1) UNRELEASED; urgency=medium
     - ixgbe: fix timestamp configuration code
     - kcm: Fix error handling for SOCK_DGRAM in kcm_sendmsg().
     - drm/amd/display: Fix a bug when searching for insert_above_mpcc
+    https://www.kernel.org/pub/linux/kernel/v6.x/ChangeLog-6.1.55
+    - autofs: fix memory leak of waitqueues in autofs_catatonic_mode
+    - btrfs: output extra debug info if we failed to find an inline backref
+    - ACPICA: Add AML_NO_OPERAND_RESOLVE flag to Timer
+    - kernel/fork: beware of __put_task_struct() calling context
+    - rcuscale: Move rcu_scale_writer() schedule_timeout_uninterruptible() to
+      _idle()
+    - [x86] ACPI: video: Add backlight=native DMI quirk for Lenovo Ideapad Z470
+    - [arm64] perf/smmuv3: Enable HiSilicon Erratum 162001900 quirk for HIP08/09
+    - [amr64] perf/imx_ddr: speed up overflow frequency of cycle
+    - hw_breakpoint: fix single-stepping when using bpf_overflow_handler
+    - [x86] ACPI: x86: s2idle: Catch multiple ACPI_TYPE_PACKAGE objects
+    - devlink: remove reload failed checks in params get/set callbacks
+    - crypto: lrw,xts - Replace strlcpy with strscpy
+    - ice: Don't tx before switchdev is fully configured
+    - wifi: ath9k: fix fortify warnings
+    - wifi: ath9k: fix printk specifier
+    - wifi: mwifiex: fix fortify warning
+    - mt76: mt7921: don't assume adequate headroom for SDIO headers
+    - wifi: wil6210: fix fortify warnings
+    - [armhf] can: sun4i_can: Add acceptance register quirk
+    - [armhf] can: sun4i_can: Add support for the Allwinner D1
+    - net: Use sockaddr_storage for getsockopt(SO_PEERNAME).
+    - net/ipv4: return the real errno instead of -EINVAL
+    - crypto: lib/mpi - avoid null pointer deref in mpi_cmp_ui()
+    - Bluetooth: Fix hci_suspend_sync crash
+    - netlink: convert nlk->flags to atomic flags
+    - tpm_tis: Resend command to recover from data transfer errors
+    - [arm64,armhf] mmc: sdhci-esdhc-imx: improve ESDHC_FLAG_ERR010450
+    - alx: fix OOB-read compiler warning
+    - wifi: mac80211: check S1G action frame size
+    - netfilter: ebtables: fix fortify warnings in size_entry_mwt()
+    - wifi: cfg80211: reject auth/assoc to AP with our address
+    - wifi: cfg80211: ocb: don't leave if not joined
+    - wifi: mac80211: check for station first in client probe
+    - wifi: mac80211_hwsim: drop short frames
+    - drm/bridge: tc358762: Instruct DSI host to generate HSE packets
+    - drm/edid: Add quirk for OSVR HDK 2.0
+    - [arm64] dts: qcom: sm6125-pdx201: correct ramoops pmsg-size
+    - [arm64] dts: qcom: sm6350: correct ramoops pmsg-size
+    - [arm64] dts: qcom: sm8150-kumano: correct ramoops pmsg-size
+    - [arm64] dts: qcom: sm8250-edo: correct ramoops pmsg-size
+    - drm/amd/display: Fix underflow issue on 175hz timing
+    - [x86] ASoC: SOF: topology: simplify code to prevent static analysis
+      warnings
+    - [x86] ASoC: Intel: sof_sdw: Update BT offload config for soundwire config
+    - [x86] ALSA: hda: intel-dsp-cfg: add LunarLake support
+    - drm/amd/display: Use DTBCLK as refclk instead of DPREFCLK
+    - drm/amd/display: Blocking invalid 420 modes on HDMI TMDS for DCN31
+    - drm/amd/display: Blocking invalid 420 modes on HDMI TMDS for DCN314
+    - [armhf] drm/exynos: fix a possible null-pointer dereference due to data
+      race in exynos_drm_crtc_atomic_disable()
+    - [armhf] bus: ti-sysc: Configure uart quirks for k3 SoC
+    - md: raid1: fix potential OOB in raid1_remove_disk()
+    - fs/jfs: prevent double-free in dbUnmount() after failed jfs_remount()
+    - jfs: fix invalid free of JFS_IP(ipimap)->i_imap in diUnmount
+    - [arm64,armhf] PCI: dwc: Provide deinit callback for i.MX
+    - [armel,armhf] 9317/1: kexec: Make smp stop calls asynchronous
+    - [powerpc*] pseries: fix possible memory leak in ibmebus_bus_init()
+    - PCI: vmd: Disable bridge window for domain reset
+    - PCI: fu740: Set the number of MSI vectors
+    - media: mdp3: Fix resource leaks in of_find_device_by_node
+    - media: dvb-usb-v2: af9035: Fix null-ptr-deref in af9035_i2c_master_xfer
+    - media: dw2102: Fix null-ptr-deref in dw2102_i2c_transfer()
+    - media: af9005: Fix null-ptr-deref in af9005_i2c_xfer
+    - media: anysee: fix null-ptr-deref in anysee_master_xfer
+    - media: az6007: Fix null-ptr-deref in az6007_i2c_xfer()
+    - media: dvb-usb-v2: gl861: Fix null-ptr-deref in gl861_i2c_master_xfer
+    - scsi: lpfc: Abort outstanding ELS cmds when mailbox timeout error is
+      detected
+    - media: tuners: qt1010: replace BUG_ON with a regular error
+    - media: pci: cx23885: replace BUG with error return
+    - usb: cdns3: Put the cdns set active part outside the spin lock
+    - usb: gadget: fsl_qe_udc: validate endpoint index for ch9 udc
+    - scsi: target: iscsi: Fix buffer overflow in lio_target_nacl_info_show()
+    - serial: cpm_uart: Avoid suspicious locking
+    - misc: open-dice: make OPEN_DICE depend on HAS_IOMEM
+    - usb: ehci: add workaround for chipidea PORTSC.PEC bug
+    - usb: chipidea: add workaround for chipidea PEC bug
+    - media: pci: ipu3-cio2: Initialise timing struct to avoid a compiler
+      warning
+    - kobject: Add sanity check for kset->kobj.ktype in kset_register()
+    - [armhf] interconnect: Fix locking for runpm vs reclaim
+    - printk: Keep non-panic-CPUs out of console lock
+    - printk: Consolidate console deferred printing
+    - dma-buf: Add unlocked variant of attachment-mapping functions
+    - misc: fastrpc: Prepare to dynamic dma-buf locking specification
+    - misc: fastrpc: Fix incorrect DMA mapping unmap request
+    - btrfs: add a helper to read the superblock metadata_uuid
+    - btrfs: compare the correct fsid/metadata_uuid in btrfs_validate_super
+    - block: factor out a bvec_set_page helper
+    - nvmet: use bvec_set_page to initialize bvecs
+    - nvmet-tcp: pass iov_len instead of sg->length to bvec_set_page()
+    - drm: gm12u320: Fix the timeout usage for usb_bulk_msg()
+    - scsi: qla2xxx: Fix NULL vs IS_ERR() bug for debugfs_create_dir()
+    - [x86] ibt: Suppress spurious ENDBR
+    - scsi: target: core: Fix target_cmd_counter leak
+    - scsi: lpfc: Fix the NULL vs IS_ERR() bug for debugfs_create_file()
+    - panic: Reenable preemption in WARN slowpath
+    - [x86] boot/compressed: Reserve more memory for page tables
+    - [x86] purgatory: Remove LTO flags
+    - md/raid1: fix error: ISO C90 forbids mixed declarations
+    - Revert "SUNRPC: Fail faster on bad verifier"
+    - attr: block mode changes of symlinks
+    - ovl: fix failed copyup of fileattr on a symlink
+    - ovl: fix incorrect fdput() on aio completion
+    - io_uring/net: fix iter retargeting for selected buf
+    - nvme: avoid bogus CRTO values
+    - md: Put the right device in md_seq_next
+    - Revert "drm/amd: Disable S/G for APUs when 64GB or more host memory"
+    - dm: don't attempt to queue IO under RCU protection
+    - btrfs: fix lockdep splat and potential deadlock after failure running
+      delayed items
+    - btrfs: fix a compilation error if DEBUG is defined in btree_dirty_folio
+    - btrfs: release path before inode lookup during the ino lookup ioctl
+    - btrfs: check for BTRFS_FS_ERROR in pending ordered assert
+    - tracing: Have tracing_max_latency inc the trace array ref count
+    - tracing: Have event inject files inc the trace array ref count
+    - tracing: Increase trace array ref count on enable and filter files
+    - tracing: Have current_trace inc the trace array ref count
+    - tracing: Have option files inc the trace array ref count
+    - selinux: fix handling of empty opts in selinux_fs_context_submount()
+    - nfsd: fix change_info in NFSv4 RENAME replies
+    - tracefs: Add missing lockdown check to tracefs_create_dir()
+    - [armhf] i2c: aspeed: Reset the i2c controller when timeout occurs
+    - ata: libata: disallow dev-initiated LPM transitions to unsupported states
+    - ata: libahci: clear pending interrupt status
+    - scsi: megaraid_sas: Fix deadlock on firmware crashdump
+    - scsi: pm8001: Setup IRQs on resume
+    - ext4: fix rec_len verify error
+    - drm/amd/display: fix the white screen issue when >= 64GB DRAM
+    - Revert "memcg: drop kmem.limit_in_bytes"
+    - drm/amdgpu: fix amdgpu_cs_p1_user_fence
+    - net/sched: Retire rsvp classifier (CVE-2023-42755)
+    - [arm64,armhf] interconnect: Teach lockdep about icc_bw_lock order
 
   [ Bastian Blank ]
   * Backport changes in Microsoft Azure Network Adapter up to 6.4.
