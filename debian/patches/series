@@ -141,7 +141,7 @@ bugfix/all/tools-perf-fix-missing-ldflags-for-some-programs.patch
 # debian-installer fixes
 bugfix/powerpc/fbdev-offb-Update-expected-device-name.patch
 
-# Backport of Microsoft Azure Network Adapter to 6.4
+# Backport of Microsoft Azure Network Adapter to 6.6
 features/all/ethernet-microsoft/0001-net-Remove-the-obsolte-u64_stats_fetch_-_irq-users-d.patch
 features/all/ethernet-microsoft/0002-net-mana-Assign-interrupts-to-CPUs-based-on-NUMA-nod.patch
 features/all/ethernet-microsoft/0003-net-mana-Add-support-for-auxiliary-device.patch
@@ -165,5 +165,12 @@ features/all/ethernet-microsoft/0020-net-mana-Add-support-for-jumbo-frame.patch
 features/all/ethernet-microsoft/0021-net-mana-Check-if-netdev-napi_alloc_frag-returns-sin.patch
 features/all/ethernet-microsoft/0022-net-mana-Fix-perf-regression-remove-rx_cqes-tx_cqes-.patch
 features/all/ethernet-microsoft/0023-net-mana-Add-support-for-vlan-tagging.patch
+features/all/ethernet-microsoft/0024-RDMA-mana_ib-Use-v2-version-of-cfg_rx_steer_req-to-e.patch
+features/all/ethernet-microsoft/0025-net-mana-use-vmalloc_array-and-vcalloc.patch
+features/all/ethernet-microsoft/0026-net-mana-Batch-ringing-RX-queue-doorbell-on-receivin.patch
+features/all/ethernet-microsoft/0027-net-mana-Use-the-correct-WQE-count-for-ringing-RQ-do.patch
+features/all/ethernet-microsoft/0028-net-mana-Configure-hwc-timeout-from-hardware.patch
+features/all/ethernet-microsoft/0029-net-mana-Rename-mana_refill_rxoob-and-remove-some-em.patch
+features/all/ethernet-microsoft/0030-net-mana-Add-gdma-stats-to-ethtool-output-for-mana.patch
 
 # ABI maintenance
