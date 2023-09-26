@@ -823,7 +823,7 @@ linux (6.1.55-1) UNRELEASED; urgency=medium
     - [arm64,armhf] interconnect: Teach lockdep about icc_bw_lock order
 
   [ Bastian Blank ]
-  * Backport changes in Microsoft Azure Network Adapter up to 6.4.
+  * Backport changes in Microsoft Azure Network Adapter up to 6.6.
     (closes: #1035378)
 
   [ Salvatore Bonaccorso ]
