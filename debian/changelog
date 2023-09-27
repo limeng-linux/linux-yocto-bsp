@@ -437,7 +437,7 @@ linux (6.1.55-1) UNRELEASED; urgency=medium
     - PCI: rockchip: Use 64-bit mask on MSI 64-bit PCI address
     - ipmi_si: fix a memleak in try_smi_init()
     - [armhf] OMAP2+: Fix -Warray-bounds warning in _pwrdm_state_switch()
-    - XArray: Do not return sibling entries from xa_load()
+    - XArray: Do not return sibling entries from xa_load() (Closes: #1053120)
     - io_uring: break iopolling on signal
     - backlight/gpio_backlight: Compare against struct fb_info.device
     - backlight/bd6107: Compare against struct fb_info.device
