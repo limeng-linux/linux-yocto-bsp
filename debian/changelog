@@ -869,6 +869,8 @@ linux (6.1.55-1) UNRELEASED; urgency=medium
   * netfilter: nf_tables: disable toggling dormant table state more than once
   * netfilter: ipset: Fix race between IPSET_CMD_CREATE and IPSET_CMD_SWAP
     (CVE-2023-42756)
+  * misc: rtsx: Fix some platforms can not boot and move the l1ss judgment to
+    probe (Closes: #1052063)
 
   [ Vincent Blut ]
   * drivers/char/hw_random: Change HW_RANDOM from module to built-in
