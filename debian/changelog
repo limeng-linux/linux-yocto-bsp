@@ -871,6 +871,7 @@ linux (6.1.55-1) UNRELEASED; urgency=medium
     (CVE-2023-42756)
   * misc: rtsx: Fix some platforms can not boot and move the l1ss judgment to
     probe (Closes: #1052063)
+  * ipv4: fix null-deref in ipv4_link_failure
 
   [ Vincent Blut ]
   * drivers/char/hw_random: Change HW_RANDOM from module to built-in

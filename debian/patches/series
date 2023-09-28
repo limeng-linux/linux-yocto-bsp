@@ -143,6 +143,7 @@ bugfix/all/netfilter-conntrack-fix-extension-size-table.patch
 bugfix/all/netfilter-bpf-adjust-timeouts-of-non-confirmed-cts-i.patch
 bugfix/all/netfilter-nf_tables-disable-toggling-dormant-table-s.patch
 bugfix/all/netfilter-ipset-fix-race-between-ipset_cmd_create-an.patch
+bugfix/all/ipv4-fix-null-deref-in-ipv4_link_failure.patch
 
 # Fix exported symbol versions
 bugfix/all/module-disable-matching-missing-version-crc.patch
