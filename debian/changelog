@@ -1,4 +1,4 @@
-linux (6.1.55-1) UNRELEASED; urgency=medium
+linux (6.1.55-1) bookworm; urgency=medium
 
   * New upstream stable update:
     https://www.kernel.org/pub/linux/kernel/v6.x/ChangeLog-6.1.53
@@ -881,7 +881,7 @@ linux (6.1.55-1) UNRELEASED; urgency=medium
   * [arm*,ppc64*,sparc64,s390x] drivers/char/hw_random: Prevent some HW Random
     Number Generator drivers from being built-in
 
- -- Bastian Blank <waldi@debian.org>  Thu, 07 Sep 2023 11:54:00 +0200
+ -- Salvatore Bonaccorso <carnil@debian.org>  Fri, 29 Sep 2023 06:15:31 +0200
 
 linux (6.1.52-1) bookworm-security; urgency=high
 
