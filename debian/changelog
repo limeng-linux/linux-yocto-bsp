@@ -204,6 +204,7 @@ linux (6.1.56-1) UNRELEASED; urgency=medium
   [ Salvatore Bonaccorso ]
   * [rt] Drop "seqlock: Do the lockdep annotation before locking in
     do_write_seqcount_begin_nested()" (applied upstream)
+  * Bump ABI to 14
 
  -- Salvatore Bonaccorso <carnil@debian.org>  Sat, 07 Oct 2023 11:21:28 +0200
 
