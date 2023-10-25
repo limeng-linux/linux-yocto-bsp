@@ -1,4 +1,4 @@
-linux (6.1.57-1) UNRELEASED; urgency=medium
+linux (6.1.58-1) UNRELEASED; urgency=medium
 
   * New upstream stable update:
     https://www.kernel.org/pub/linux/kernel/v6.x/ChangeLog-6.1.56
@@ -352,6 +352,12 @@ linux (6.1.57-1) UNRELEASED; urgency=medium
     - btrfs: file_remove_privs needs an exclusive lock in direct io write
     - ipv6: remove one read_lock()/read_unlock() pair in rt6_check_neigh()
     - xen/events: replace evtchn_rwlock with RCU (CVE-2023-34324)
+    https://www.kernel.org/pub/linux/kernel/v6.x/ChangeLog-6.1.58
+    - Revert "NFS: More fixes for nfs_direct_write_reschedule_io()"
+    - Revert "NFS: Use the correct commit info in nfs_join_page_group()"
+    - Revert "NFS: More O_DIRECT accounting fixes for error paths"
+    - Revert "NFS: Fix O_DIRECT locking issues"
+    - Revert "NFS: Fix error handling for O_DIRECT write scheduling"
 
   [ Salvatore Bonaccorso ]
   * [rt] Drop "seqlock: Do the lockdep annotation before locking in
