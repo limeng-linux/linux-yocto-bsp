@@ -491,6 +491,8 @@ linux (6.1.59-1) UNRELEASED; urgency=medium
   * [rt] Drop "seqlock: Do the lockdep annotation before locking in
     do_write_seqcount_begin_nested()" (applied upstream)
   * Bump ABI to 14
+  * Refresh "net: mana: Add new MANA VF performance counters for easier
+    troubleshooting"
 
  -- Salvatore Bonaccorso <carnil@debian.org>  Sat, 07 Oct 2023 11:21:28 +0200
 
