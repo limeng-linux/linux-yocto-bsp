@@ -1,4 +1,4 @@
-linux (6.1.58-1) UNRELEASED; urgency=medium
+linux (6.1.59-1) UNRELEASED; urgency=medium
 
   * New upstream stable update:
     https://www.kernel.org/pub/linux/kernel/v6.x/ChangeLog-6.1.56
@@ -358,6 +358,134 @@ linux (6.1.58-1) UNRELEASED; urgency=medium
     - Revert "NFS: More O_DIRECT accounting fixes for error paths"
     - Revert "NFS: Fix O_DIRECT locking issues"
     - Revert "NFS: Fix error handling for O_DIRECT write scheduling"
+    https://www.kernel.org/pub/linux/kernel/v6.x/ChangeLog-6.1.59
+    - net: mana: Fix TX CQE error handling
+    - mptcp: fix delegated action races
+    - [x86] drm/i915: Don't set PIPE_CONTROL_FLUSH_L3 for aux inval
+    - RDMA/cxgb4: Check skb value for failure to allocate
+    - [arm64] perf/arm-cmn: Fix the unhandled overflow status of counter 4 to 7
+    - [x86] platform/x86: think-lmi: Fix reference leak
+    - [x86] platform/x86: hp-wmi:: Mark driver struct with __refdata to prevent
+      section mismatch warning
+    - scsi: Do not rescan devices with a suspended queue
+    - HID: logitech-hidpp: Fix kernel crash on receiver USB disconnect
+    - quota: Fix slow quotaoff
+    - [x86] ASoC: amd: yc: Fix non-functional mic on Lenovo 82YM
+    - ata: libata-scsi: Disable scsi device manage_system_start_stop
+    - net: prevent address rewrite in kernel_bind()
+    - irqchip: renesas-rzg2l: Fix logic to clear TINT interrupt source
+    - KEYS: trusted: Remove redundant static calls usage
+    - ALSA: usb-audio: Fix microphone sound on Opencomm2 Headset
+    - ALSA: usb-audio: Fix microphone sound on Nexigo webcam.
+    - ALSA: hda/realtek: Change model for Intel RVP board
+    - ASoC: simple-card-utils: fixup simple_util_startup() error handling
+    - [x86] ASoC: Intel: soc-acpi: Add entry for HDMI_In capture support in MTL
+      match table
+    - [x86] ASoC: Intel: sof_sdw: add support for SKU 0B14
+    - [x86] ASoC: Intel: soc-acpi: Add entry for sof_es8336 in MTL match table.
+    - ASoC: Use of_property_read_bool() for boolean properties
+    - ASoC: fsl_sai: MCLK bind with TX/RX enable bit
+    - [arm64] ASoC: fsl_sai: Don't disable bitclock for i.MX8MP
+    - ALSA: hda/realtek: Add quirk for HP Victus 16-d1xxx to enable mute LED
+    - ALSA: hda/realtek: Add quirk for mute LEDs on HP ENVY x360 15-eu0xxx
+    - ALSA: hda/realtek - ALC287 I2S speaker platform support
+    - ALSA: hda/realtek - ALC287 merge RTK codec with CS CS35L41 AMP
+    - pinctrl: nuvoton: wpcm450: fix out of bounds write
+    - [arm64] drm/msm/dp: do not reinitialize phy unless retry during link
+      training
+    - [arm64] drm/msm/dsi: skip the wait for video mode done if not applicable
+    - [arm64] drm/msm/dsi: fix irq_of_parse_and_map() error checking
+    - [arm64] drm/msm/dpu: change _dpu_plane_calc_bw() to use u64 to avoid
+      overflow
+    - [arm64] drm/msm/dp: Add newlines to debug printks
+    - can: isotp: isotp_sendmsg(): fix TX state detection and wait behavior
+    - ravb: Fix up dma_free_coherent() call in ravb_remove()
+    - ravb: Fix use-after-free issue in ravb_tx_timeout_work() (CVE-2023-35827)
+    - ieee802154: ca8210: Fix a potential UAF in ca8210_probe
+    - xen-netback: use default TX queue size for vifs
+    - drm/vmwgfx: fix typo of sizeof argument
+    - bpf: Fix verifier log for async callback return values
+    - net: refine debug info in skb_checksum_help()
+    - net: macsec: indicate next pn update when offloading
+    - net: phy: mscc: macsec: reject PN update requests
+    - net/mlx5e: macsec: use update_pn flag instead of PN comparation
+    - ixgbe: fix crash with empty VF macvlan list
+    - net/mlx5e: Again mutually exclude RX-FCS and RX-port-timestamp
+    - net: nfc: fix races in nfc_llcp_sock_get() and nfc_llcp_sock_get_sn()
+    - net/smc: Fix pos miscalculation in statistics
+    - pinctrl: renesas: rzn1: Enable missing PINMUX
+    - workqueue: Override implicit ordered attribute in
+      workqueue_apply_unbound_cpumask()
+    - tcp: enforce receive buffer memory limits by allowing the tcp window to
+      shrink
+    - [armhf] dmaengine: stm32-mdma: abort resume if no ongoing transfer
+    - [armhf] dmaengine: stm32-dma: fix stm32_dma_prep_slave_sg in case of MDMA
+      chaining
+    - [armhf] dmaengine: stm32-dma: fix residue in case of MDMA chaining
+    - [armhf] dmaengine: stm32-mdma: use Link Address Register to compute
+      residue
+    - [armhf] dmaengine: stm32-mdma: set in_flight_bytes in case CRQA flag is
+      set
+    - usb: xhci: xhci-ring: Use sysdev for mapping bounce buffer
+    - net: usb: dm9601: fix uninitialized variable use in dm9601_mdio_read
+    - [arm64,armhf] usb: dwc3: Soft reset phy on probe for host
+    - usb: cdns3: Modify the return value of cdns_set_active () to void when
+      CONFIG_PM_SLEEP is disabled
+    - usb: hub: Guard against accesses to uninitialized BOS descriptors
+    - usb: musb: Get the musb_qh poniter after musb_giveback
+    - usb: musb: Modify the "HWVers" register address
+    - iio: pressure: bmp280: Fix NULL pointer exception
+    - iio: imu: bno055: Fix missing Kconfig dependencies
+    - iio: adc: imx8qxp: Fix address for command buffer registers
+    - iio: dac: ad3552r: Correct device IDs
+    - iio: admv1013: add mixer_vgate corner cases
+    - iio: pressure: dps310: Adjust Timeout Settings
+    - iio: pressure: ms5611: ms5611_prom_is_valid false negative bug
+    - iio: addac: Kconfig: update ad74413r selections
+    - drm/atomic-helper: relax unregistered connector check
+    - drm/amdgpu: add missing NULL check
+    - drm/amd/display: Don't set dpms_off for seamless boot
+    - ACPI: resource: Skip IRQ override on ASUS ExpertBook B1402CBA
+    - ACPI: EC: Add quirk for the HP Pavilion Gaming 15-dk1xxx
+    - ksmbd: not allow to open file if delelete on close bit is set
+    - [x86] perf/x86/lbr: Filter vsyscall addresses
+    - [x86] cpu: Fix AMD erratum #1485 on Zen4-based CPUs
+    - mcb: remove is_added flag from mcb_device struct
+    - [x86] thunderbolt: Workaround an IOMMU fault on certain systems with Intel
+      Maple Ridge
+    - [x86] thunderbolt: Check that lane 1 is in CL0 before enabling lane
+      bonding
+    - [x86] thunderbolt: Restart XDomain discovery handshake after failure
+    - [powerpc*] 47x: Fix 47x syscall return crash
+    - libceph: use kernel_connect()
+    - ceph: fix incorrect revoked caps assert in ceph_fill_file_size()
+    - ceph: fix type promotion bug on 32bit systems
+    - Input: powermate - fix use-after-free in powermate_config_complete
+    - Input: psmouse - fix fast_reconnect function for PS/2 mode
+    - Input: xpad - add PXN V900 support
+    - Input: i8042 - add Fujitsu Lifebook E5411 to i8042 quirk table
+    - Input: goodix - ensure int GPIO is in input for gpio_count == 1 &&
+      gpio_int_idx == 0 case
+    - mctp: perform route lookups under a RCU read-side lock
+    - nfp: flower: avoid rmmod nfp crash issues
+    - usb: typec: ucsi: Use GET_CAPABILITY attributes data to set power supply
+      scope
+    - cgroup: Remove duplicates in cgroup v1 tasks file
+    - dma-buf: add dma_fence_timestamp helper
+    - pinctrl: avoid unsafe code pattern in find_pinctrl()
+    - scsi: ufs: core: Correct clear TM error log
+    - counter: chrdev: fix getting array extensions
+    - counter: microchip-tcb-capture: Fix the use of internal GCLK logic
+    - usb: typec: altmodes/displayport: Signal hpd low when exiting mode
+    - usb: typec: ucsi: Clear EVENT_PENDING bit if ucsi_send_command fails
+    - usb: gadget: udc-xilinx: replace memcpy with memcpy_toio
+    - usb: gadget: ncm: Handle decoding of multiple NTB's in unwrap call
+    - usb: cdnsp: Fixes issue with dequeuing not queued requests
+    - [x86] alternatives: Disable KASAN in apply_alternatives()
+    - [amd64] dmaengine: idxd: use spin_lock_irqsave before wait_event_lock_irq
+    - [powerpc*] 8xx: Fix pte_access_permitted() for PAGE_NONE
+    - [powerpc*] 64e: Fix wrong test in __ptep_test_and_clear_young()
+    - ALSA: hda/realtek - Fixed two speaker platform
 
   [ Salvatore Bonaccorso ]
   * [rt] Drop "seqlock: Do the lockdep annotation before locking in
