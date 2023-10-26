@@ -493,6 +493,7 @@ linux (6.1.59-1) UNRELEASED; urgency=medium
   * Bump ABI to 14
   * Refresh "net: mana: Add new MANA VF performance counters for easier
     troubleshooting"
+  * [rt] Update to 6.1.59-rt16
 
  -- Salvatore Bonaccorso <carnil@debian.org>  Sat, 07 Oct 2023 11:21:28 +0200
 

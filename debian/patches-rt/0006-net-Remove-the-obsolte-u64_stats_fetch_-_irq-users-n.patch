@@ -1,9 +1,9 @@
-From e857a2d475589bd2ec0f109db01aa89f14487f65 Mon Sep 17 00:00:00 2001
+From a5d4874fab8b2a5b5627fb0d69791ccaa99b722f Mon Sep 17 00:00:00 2001
 From: Thomas Gleixner <tglx@linutronix.de>
 Date: Thu, 25 Aug 2022 16:17:37 +0200
-Subject: [PATCH 06/64] net: Remove the obsolte u64_stats_fetch_*_irq() users
+Subject: [PATCH 06/62] net: Remove the obsolte u64_stats_fetch_*_irq() users
  (net).
-Origin: https://www.kernel.org/pub/linux/kernel/projects/rt/6.1/older/patches-6.1.54-rt15.tar.xz
+Origin: https://www.kernel.org/pub/linux/kernel/projects/rt/6.1/older/patches-6.1.59-rt16.tar.xz
 
 Now that the 32bit UP oddity is gone and 32bit uses always a sequence
 count, there is no need for the fetch_irq() variants anymore.
@@ -88,10 +88,10 @@ index 9ffd40b8270c..bc75fa1e4666 100644
  		u64_stats_add(&stats->rx_packets, rxpackets);
  		u64_stats_add(&stats->rx_bytes, rxbytes);
 diff --git a/net/core/dev.c b/net/core/dev.c
-index a2e3c6470ab3..75139898dfec 100644
+index 5374761f5af2..3161fbf74638 100644
 --- a/net/core/dev.c
 +++ b/net/core/dev.c
-@@ -10476,12 +10476,12 @@ void dev_fetch_sw_netstats(struct rtnl_link_stats64 *s,
+@@ -10480,12 +10480,12 @@ void dev_fetch_sw_netstats(struct rtnl_link_stats64 *s,
  
  		stats = per_cpu_ptr(netstats, cpu);
  		do {
@@ -191,7 +191,7 @@ index c8d137ef5980..b71ccaec0991 100644
  
  static int
 diff --git a/net/devlink/leftover.c b/net/devlink/leftover.c
-index 63188d6a50fe..11095a4fee3d 100644
+index 032c7af065cd..94e8cc3de330 100644
 --- a/net/devlink/leftover.c
 +++ b/net/devlink/leftover.c
 @@ -8307,10 +8307,10 @@ static void devlink_trap_stats_read(struct devlink_stats __percpu *trap_stats,
@@ -327,10 +327,10 @@ index 17a1b731a76b..2be696513629 100644
  		seq_printf(seq, "%3X %8LX %8LX %8LX %16LX %16LX\n",
  			   i, (u64)conns, (u64)inpkts,
 diff --git a/net/netfilter/nf_tables_api.c b/net/netfilter/nf_tables_api.c
-index 3c5cac9bd9b7..32423597bca0 100644
+index 5e3dbe2652db..1e8667928364 100644
 --- a/net/netfilter/nf_tables_api.c
 +++ b/net/netfilter/nf_tables_api.c
-@@ -1687,10 +1687,10 @@ static int nft_dump_stats(struct sk_buff *skb, struct nft_stats __percpu *stats)
+@@ -1691,10 +1691,10 @@ static int nft_dump_stats(struct sk_buff *skb, struct nft_stats __percpu *stats)
  	for_each_possible_cpu(cpu) {
  		cpu_stats = per_cpu_ptr(stats, cpu);
  		do {

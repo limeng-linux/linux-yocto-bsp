@@ -1,8 +1,8 @@
-From d2846be5d39130e31ea4798320052c3b3300fc92 Mon Sep 17 00:00:00 2001
+From 2dff99cab1eb82be947a673051feb64f328474da Mon Sep 17 00:00:00 2001
 From: Sebastian Andrzej Siewior <bigeasy@linutronix.de>
 Date: Mon, 15 Aug 2022 17:29:50 +0200
-Subject: [PATCH 09/64] net: Avoid the IPI to free the
-Origin: https://www.kernel.org/pub/linux/kernel/projects/rt/6.1/older/patches-6.1.54-rt15.tar.xz
+Subject: [PATCH 09/62] net: Avoid the IPI to free the
+Origin: https://www.kernel.org/pub/linux/kernel/projects/rt/6.1/older/patches-6.1.59-rt16.tar.xz
 
 skb_attempt_defer_free() collects a skbs, which was allocated on a
 remote CPU, on a per-CPU list. These skbs are either freed on that
@@ -41,10 +41,10 @@ index 5a04fbf72476..98eb63c317f7 100644
  
  static inline void input_queue_head_incr(struct softnet_data *sd)
 diff --git a/net/core/dev.c b/net/core/dev.c
-index 75139898dfec..f0ba49d6b895 100644
+index 3161fbf74638..4f5748c34e48 100644
 --- a/net/core/dev.c
 +++ b/net/core/dev.c
-@@ -4589,15 +4589,6 @@ static void rps_trigger_softirq(void *data)
+@@ -4593,15 +4593,6 @@ static void rps_trigger_softirq(void *data)
  
  #endif /* CONFIG_RPS */
  
@@ -60,7 +60,7 @@ index 75139898dfec..f0ba49d6b895 100644
  /*
   * Check if this softnet_data structure is another cpu one
   * If yes, queue it to our IPI list and return 1
-@@ -6655,6 +6646,30 @@ static void skb_defer_free_flush(struct softnet_data *sd)
+@@ -6659,6 +6650,30 @@ static void skb_defer_free_flush(struct softnet_data *sd)
  	}
  }
  
@@ -91,7 +91,7 @@ index 75139898dfec..f0ba49d6b895 100644
  static __latent_entropy void net_rx_action(struct softirq_action *h)
  {
  	struct softnet_data *sd = this_cpu_ptr(&softnet_data);
-@@ -11396,7 +11411,11 @@ static int __init net_dev_init(void)
+@@ -11400,7 +11415,11 @@ static int __init net_dev_init(void)
  		INIT_CSD(&sd->csd, rps_trigger_softirq, sd);
  		sd->cpu = i;
  #endif
