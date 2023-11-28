@@ -1,8 +1,8 @@
-From 5adb57bceaef047fe90c7b1c01c92a32cc065136 Mon Sep 17 00:00:00 2001
+From c95db53df39cee069b711130e5badc849e411317 Mon Sep 17 00:00:00 2001
 From: Sebastian Andrzej Siewior <bigeasy@linutronix.de>
 Date: Fri, 26 Jul 2019 11:30:49 +0200
-Subject: [PATCH 45/64] powerpc: traps: Use PREEMPT_RT
-Origin: https://www.kernel.org/pub/linux/kernel/projects/rt/6.1/older/patches-6.1.54-rt15.tar.xz
+Subject: [PATCH 45/62] powerpc: traps: Use PREEMPT_RT
+Origin: https://www.kernel.org/pub/linux/kernel/projects/rt/6.1/older/patches-6.1.59-rt16.tar.xz
 
 Add PREEMPT_RT to the backtrace if enabled.
 

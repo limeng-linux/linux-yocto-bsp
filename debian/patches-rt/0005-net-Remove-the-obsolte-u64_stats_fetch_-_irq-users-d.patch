@@ -1,9 +1,9 @@
-From 50e6d3dcf2e1bc6f7876ff17917e13d82304f2b1 Mon Sep 17 00:00:00 2001
+From d9a31e48e4ef596ab507ac5bb01e8c6a995c4262 Mon Sep 17 00:00:00 2001
 From: Thomas Gleixner <tglx@linutronix.de>
 Date: Thu, 25 Aug 2022 16:15:44 +0200
-Subject: [PATCH 05/64] net: Remove the obsolte u64_stats_fetch_*_irq() users
+Subject: [PATCH 05/62] net: Remove the obsolte u64_stats_fetch_*_irq() users
  (drivers).
-Origin: https://www.kernel.org/pub/linux/kernel/projects/rt/6.1/older/patches-6.1.54-rt15.tar.xz
+Origin: https://www.kernel.org/pub/linux/kernel/projects/rt/6.1/older/patches-6.1.59-rt16.tar.xz
 
 Now that the 32bit UP oddity is gone and 32bit uses always a sequence
 count, there is no need for the fetch_irq() variants anymore.
@@ -120,10 +120,10 @@ index 444ccef76da2..8da79eedc057 100644
  
  static void ena_queue_stats(struct ena_adapter *adapter, u64 **data)
 diff --git a/drivers/net/ethernet/amazon/ena/ena_netdev.c b/drivers/net/ethernet/amazon/ena/ena_netdev.c
-index 5ce01ac72637..e8ad5ea31aff 100644
+index 42a66b74c1e5..6ab206f8283c 100644
 --- a/drivers/net/ethernet/amazon/ena/ena_netdev.c
 +++ b/drivers/net/ethernet/amazon/ena/ena_netdev.c
-@@ -3305,10 +3305,10 @@ static void ena_get_stats64(struct net_device *netdev,
+@@ -3308,10 +3308,10 @@ static void ena_get_stats64(struct net_device *netdev,
  		tx_ring = &adapter->tx_ring[i];
  
  		do {
@@ -136,7 +136,7 @@ index 5ce01ac72637..e8ad5ea31aff 100644
  
  		stats->tx_packets += packets;
  		stats->tx_bytes += bytes;
-@@ -3316,20 +3316,20 @@ static void ena_get_stats64(struct net_device *netdev,
+@@ -3319,20 +3319,20 @@ static void ena_get_stats64(struct net_device *netdev,
  		rx_ring = &adapter->rx_ring[i];
  
  		do {
@@ -597,7 +597,7 @@ index 2e5e0a887270..07b2ab8d054c 100644
  				.stat_name = cpu_to_be32(TX_WAKE_CNT),
  				.value = cpu_to_be64(priv->tx[idx].wake_queue),
 diff --git a/drivers/net/ethernet/hisilicon/hns3/hns3_enet.c b/drivers/net/ethernet/hisilicon/hns3/hns3_enet.c
-index 8aae179554a8..2cfeb68571d3 100644
+index 04c9baca1b0f..00da7f99e02b 100644
 --- a/drivers/net/ethernet/hisilicon/hns3/hns3_enet.c
 +++ b/drivers/net/ethernet/hisilicon/hns3/hns3_enet.c
 @@ -2496,7 +2496,7 @@ static void hns3_fetch_stats(struct rtnl_link_stats64 *stats,
@@ -793,7 +793,7 @@ index 08ccf0024ce1..6b3f3727c3f1 100644
  			tx_p += packets;
  			tx_restart += p->tx_stats.restart_queue;
 diff --git a/drivers/net/ethernet/intel/iavf/iavf_ethtool.c b/drivers/net/ethernet/intel/iavf/iavf_ethtool.c
-index fe912b1c468e..a34303ad057d 100644
+index c13b4fa659ee..90397293525f 100644
 --- a/drivers/net/ethernet/intel/iavf/iavf_ethtool.c
 +++ b/drivers/net/ethernet/intel/iavf/iavf_ethtool.c
 @@ -147,7 +147,7 @@ __iavf_add_ethtool_stats(u64 **data, void *pointer,
@@ -911,7 +911,7 @@ index 45ce4ed16146..9824f7cfaca4 100644
  		packets += _packets;
  	}
 diff --git a/drivers/net/ethernet/intel/igc/igc_ethtool.c b/drivers/net/ethernet/intel/igc/igc_ethtool.c
-index 511fc3f41208..2899109e6fb5 100644
+index 9166fde40c77..0c3c729c9734 100644
 --- a/drivers/net/ethernet/intel/igc/igc_ethtool.c
 +++ b/drivers/net/ethernet/intel/igc/igc_ethtool.c
 @@ -839,15 +839,15 @@ static void igc_ethtool_get_stats(struct net_device *netdev,
@@ -951,7 +951,7 @@ index 511fc3f41208..2899109e6fb5 100644
  	}
  	spin_unlock(&adapter->stats64_lock);
 diff --git a/drivers/net/ethernet/intel/igc/igc_main.c b/drivers/net/ethernet/intel/igc/igc_main.c
-index 2f3947cf513b..125669a6f6bb 100644
+index 1ac836a55cd3..15e6855573cd 100644
 --- a/drivers/net/ethernet/intel/igc/igc_main.c
 +++ b/drivers/net/ethernet/intel/igc/igc_main.c
 @@ -4865,10 +4865,10 @@ void igc_update_stats(struct igc_adapter *adapter)
@@ -1218,7 +1218,7 @@ index ab33ba1c3023..ff97b140886a 100644
  	stats->tx_packets = _packets;
  	stats->tx_bytes = _bytes;
 diff --git a/drivers/net/ethernet/mediatek/mtk_eth_soc.c b/drivers/net/ethernet/mediatek/mtk_eth_soc.c
-index 0ac5ae16308f..c13cc420c64b 100644
+index 17e6ac4445af..f737e2b9a29e 100644
 --- a/drivers/net/ethernet/mediatek/mtk_eth_soc.c
 +++ b/drivers/net/ethernet/mediatek/mtk_eth_soc.c
 @@ -866,7 +866,7 @@ static void mtk_get_stats64(struct net_device *dev,
@@ -1459,7 +1459,7 @@ index d2c6a5dfdc0e..b7e24ae92525 100644
  	stats->rx_errors      = priv->stats_rx.errors;
  	stats->tx_errors      = priv->stats_tx.errors;
 diff --git a/drivers/net/ethernet/ti/am65-cpsw-nuss.c b/drivers/net/ethernet/ti/am65-cpsw-nuss.c
-index 25466cbdc16b..450c20d65d19 100644
+index 9f2553799895..1085b0642c28 100644
 --- a/drivers/net/ethernet/ti/am65-cpsw-nuss.c
 +++ b/drivers/net/ethernet/ti/am65-cpsw-nuss.c
 @@ -1376,12 +1376,12 @@ static void am65_cpsw_nuss_ndo_get_stats(struct net_device *dev,
@@ -1746,10 +1746,10 @@ index 2e9742952c4e..f6d53e63ef4e 100644
  		*packets += tpackets;
  	}
 diff --git a/drivers/net/macsec.c b/drivers/net/macsec.c
-index 578f470e9fad..2de422ab3e6a 100644
+index 81453e84b641..492a0784f3a9 100644
 --- a/drivers/net/macsec.c
 +++ b/drivers/net/macsec.c
-@@ -2800,9 +2800,9 @@ static void get_rx_sc_stats(struct net_device *dev,
+@@ -2802,9 +2802,9 @@ static void get_rx_sc_stats(struct net_device *dev,
  
  		stats = per_cpu_ptr(rx_sc->stats, cpu);
  		do {
@@ -1761,7 +1761,7 @@ index 578f470e9fad..2de422ab3e6a 100644
  
  		sum->InOctetsValidated += tmp.InOctetsValidated;
  		sum->InOctetsDecrypted += tmp.InOctetsDecrypted;
-@@ -2881,9 +2881,9 @@ static void get_tx_sc_stats(struct net_device *dev,
+@@ -2883,9 +2883,9 @@ static void get_tx_sc_stats(struct net_device *dev,
  
  		stats = per_cpu_ptr(macsec_priv(dev)->secy.tx_sc.stats, cpu);
  		do {
@@ -1773,7 +1773,7 @@ index 578f470e9fad..2de422ab3e6a 100644
  
  		sum->OutPktsProtected   += tmp.OutPktsProtected;
  		sum->OutPktsEncrypted   += tmp.OutPktsEncrypted;
-@@ -2937,9 +2937,9 @@ static void get_secy_stats(struct net_device *dev, struct macsec_dev_stats *sum)
+@@ -2939,9 +2939,9 @@ static void get_secy_stats(struct net_device *dev, struct macsec_dev_stats *sum)
  
  		stats = per_cpu_ptr(macsec_priv(dev)->stats, cpu);
  		do {
@@ -1851,7 +1851,7 @@ index 9a1a5b203624..e470e3398abc 100644
  
  static int
 diff --git a/drivers/net/team/team.c b/drivers/net/team/team.c
-index 921ca59822b0..382756c3fb83 100644
+index 556b2d1cd2ac..1b0fc84b4d0c 100644
 --- a/drivers/net/team/team.c
 +++ b/drivers/net/team/team.c
 @@ -1866,13 +1866,13 @@ team_get_stats64(struct net_device *dev, struct rtnl_link_stats64 *stats)
@@ -1994,7 +1994,7 @@ index 21d3461fb5d1..666622ae4b9d 100644
  	}
  }
 diff --git a/drivers/net/vrf.c b/drivers/net/vrf.c
-index f6dcec66f0a4..bdb3a76a352e 100644
+index 208df4d41939..6043e63b42f9 100644
 --- a/drivers/net/vrf.c
 +++ b/drivers/net/vrf.c
 @@ -159,13 +159,13 @@ static void vrf_get_stats64(struct net_device *dev,

@@ -1,8 +1,8 @@
-From 427e2ea82e9cbd1ea6c05fe371e1154730b8229d Mon Sep 17 00:00:00 2001
+From 29c3d277b6b0b6283f72b552754335c5ccadb20d Mon Sep 17 00:00:00 2001
 From: Thomas Gleixner <tglx@linutronix.de>
 Date: Fri, 26 Oct 2012 18:50:54 +0100
-Subject: [PATCH 32/64] sched: Add support for lazy preemption
-Origin: https://www.kernel.org/pub/linux/kernel/projects/rt/6.1/older/patches-6.1.54-rt15.tar.xz
+Subject: [PATCH 32/62] sched: Add support for lazy preemption
+Origin: https://www.kernel.org/pub/linux/kernel/projects/rt/6.1/older/patches-6.1.59-rt16.tar.xz
 
 It has become an obsession to mitigate the determinism vs. throughput
 loss of RT. Looking at the mainline semantics of preemption points
@@ -301,7 +301,7 @@ index c2f1fd95a821..260c08efeb48 100644
  	bool
  
 diff --git a/kernel/sched/core.c b/kernel/sched/core.c
-index 26736f3e87e3..f26292bed420 100644
+index 00fc12958c7b..fb5472a2850c 100644
 --- a/kernel/sched/core.c
 +++ b/kernel/sched/core.c
 @@ -1040,6 +1040,46 @@ void resched_curr(struct rq *rq)
@@ -557,7 +557,7 @@ index b62d53d7c264..f2577f511a41 100644
  extern void init_rt_bandwidth(struct rt_bandwidth *rt_b, u64 period, u64 runtime);
  extern bool sched_rt_bandwidth_account(struct rt_rq *rt_rq);
 diff --git a/kernel/trace/trace.c b/kernel/trace/trace.c
-index 54ccdca39531..00a1a6cc2a5b 100644
+index 9db92a6e1463..0efcfac975b6 100644
 --- a/kernel/trace/trace.c
 +++ b/kernel/trace/trace.c
 @@ -2658,11 +2658,19 @@ unsigned int tracing_gen_ctx_irq_test(unsigned int irqs_status)
@@ -635,7 +635,7 @@ index 54ccdca39531..00a1a6cc2a5b 100644
  
  void
 diff --git a/kernel/trace/trace_events.c b/kernel/trace/trace_events.c
-index 0447c46ef4d7..b6304ea881dd 100644
+index 9da418442a06..1d8c513d1121 100644
 --- a/kernel/trace/trace_events.c
 +++ b/kernel/trace/trace_events.c
 @@ -208,6 +208,7 @@ static int trace_define_common_fields(void)

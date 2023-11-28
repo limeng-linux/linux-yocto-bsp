@@ -1,8 +1,8 @@
-From f073b895b11d1304d92b81209f605faf787477ae Mon Sep 17 00:00:00 2001
+From 45088f69b7318ddc1c438d0595f09ded3109b475 Mon Sep 17 00:00:00 2001
 From: Wander Lairson Costa <wander@redhat.com>
 Date: Wed, 14 Jun 2023 09:23:22 -0300
-Subject: [PATCH 58/64] sched: avoid false lockdep splat in put_task_struct()
-Origin: https://www.kernel.org/pub/linux/kernel/projects/rt/6.1/older/patches-6.1.54-rt15.tar.xz
+Subject: [PATCH 57/62] sched: avoid false lockdep splat in put_task_struct()
+Origin: https://www.kernel.org/pub/linux/kernel/projects/rt/6.1/older/patches-6.1.59-rt16.tar.xz
 
 In put_task_struct(), a spin_lock is indirectly acquired under the kernel
 stock. When running the kernel in real-time (RT) configuration, the
