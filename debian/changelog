@@ -1439,6 +1439,7 @@ linux (6.1.64-1) UNRELEASED; urgency=medium
   * Do not enable DEBUG_PREEMPT (not enabled by default since 6.1.60)
   * [x86] drivers/platform/x86/hp: Enable X86_PLATFORM_DRIVERS_HP
     (Closes: #1038799)
+  * nvmet: nul-terminate the NQNs passed in the connect command (CVE-2023-6121)
 
  -- Salvatore Bonaccorso <carnil@debian.org>  Sat, 07 Oct 2023 11:21:28 +0200
 
