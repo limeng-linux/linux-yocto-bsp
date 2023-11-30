@@ -1,4 +1,4 @@
-linux (6.1.64-1) UNRELEASED; urgency=medium
+linux (6.1.64-1) bookworm; urgency=medium
 
   * New upstream stable update:
     https://www.kernel.org/pub/linux/kernel/v6.x/ChangeLog-6.1.56
@@ -1441,7 +1441,7 @@ linux (6.1.64-1) UNRELEASED; urgency=medium
     (Closes: #1038799)
   * nvmet: nul-terminate the NQNs passed in the connect command (CVE-2023-6121)
 
- -- Salvatore Bonaccorso <carnil@debian.org>  Sat, 07 Oct 2023 11:21:28 +0200
+ -- Salvatore Bonaccorso <carnil@debian.org>  Thu, 30 Nov 2023 16:41:14 +0100
 
 linux (6.1.55-1) bookworm; urgency=medium
 
