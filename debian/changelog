@@ -73,6 +73,9 @@ linux (6.1.65-1) UNRELEASED; urgency=medium
     - [arm64] USB: dwc3: qcom: fix wakeup after probe deferral
     - io_uring: fix off-by one bvec index
 
+  [ Salvatore Bonaccorso ]
+  * Bump ABI to 15
+
  -- Salvatore Bonaccorso <carnil@debian.org>  Wed, 06 Dec 2023 11:47:56 +0100
 
 linux (6.1.64-1) bookworm; urgency=medium
