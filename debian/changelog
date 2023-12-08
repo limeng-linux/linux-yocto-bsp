@@ -1,4 +1,4 @@
-linux (6.1.65-1) UNRELEASED; urgency=medium
+linux (6.1.66-1) UNRELEASED; urgency=medium
 
   * New upstream stable update:
     https://www.kernel.org/pub/linux/kernel/v6.x/ChangeLog-6.1.65
@@ -72,6 +72,86 @@ linux (6.1.65-1) UNRELEASED; urgency=medium
     - [arm64] USB: dwc3: qcom: fix software node leak on probe errors
     - [arm64] USB: dwc3: qcom: fix wakeup after probe deferral
     - io_uring: fix off-by one bvec index
+    https://www.kernel.org/pub/linux/kernel/v6.x/ChangeLog-6.1.66
+    - cifs: Fix FALLOC_FL_ZERO_RANGE by setting i_size if EOF moved
+    - cifs: Fix FALLOC_FL_INSERT_RANGE by setting i_size after EOF moved
+    - smb: client: report correct st_size for SMB and NFS symlinks
+    - pinctrl: avoid reload of p state in list iteration
+    - firewire: core: fix possible memory leak in create_units()
+    - mmc: sdhci-pci-gli: Disable LPM during initialization
+    - mmc: cqhci: Increase recovery halt timeout
+    - mmc: cqhci: Warn of halt or task clear failure
+    - mmc: cqhci: Fix task clearing in CQE error recovery
+    - mmc: block: Retry commands in CQE error recovery
+    - mmc: block: Do not lose cache flush during CQE error recovery
+    - mmc: block: Be sure to wait while busy in CQE error recovery
+    - ALSA: hda: Disable power-save on KONTRON SinglePC
+    - ALSA: hda/realtek: Headset Mic VREF to 100%
+    - ALSA: hda/realtek: Add supported ALC257 for ChromeOS
+    - dm-verity: align struct dm_verity_fec_io properly
+    - scsi: Change SCSI device boolean fields to single bit flags
+    - scsi: sd: Fix system start for ATA devices
+    - drm/amd: Enable PCIe PME from D3
+    - drm/amdgpu: Force order between a read and write to the same address
+    - drm/amd/display: Include udelay when waiting for INBOX0 ACK
+    - drm/amd/display: Remove min_dst_y_next_start check for Z8
+    - drm/amd/display: Use DRAM speed from validation for dummy p-state
+    - drm/amd/display: Update min Z8 residency time to 2100 for DCN314
+    - drm/amd/display: fix ABM disablement
+    - dm verity: initialize fec io before freeing it
+    - dm verity: don't perform FEC for failed readahead IO
+    - nvme: check for valid nvme_identify_ns() before using it
+    - [x86] cpufreq/amd-pstate: Fix the return value of amd_pstate_fast_switch()
+    - dma-buf: fix check in dma_resv_add_fence
+    - bcache: revert replacing IS_ERR_OR_NULL with IS_ERR
+    - [amd64] iommu/vt-d: Add MTL to quirk list to skip TE disabling
+    - [powerpc*] KVM: PPC: Book3S HV: Fix KVM_RUN clobbering FP/VEC user
+      registers
+    - [powerpc*] Don't clobber f0/vs0 during fp|altivec register save
+      (Closes: #1032104)
+    - btrfs: add dmesg output for first mount and last unmount of a filesystem
+    - btrfs: ref-verify: fix memory leaks in btrfs_ref_tree_mod()
+    - btrfs: fix off-by-one when checking chunk map includes logical address
+    - btrfs: send: ensure send_fd is writable
+    - btrfs: make error messages more clear when getting a chunk map
+    - btrfs: fix 64bit compat send ioctl arguments not initializing version
+      member
+    - Input: xpad - add HyperX Clutch Gladiate Support
+    - wifi: cfg80211: fix CQM for non-range use
+    - [arm64,armhf] USB: xhci-plat: fix legacy PHY double init
+    - USB: core: Change configuration warnings to notices
+    - usb: config: fix iteration issue in 'usb_get_bos_descriptor()'
+    - ipv4: igmp: fix refcnt uaf issue when receiving igmp query packet
+    - [arm64] dpaa2-eth: increase the needed headroom to account for alignment
+    - net: stmmac: xgmac: Disable FPE MMC interrupts
+    - r8169: prevent potential deadlock in rtl8169_close
+    - [x86] KVM: x86: Fix lapic timer interrupt lost after loading a snapshot.
+    - PCI: Lengthen reset delay for VideoPropulsion Torrent QN16e card
+    - spi: Fix null dereference on suspend
+    - drm/amd/display: Restore rptr/wptr for DMCUB as workaround
+    - drm/amd/display: Guard against invalid RPTR/WPTR being set
+    - [armhf] cpufreq: imx6q: don't warn for disabling a non-existing frequency
+    - [armhf] cpufreq: imx6q: Don't disable 792 Mhz OPP unnecessarily
+    - [amd64] iommu/vt-d: Omit devTLB invalidation requests when TES=0
+    - [amd64] iommu/vt-d: Allocate pasid table in device probe path
+    - [amd64] iommu/vt-d: Add device_block_translation() helper
+    - [amd64] iommu/vt-d: Disable PCI ATS in legacy passthrough mode
+    - [amd64] iommu/vt-d: Make context clearing consistent with context mapping
+    - drm/amd/pm: fix a memleak in aldebaran_tables_init
+    - mmc: core: add helpers mmc_regulator_enable/disable_vqmmc
+    - mmc: sdhci-sprd: Fix vqmmc not shutting down after the card was pulled
+    - drm/amd/display: Expand kernel doc for DC
+    - drm/amd/display: clean code-style issues in dcn30_set_mpc_shaper_3dlut
+    - drm/amd/display: Fix the delta clamping for shaper LUT
+    - drm/amd/display: Fix MPCC 1DLUT programming
+    - r8169: disable ASPM in case of tx timeout
+    - r8169: fix deadlock on RTL8125 in jumbo mtu mode (Closes: #1057790)
+    - xen: Allow platform PCI interrupt to be shared
+    - xen: simplify evtchn_do_upcall() call maze
+    - [x86] xen: fix percpu vcpu_info allocation
+    - [x86] apic/msi: Fix misconfigured non-maskable MSI quirk
+    - iomap: update ki_pos a little later in iomap_dio_complete
+      (Closes: #1057843)
 
   [ Salvatore Bonaccorso ]
   * Bump ABI to 15
