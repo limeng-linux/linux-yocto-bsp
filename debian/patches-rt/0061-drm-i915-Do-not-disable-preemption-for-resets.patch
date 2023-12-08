@@ -1,8 +1,8 @@
-From 68d218c2c84488dd4826a2a1290886fc3b493cf6 Mon Sep 17 00:00:00 2001
+From c13072658eb80b76ddf7a2a7fa49ec44d26ec1fd Mon Sep 17 00:00:00 2001
 From: Tvrtko Ursulin <tvrtko.ursulin@intel.com>
 Date: Fri, 18 Aug 2023 22:45:25 -0400
 Subject: [PATCH 61/62] drm/i915: Do not disable preemption for resets
-Origin: https://www.kernel.org/pub/linux/kernel/projects/rt/6.1/older/patches-6.1.59-rt16.tar.xz
+Origin: https://www.kernel.org/pub/linux/kernel/projects/rt/6.1/older/patches-6.1.66-rt19.tar.xz
 
 [commit 40cd2835ced288789a685aa4aa7bc04b492dcd45 in linux-rt-devel]
 
@@ -106,5 +106,5 @@ index 10b930eaa8cb..6108a449cd19 100644
  	intel_uncore_forcewake_put(gt->uncore, FORCEWAKE_ALL);
  
 -- 
-2.41.0
+2.43.0
 

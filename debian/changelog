@@ -155,6 +155,7 @@ linux (6.1.66-1) UNRELEASED; urgency=medium
 
   [ Salvatore Bonaccorso ]
   * Bump ABI to 15
+  * [rt] Update to 6.1.66-rt19
 
  -- Salvatore Bonaccorso <carnil@debian.org>  Wed, 06 Dec 2023 11:47:56 +0100
 

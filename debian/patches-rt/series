@@ -59,4 +59,4 @@
 0059-bpf-Remove-in_atomic-from-bpf_link_put.patch
 0060-posix-timers-Ensure-timer-ID-search-loop-limit-is-va.patch
 0061-drm-i915-Do-not-disable-preemption-for-resets.patch
-0062-Linux-6.1.59-rt16-REBASE.patch
+0062-Linux-6.1.66-rt19-REBASE.patch

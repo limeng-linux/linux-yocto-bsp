@@ -1,9 +1,9 @@
-From ff00056dbb8c07911e27e415c25da9c7a7469c3b Mon Sep 17 00:00:00 2001
+From 65b087aac5131f01900c517c9a6c51ee8c62736a Mon Sep 17 00:00:00 2001
 From: Sebastian Andrzej Siewior <bigeasy@linutronix.de>
 Date: Tue, 30 Jun 2020 11:45:14 +0200
 Subject: [PATCH 33/62] x86/entry: Use should_resched() in
  idtentry_exit_cond_resched()
-Origin: https://www.kernel.org/pub/linux/kernel/projects/rt/6.1/older/patches-6.1.59-rt16.tar.xz
+Origin: https://www.kernel.org/pub/linux/kernel/projects/rt/6.1/older/patches-6.1.66-rt19.tar.xz
 
 The TIF_NEED_RESCHED bit is inlined on x86 into the preemption counter.
 By using should_resched(0) instead of need_resched() the same check can
@@ -32,5 +32,5 @@ index be61332c66b5..97ff5faad4fb 100644
  	}
  }
 -- 
-2.41.0
+2.43.0
 
