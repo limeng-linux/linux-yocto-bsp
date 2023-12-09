@@ -1,3 +1,164 @@
+linux (6.1.66-1) UNRELEASED; urgency=medium
+
+  * New upstream stable update:
+    https://www.kernel.org/pub/linux/kernel/v6.x/ChangeLog-6.1.65
+    - afs: Fix afs_server_list to be cleaned up with RCU
+    - afs: Make error on cell lookup failure consistent with OpenAFS
+    - [arm64,armhf] drm/panel: simple: Fix Innolux G101ICE-L01 bus flags
+    - [arm64,armhf] drm/panel: simple: Fix Innolux G101ICE-L01 timings
+    - wireguard: use DEV_STATS_INC()
+    - ata: pata_isapnp: Add missing error check for devm_ioport_map()
+    - [x86] drm/i915: do not clean GT table on error path
+    - [arm64,armhf] drm/rockchip: vop: Fix color for RGB888/BGR888 format on VOP
+      full
+    - HID: fix HID device resource race between HID core and debugging support
+    - ipv4: Correct/silence an endian warning in __ip_do_redirect
+    - net: usb: ax88179_178a: fix failed operations during ax88179_reset
+    - net/smc: avoid data corruption caused by decline
+    - [armhf] arm/xen: fix xen_vcpu_info allocation alignment
+    - [amd64,arm64] amd-xgbe: handle corner-case during sfp hotplug
+    - [amd64,arm64] amd-xgbe: handle the corner-case during tx completion
+    - [amd64,arm64] amd-xgbe: propagate the correct speed and duplex status
+    - afs: Return ENOENT if no cell DNS record can be found
+    - afs: Fix file locking on R/O volumes to operate in local mode
+    - mm,kfence: decouple kfence from page granularity mapping judgement
+    - i40e: use ERR_PTR error print in i40e messages
+    - i40e: Fix adding unsupported cloud filters
+    - [arm64] USB: dwc3: qcom: fix resource leaks on probe deferral
+    - [arm64] USB: dwc3: qcom: fix ACPI platform device leak
+    - lockdep: Fix block chain corruption
+    - cifs: minor cleanup of some headers
+    - smb3: allow dumping session and tcon id to improve stats analysis and
+      debugging
+    - cifs: print last update time for interface list
+    - cifs: distribute channels across interfaces based on speed
+    - cifs: account for primary channel in the interface list
+    - cifs: fix leak of iface for primary channel
+    - ext4: add a new helper to check if es must be kept
+    - ext4: factor out __es_alloc_extent() and __es_free_extent()
+    - ext4: use pre-allocated es in __es_insert_extent()
+    - ext4: use pre-allocated es in __es_remove_extent()
+    - ext4: using nofail preallocation in ext4_es_remove_extent()
+    - ext4: using nofail preallocation in ext4_es_insert_delayed_block()
+    - ext4: using nofail preallocation in ext4_es_insert_extent()
+    - ext4: fix slab-use-after-free in ext4_es_insert_extent()
+    - ext4: make sure allocate pending entry not fail
+    - NFSD: Fix "start of NFS reply" pointer passed to nfsd_cache_update()
+    - NFSD: Fix checksum mismatches in the duplicate reply cache
+    - ACPI: resource: Skip IRQ override on ASUS ExpertBook B1402CVA
+    - swiotlb-xen: provide the "max_mapping_size" method
+    - bcache: replace a mistaken IS_ERR() by IS_ERR_OR_NULL() in
+      btree_gc_coalesce()
+    - md: fix bi_status reporting in md_end_clone_io
+    - bcache: fixup multi-threaded bch_sectors_dirty_init() wake-up race
+    - io_uring/fs: consider link->flags when getting path for LINKAT
+    - [s390x] dasd: protect device queue against concurrent access
+    - USB: serial: option: add Luat Air72*U series products
+    - hv_netvsc: fix race of netvsc and VF register_netdevice
+    - hv_netvsc: Fix race of register_netdevice_notifier and VF register
+    - hv_netvsc: Mark VF as slave before exposing it to user-mode
+    - dm-delay: fix a race between delay_presuspend and delay_bio
+    - bcache: check return value from btree_node_alloc_replacement()
+    - bcache: prevent potential division by zero error
+    - bcache: fixup init dirty data errors
+    - bcache: fixup lock c->root error
+    - USB: serial: option: add Fibocom L7xx modules
+    - USB: serial: option: fix FM101R-GL defines
+    - USB: serial: option: don't claim interface 4 for ZTE MF290
+    - usb: typec: tcpm: Skip hard reset when in error recovery
+    - [arm64,armhf] USB: dwc2: write HCINT with INTMASK applied
+    - [arm64,armhf] usb: dwc3: Fix default mode initialization
+    - [arm64,armhf] usb: dwc3: set the dma max_seg_size
+    - [arm64] USB: dwc3: qcom: fix software node leak on probe errors
+    - [arm64] USB: dwc3: qcom: fix wakeup after probe deferral
+    - io_uring: fix off-by one bvec index
+    https://www.kernel.org/pub/linux/kernel/v6.x/ChangeLog-6.1.66
+    - cifs: Fix FALLOC_FL_ZERO_RANGE by setting i_size if EOF moved
+    - cifs: Fix FALLOC_FL_INSERT_RANGE by setting i_size after EOF moved
+    - smb: client: report correct st_size for SMB and NFS symlinks
+    - pinctrl: avoid reload of p state in list iteration
+    - firewire: core: fix possible memory leak in create_units()
+    - mmc: sdhci-pci-gli: Disable LPM during initialization
+    - mmc: cqhci: Increase recovery halt timeout
+    - mmc: cqhci: Warn of halt or task clear failure
+    - mmc: cqhci: Fix task clearing in CQE error recovery
+    - mmc: block: Retry commands in CQE error recovery
+    - mmc: block: Do not lose cache flush during CQE error recovery
+    - mmc: block: Be sure to wait while busy in CQE error recovery
+    - ALSA: hda: Disable power-save on KONTRON SinglePC
+    - ALSA: hda/realtek: Headset Mic VREF to 100%
+    - ALSA: hda/realtek: Add supported ALC257 for ChromeOS
+    - dm-verity: align struct dm_verity_fec_io properly
+    - scsi: Change SCSI device boolean fields to single bit flags
+    - scsi: sd: Fix system start for ATA devices
+    - drm/amd: Enable PCIe PME from D3
+    - drm/amdgpu: Force order between a read and write to the same address
+    - drm/amd/display: Include udelay when waiting for INBOX0 ACK
+    - drm/amd/display: Remove min_dst_y_next_start check for Z8
+    - drm/amd/display: Use DRAM speed from validation for dummy p-state
+    - drm/amd/display: Update min Z8 residency time to 2100 for DCN314
+    - drm/amd/display: fix ABM disablement
+    - dm verity: initialize fec io before freeing it
+    - dm verity: don't perform FEC for failed readahead IO
+    - nvme: check for valid nvme_identify_ns() before using it
+    - [x86] cpufreq/amd-pstate: Fix the return value of amd_pstate_fast_switch()
+    - dma-buf: fix check in dma_resv_add_fence
+    - bcache: revert replacing IS_ERR_OR_NULL with IS_ERR
+    - [amd64] iommu/vt-d: Add MTL to quirk list to skip TE disabling
+    - [powerpc*] KVM: PPC: Book3S HV: Fix KVM_RUN clobbering FP/VEC user
+      registers
+    - [powerpc*] Don't clobber f0/vs0 during fp|altivec register save
+      (Closes: #1032104)
+    - btrfs: add dmesg output for first mount and last unmount of a filesystem
+    - btrfs: ref-verify: fix memory leaks in btrfs_ref_tree_mod()
+    - btrfs: fix off-by-one when checking chunk map includes logical address
+    - btrfs: send: ensure send_fd is writable
+    - btrfs: make error messages more clear when getting a chunk map
+    - btrfs: fix 64bit compat send ioctl arguments not initializing version
+      member
+    - Input: xpad - add HyperX Clutch Gladiate Support
+    - wifi: cfg80211: fix CQM for non-range use
+    - [arm64,armhf] USB: xhci-plat: fix legacy PHY double init
+    - USB: core: Change configuration warnings to notices
+    - usb: config: fix iteration issue in 'usb_get_bos_descriptor()'
+    - ipv4: igmp: fix refcnt uaf issue when receiving igmp query packet
+    - [arm64] dpaa2-eth: increase the needed headroom to account for alignment
+    - net: stmmac: xgmac: Disable FPE MMC interrupts
+    - r8169: prevent potential deadlock in rtl8169_close
+    - [x86] KVM: x86: Fix lapic timer interrupt lost after loading a snapshot.
+    - PCI: Lengthen reset delay for VideoPropulsion Torrent QN16e card
+    - spi: Fix null dereference on suspend
+    - drm/amd/display: Restore rptr/wptr for DMCUB as workaround
+    - drm/amd/display: Guard against invalid RPTR/WPTR being set
+    - [armhf] cpufreq: imx6q: don't warn for disabling a non-existing frequency
+    - [armhf] cpufreq: imx6q: Don't disable 792 Mhz OPP unnecessarily
+    - [amd64] iommu/vt-d: Omit devTLB invalidation requests when TES=0
+    - [amd64] iommu/vt-d: Allocate pasid table in device probe path
+    - [amd64] iommu/vt-d: Add device_block_translation() helper
+    - [amd64] iommu/vt-d: Disable PCI ATS in legacy passthrough mode
+    - [amd64] iommu/vt-d: Make context clearing consistent with context mapping
+    - drm/amd/pm: fix a memleak in aldebaran_tables_init
+    - mmc: core: add helpers mmc_regulator_enable/disable_vqmmc
+    - mmc: sdhci-sprd: Fix vqmmc not shutting down after the card was pulled
+    - drm/amd/display: Expand kernel doc for DC
+    - drm/amd/display: clean code-style issues in dcn30_set_mpc_shaper_3dlut
+    - drm/amd/display: Fix the delta clamping for shaper LUT
+    - drm/amd/display: Fix MPCC 1DLUT programming
+    - r8169: disable ASPM in case of tx timeout
+    - r8169: fix deadlock on RTL8125 in jumbo mtu mode (Closes: #1057790)
+    - xen: Allow platform PCI interrupt to be shared
+    - xen: simplify evtchn_do_upcall() call maze
+    - [x86] xen: fix percpu vcpu_info allocation
+    - [x86] apic/msi: Fix misconfigured non-maskable MSI quirk
+    - iomap: update ki_pos a little later in iomap_dio_complete
+      (Closes: #1057843)
+
+  [ Salvatore Bonaccorso ]
+  * Bump ABI to 15
+  * [rt] Update to 6.1.66-rt19
+
+ -- Salvatore Bonaccorso <carnil@debian.org>  Wed, 06 Dec 2023 11:47:56 +0100
+
 linux (6.1.64-1) bookworm; urgency=medium
 
   * New upstream stable update:

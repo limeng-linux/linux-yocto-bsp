@@ -1,8 +1,8 @@
-From 53494188a6cc73ea5f03c765afb28d9530cb17a9 Mon Sep 17 00:00:00 2001
+From 96f5fc1827eb5143ea4e15932ebf07fe22b9dc75 Mon Sep 17 00:00:00 2001
 From: John Ogness <john.ogness@linutronix.de>
 Date: Fri, 4 Feb 2022 16:01:17 +0106
 Subject: [PATCH 20/62] printk: add infrastucture for atomic consoles
-Origin: https://www.kernel.org/pub/linux/kernel/projects/rt/6.1/older/patches-6.1.59-rt16.tar.xz
+Origin: https://www.kernel.org/pub/linux/kernel/projects/rt/6.1/older/patches-6.1.66-rt19.tar.xz
 
 Many times it is not possible to see the console output on
 panic because printing threads cannot be scheduled and/or the
@@ -604,5 +604,5 @@ index e9f9b66608a0..73b1727087c7 100644
  		seq = con->seq;
  
 -- 
-2.41.0
+2.43.0
 

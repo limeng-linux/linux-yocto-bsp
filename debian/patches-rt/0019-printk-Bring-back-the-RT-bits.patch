@@ -1,8 +1,8 @@
-From 7961ab5772a99b7fa15f8952bffea10bacedede6 Mon Sep 17 00:00:00 2001
+From 5d70f405b205b8d10fb97f211aafebc071bd3f1f Mon Sep 17 00:00:00 2001
 From: Sebastian Andrzej Siewior <bigeasy@linutronix.de>
 Date: Tue, 19 Jul 2022 20:08:01 +0200
 Subject: [PATCH 19/62] printk: Bring back the RT bits.
-Origin: https://www.kernel.org/pub/linux/kernel/projects/rt/6.1/older/patches-6.1.59-rt16.tar.xz
+Origin: https://www.kernel.org/pub/linux/kernel/projects/rt/6.1/older/patches-6.1.66-rt19.tar.xz
 
 This is a revert of the commits:
 | 07a22b61946f0 Revert "printk: add functions to prefer direct printing"
@@ -31,10 +31,10 @@ Signed-off-by: Sebastian Andrzej Siewior <bigeasy@linutronix.de>
  12 files changed, 636 insertions(+), 59 deletions(-)
 
 diff --git a/drivers/tty/sysrq.c b/drivers/tty/sysrq.c
-index d2b2720db6ca..18e623325887 100644
+index 248067197287..0db9dad8c99f 100644
 --- a/drivers/tty/sysrq.c
 +++ b/drivers/tty/sysrq.c
-@@ -581,6 +581,7 @@ void __handle_sysrq(int key, bool check_mask)
+@@ -582,6 +582,7 @@ void __handle_sysrq(int key, bool check_mask)
  
  	rcu_sysrq_start();
  	rcu_read_lock();
@@ -42,7 +42,7 @@ index d2b2720db6ca..18e623325887 100644
  	/*
  	 * Raise the apparent loglevel to maximum so that the sysrq header
  	 * is shown to provide the user with positive feedback.  We do not
-@@ -622,6 +623,7 @@ void __handle_sysrq(int key, bool check_mask)
+@@ -623,6 +624,7 @@ void __handle_sysrq(int key, bool check_mask)
  		pr_cont("\n");
  		console_loglevel = orig_log_level;
  	}
@@ -1076,10 +1076,10 @@ index 6d10927a07d8..8e8fd2fb0a5b 100644
 +	}
 +}
 diff --git a/kernel/rcu/tree_stall.h b/kernel/rcu/tree_stall.h
-index 5653560573e2..dcbbcf93d608 100644
+index 7d15b5b5a235..7b411d663e8f 100644
 --- a/kernel/rcu/tree_stall.h
 +++ b/kernel/rcu/tree_stall.h
-@@ -642,6 +642,7 @@ static void print_cpu_stall(unsigned long gps)
+@@ -648,6 +648,7 @@ static void print_cpu_stall(unsigned long gps)
  	 * See Documentation/RCU/stallwarn.rst for info on how to debug
  	 * RCU CPU stall warnings.
  	 */
@@ -1087,7 +1087,7 @@ index 5653560573e2..dcbbcf93d608 100644
  	trace_rcu_stall_warning(rcu_state.name, TPS("SelfDetected"));
  	pr_err("INFO: %s self-detected stall on CPU\n", rcu_state.name);
  	raw_spin_lock_irqsave_rcu_node(rdp->mynode, flags);
-@@ -676,6 +677,7 @@ static void print_cpu_stall(unsigned long gps)
+@@ -682,6 +683,7 @@ static void print_cpu_stall(unsigned long gps)
  	 */
  	set_tsk_need_resched(current);
  	set_preempt_need_resched();
@@ -1096,10 +1096,10 @@ index 5653560573e2..dcbbcf93d608 100644
  
  static void check_cpu_stall(struct rcu_data *rdp)
 diff --git a/kernel/reboot.c b/kernel/reboot.c
-index 3bba88c7ffc6..57cedc330660 100644
+index 6ebef11c8876..23a8cfed1a72 100644
 --- a/kernel/reboot.c
 +++ b/kernel/reboot.c
-@@ -82,6 +82,7 @@ void kernel_restart_prepare(char *cmd)
+@@ -83,6 +83,7 @@ void kernel_restart_prepare(char *cmd)
  {
  	blocking_notifier_call_chain(&reboot_notifier_list, SYS_RESTART, cmd);
  	system_state = SYSTEM_RESTART;
@@ -1107,7 +1107,7 @@ index 3bba88c7ffc6..57cedc330660 100644
  	usermodehelper_disable();
  	device_shutdown();
  }
-@@ -282,6 +283,7 @@ static void kernel_shutdown_prepare(enum system_states state)
+@@ -283,6 +284,7 @@ static void kernel_shutdown_prepare(enum system_states state)
  	blocking_notifier_call_chain(&reboot_notifier_list,
  		(state == SYSTEM_HALT) ? SYS_HALT : SYS_POWER_OFF, NULL);
  	system_state = state;
@@ -1115,7 +1115,7 @@ index 3bba88c7ffc6..57cedc330660 100644
  	usermodehelper_disable();
  	device_shutdown();
  }
-@@ -836,9 +838,11 @@ static int __orderly_reboot(void)
+@@ -837,9 +839,11 @@ static int __orderly_reboot(void)
  	ret = run_cmd(reboot_cmd);
  
  	if (ret) {
@@ -1127,7 +1127,7 @@ index 3bba88c7ffc6..57cedc330660 100644
  	}
  
  	return ret;
-@@ -851,6 +855,7 @@ static int __orderly_poweroff(bool force)
+@@ -852,6 +856,7 @@ static int __orderly_poweroff(bool force)
  	ret = run_cmd(poweroff_cmd);
  
  	if (ret && force) {
@@ -1135,7 +1135,7 @@ index 3bba88c7ffc6..57cedc330660 100644
  		pr_warn("Failed to start orderly shutdown: forcing the issue\n");
  
  		/*
-@@ -860,6 +865,7 @@ static int __orderly_poweroff(bool force)
+@@ -861,6 +866,7 @@ static int __orderly_poweroff(bool force)
  		 */
  		emergency_sync();
  		kernel_power_off();
@@ -1143,7 +1143,7 @@ index 3bba88c7ffc6..57cedc330660 100644
  	}
  
  	return ret;
-@@ -917,6 +923,8 @@ EXPORT_SYMBOL_GPL(orderly_reboot);
+@@ -918,6 +924,8 @@ EXPORT_SYMBOL_GPL(orderly_reboot);
   */
  static void hw_failure_emergency_poweroff_func(struct work_struct *work)
  {
@@ -1152,7 +1152,7 @@ index 3bba88c7ffc6..57cedc330660 100644
  	/*
  	 * We have reached here after the emergency shutdown waiting period has
  	 * expired. This means orderly_poweroff has not been able to shut off
-@@ -933,6 +941,8 @@ static void hw_failure_emergency_poweroff_func(struct work_struct *work)
+@@ -934,6 +942,8 @@ static void hw_failure_emergency_poweroff_func(struct work_struct *work)
  	 */
  	pr_emerg("Hardware protection shutdown failed. Trying emergency restart\n");
  	emergency_restart();
@@ -1161,7 +1161,7 @@ index 3bba88c7ffc6..57cedc330660 100644
  }
  
  static DECLARE_DELAYED_WORK(hw_failure_emergency_poweroff_work,
-@@ -971,11 +981,13 @@ void hw_protection_shutdown(const char *reason, int ms_until_forced)
+@@ -972,11 +982,13 @@ void hw_protection_shutdown(const char *reason, int ms_until_forced)
  {
  	static atomic_t allow_proceed = ATOMIC_INIT(1);
  
@@ -1176,7 +1176,7 @@ index 3bba88c7ffc6..57cedc330660 100644
  
  	/*
  	 * Queue a backup emergency shutdown in the event of
-@@ -983,6 +995,8 @@ void hw_protection_shutdown(const char *reason, int ms_until_forced)
+@@ -984,6 +996,8 @@ void hw_protection_shutdown(const char *reason, int ms_until_forced)
  	 */
  	hw_failure_emergency_poweroff(ms_until_forced);
  	orderly_poweroff(true);
@@ -1186,10 +1186,10 @@ index 3bba88c7ffc6..57cedc330660 100644
  EXPORT_SYMBOL_GPL(hw_protection_shutdown);
  
 diff --git a/kernel/watchdog.c b/kernel/watchdog.c
-index 8e61f21e7e33..41596c415111 100644
+index 45693fb3e08d..f366008298ac 100644
 --- a/kernel/watchdog.c
 +++ b/kernel/watchdog.c
-@@ -424,6 +424,8 @@ static enum hrtimer_restart watchdog_timer_fn(struct hrtimer *hrtimer)
+@@ -431,6 +431,8 @@ static enum hrtimer_restart watchdog_timer_fn(struct hrtimer *hrtimer)
  		/* Start period for the next softlockup warning. */
  		update_report_ts();
  
@@ -1198,7 +1198,7 @@ index 8e61f21e7e33..41596c415111 100644
  		pr_emerg("BUG: soft lockup - CPU#%d stuck for %us! [%s:%d]\n",
  			smp_processor_id(), duration,
  			current->comm, task_pid_nr(current));
-@@ -442,6 +444,8 @@ static enum hrtimer_restart watchdog_timer_fn(struct hrtimer *hrtimer)
+@@ -449,6 +451,8 @@ static enum hrtimer_restart watchdog_timer_fn(struct hrtimer *hrtimer)
  		add_taint(TAINT_SOFTLOCKUP, LOCKDEP_STILL_OK);
  		if (softlockup_panic)
  			panic("softlockup: hung tasks");
@@ -1230,5 +1230,5 @@ index 1e8a49dc956e..7c977b945c92 100644
  		return;
  	}
 -- 
-2.41.0
+2.43.0
 

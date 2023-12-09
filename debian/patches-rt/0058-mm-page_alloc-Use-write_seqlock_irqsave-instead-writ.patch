@@ -1,9 +1,9 @@
-From f278750e534bbd3b51b3eb52dfc11d17740f5a2c Mon Sep 17 00:00:00 2001
+From c1ef3e0906ff0340ce12f13c4d47888881a125da Mon Sep 17 00:00:00 2001
 From: Sebastian Andrzej Siewior <bigeasy@linutronix.de>
 Date: Fri, 23 Jun 2023 22:15:17 +0200
 Subject: [PATCH 58/62] mm/page_alloc: Use write_seqlock_irqsave() instead
  write_seqlock() + local_irq_save().
-Origin: https://www.kernel.org/pub/linux/kernel/projects/rt/6.1/older/patches-6.1.59-rt16.tar.xz
+Origin: https://www.kernel.org/pub/linux/kernel/projects/rt/6.1/older/patches-6.1.66-rt19.tar.xz
 
 __build_all_zonelists() acquires zonelist_update_seq by first disabling
 interrupts via local_irq_save() and then acquiring the seqlock with
@@ -53,7 +53,7 @@ Signed-off-by: Clark Williams <clark.williams@gmail.com>
  1 file changed, 6 insertions(+), 9 deletions(-)
 
 diff --git a/mm/page_alloc.c b/mm/page_alloc.c
-index ca017c6008b7..9b7b43845ff4 100644
+index 4583f8a42d91..835b69a64f4f 100644
 --- a/mm/page_alloc.c
 +++ b/mm/page_alloc.c
 @@ -6588,19 +6588,17 @@ static void __build_all_zonelists(void *data)
@@ -93,5 +93,5 @@ index ca017c6008b7..9b7b43845ff4 100644
  
  static noinline void __init
 -- 
-2.41.0
+2.43.0
 
