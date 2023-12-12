@@ -5,6 +5,9 @@ linux (6.1.67-1) UNRELEASED; urgency=medium
     - Revert "wifi: cfg80211: fix CQM for non-range use" (Closes: #1057967,
       #1057969)
 
+  [ Salvatore Bonaccorso ]
+  * Bump ABI to 16
+
  -- Salvatore Bonaccorso <carnil@debian.org>  Mon, 11 Dec 2023 14:35:23 +0100
 
 linux (6.1.66-1) bookworm; urgency=medium
