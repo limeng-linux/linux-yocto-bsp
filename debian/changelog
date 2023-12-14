@@ -154,6 +154,9 @@ linux (6.1.68-1) UNRELEASED; urgency=medium
     - [x86] drm/i915/sdvo: stop caching has_hdmi_monitor in struct intel_sdvo
     - [x86] drm/i915: Skip some timing checks on BXT/GLK DSI transcoders
 
+  [ Salvatore Bonaccorso ]
+  * Bump ABI to 17
+
  -- Salvatore Bonaccorso <carnil@debian.org>  Wed, 13 Dec 2023 20:56:47 +0100
 
 linux (6.1.67-1) bookworm; urgency=medium
