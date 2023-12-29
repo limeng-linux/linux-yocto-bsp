@@ -259,6 +259,8 @@ linux (6.1.69-1) UNRELEASED; urgency=medium
     This is a breach of the integrity lockdown requirement of secure boot
     and thus cannot be enabled.
     Thanks to Bastian Blank and Ben Hutchings
+  * Bluetooth: af_bluetooth: Fix Use-After-Free in bt_sock_recvmsg
+    (CVE-2023-51779)
 
  -- Salvatore Bonaccorso <carnil@debian.org>  Wed, 13 Dec 2023 20:56:47 +0100
 
