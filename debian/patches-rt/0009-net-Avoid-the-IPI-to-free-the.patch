@@ -1,8 +1,8 @@
-From 651488acd92f8f91ffff484c8221cad20b6a6d14 Mon Sep 17 00:00:00 2001
+From c910f301d71266e18f63407ec6c65d19ae90e779 Mon Sep 17 00:00:00 2001
 From: Sebastian Andrzej Siewior <bigeasy@linutronix.de>
 Date: Mon, 15 Aug 2022 17:29:50 +0200
 Subject: [PATCH 09/62] net: Avoid the IPI to free the
-Origin: https://www.kernel.org/pub/linux/kernel/projects/rt/6.1/older/patches-6.1.66-rt19.tar.xz
+Origin: https://www.kernel.org/pub/linux/kernel/projects/rt/6.1/older/patches-6.1.69-rt21.tar.xz
 
 skb_attempt_defer_free() collects a skbs, which was allocated on a
 remote CPU, on a per-CPU list. These skbs are either freed on that

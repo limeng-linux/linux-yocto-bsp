@@ -1,9 +1,9 @@
-From 2d42ef11e31ff6a08a5d393e3d3bc4ff35d768ee Mon Sep 17 00:00:00 2001
+From d5541b6ef4eccee650abfe3095b9e7365773494c Mon Sep 17 00:00:00 2001
 From: Sebastian Andrzej Siewior <bigeasy@linutronix.de>
 Date: Wed, 22 Jun 2022 11:36:17 +0200
 Subject: [PATCH 02/62] signal: Don't disable preemption in ptrace_stop() on
  PREEMPT_RT.
-Origin: https://www.kernel.org/pub/linux/kernel/projects/rt/6.1/older/patches-6.1.66-rt19.tar.xz
+Origin: https://www.kernel.org/pub/linux/kernel/projects/rt/6.1/older/patches-6.1.69-rt21.tar.xz
 
 Commit
    53da1d9456fe7 ("fix ptrace slowness")
