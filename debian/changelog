@@ -262,6 +262,8 @@ linux (6.1.69-1) UNRELEASED; urgency=medium
   * Bluetooth: af_bluetooth: Fix Use-After-Free in bt_sock_recvmsg
     (CVE-2023-51779)
   * netfilter: nf_tables: skip set commit for deleted/destroyed sets
+  * Revert "scsi: aacraid: Reply queue mapping to CPUs based on IRQ affinity"
+    (Closes: #1059624)
 
  -- Salvatore Bonaccorso <carnil@debian.org>  Wed, 13 Dec 2023 20:56:47 +0100
 
