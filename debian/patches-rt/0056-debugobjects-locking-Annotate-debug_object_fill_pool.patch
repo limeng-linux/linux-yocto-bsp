@@ -1,9 +1,9 @@
-From 705a9feafd53bbfc8585340567d327f6cd86ac60 Mon Sep 17 00:00:00 2001
+From c082e5d28e56252dca01b53c553bba5cd152fec1 Mon Sep 17 00:00:00 2001
 From: Peter Zijlstra <peterz@infradead.org>
 Date: Tue, 25 Apr 2023 17:03:13 +0200
 Subject: [PATCH 56/62] debugobjects,locking: Annotate debug_object_fill_pool()
  wait type violation
-Origin: https://www.kernel.org/pub/linux/kernel/projects/rt/6.1/older/patches-6.1.66-rt19.tar.xz
+Origin: https://www.kernel.org/pub/linux/kernel/projects/rt/6.1/older/patches-6.1.69-rt21.tar.xz
 
 There is an explicit wait-type violation in debug_object_fill_pool()
 for PREEMPT_RT=n kernels which allows them to more easily fill the
