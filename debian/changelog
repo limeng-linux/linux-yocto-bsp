@@ -1,4 +1,4 @@
-linux (6.1.69-1) UNRELEASED; urgency=medium
+linux (6.1.69-1) bookworm-security; urgency=high
 
   * New upstream stable update:
     https://www.kernel.org/pub/linux/kernel/v6.x/ChangeLog-6.1.68
@@ -265,7 +265,7 @@ linux (6.1.69-1) UNRELEASED; urgency=medium
   * Revert "scsi: aacraid: Reply queue mapping to CPUs based on IRQ affinity"
     (Closes: #1059624)
 
- -- Salvatore Bonaccorso <carnil@debian.org>  Wed, 13 Dec 2023 20:56:47 +0100
+ -- Salvatore Bonaccorso <carnil@debian.org>  Sat, 30 Dec 2023 10:31:20 +0100
 
 linux (6.1.67-1) bookworm; urgency=medium
 
