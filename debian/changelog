@@ -116,6 +116,7 @@ linux (6.1.70-1) UNRELEASED; urgency=medium
 
   [ Salvatore Bonaccorso ]
   * Refresh "net: mana: Add support for auxiliary device"
+  * Bump ABI to 18
 
  -- Salvatore Bonaccorso <carnil@debian.org>  Mon, 01 Jan 2024 15:07:47 +0100
 
