@@ -114,6 +114,9 @@ linux (6.1.70-1) UNRELEASED; urgency=medium
     - wifi: nl80211: fix deadlock in nl80211_set_cqm_rssi (6.6.x)
     - loop: deprecate autoloading callback loop_probe()
 
+  [ Salvatore Bonaccorso ]
+  * Refresh "net: mana: Add support for auxiliary device"
+
  -- Salvatore Bonaccorso <carnil@debian.org>  Mon, 01 Jan 2024 15:07:47 +0100
 
 linux (6.1.69-1) bookworm-security; urgency=high
