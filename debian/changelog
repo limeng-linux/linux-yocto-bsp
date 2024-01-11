@@ -1,4 +1,4 @@
-linux (6.1.71-1) UNRELEASED; urgency=medium
+linux (6.1.72-1) UNRELEASED; urgency=medium
 
   * New upstream stable update:
     https://www.kernel.org/pub/linux/kernel/v6.x/ChangeLog-6.1.70
@@ -212,6 +212,149 @@ linux (6.1.71-1) UNRELEASED; urgency=medium
     - device property: Allow const parameter to dev_fwnode()
     - kallsyms: Make module_kallsyms_on_each_symbol generally available
     - tracing/kprobes: Fix symbol counting logic by looking at modules as well
+    https://www.kernel.org/pub/linux/kernel/v6.x/ChangeLog-6.1.72
+    - keys, dns: Fix missing size check of V1 server-list header
+    - block: Don't invalidate pagecache for invalid falloc modes
+    - ALSA: hda/realtek: enable SND_PCI_QUIRK for hp pavilion 14-ec1xxx series
+    - ALSA: hda/realtek: fix mute/micmute LEDs for a HP ZBook
+    - ALSA: hda/realtek: Fix mute and mic-mute LEDs for HP ProBook 440 G6
+    - mptcp: prevent tcp diag from closing listener subflows
+    - Revert "PCI/ASPM: Remove pcie_aspm_pm_state_change()"
+    - [x86] drm/mgag200: Fix gamma lut not initialized for G200ER, G200EV,
+      G200SE
+    - cifs: cifs_chan_is_iface_active should be called with chan_lock held
+    - cifs: do not depend on release_iface for maintaining iface_list
+    - [x86] KVM: x86/pmu: fix masking logic for MSR_CORE_PERF_GLOBAL_CTRL
+    - wifi: iwlwifi: pcie: don't synchronize IRQs from IRQ (Closes: #1058887)
+    - [arm64] drm/bridge: ti-sn65dsi86: Never store more than msg->size bytes in
+      AUX xfer
+    - netfilter: use skb_ip_totlen and iph_totlen
+    - netfilter: nf_tables: set transport offset from mac header for
+      netdev/egress
+    - nfc: llcp_core: Hold a ref to llcp_local->dev when holding a ref to
+      llcp_local
+    - [x86] drm/i915/dp: Fix passing the correct DPCD_REV for
+      drm_dp_set_phy_test_pattern
+    - ice: Fix link_down_on_close message
+    - ice: Shut down VSI with "link-down-on-close" enabled
+    - i40e: Fix filter input checks to prevent config with invalid values
+    - igc: Report VLAN EtherType matching back to user
+    - igc: Check VLAN TCI mask
+    - igc: Check VLAN EtherType mask
+    - net: sched: em_text: fix possible memory leak in em_text_destroy()
+    - r8169: Fix PCI error on system resume
+    - can: raw: add support for SO_MARK
+    - net-timestamp: extend SOF_TIMESTAMPING_OPT_ID to HW timestamps
+    - net: annotate data-races around sk->sk_tsflags
+    - net: annotate data-races around sk->sk_bind_phc
+    - net: Implement missing getsockopt(SO_TIMESTAMPING_NEW)
+    - [armhf] sun9i: smp: Fix array-index-out-of-bounds read in
+      sunxi_mc_smp_init
+    - sfc: fix a double-free bug in efx_probe_filters
+    - [arm64] net: bcmgenet: Fix FCS generation for fragmented skbuffs
+    - netfilter: nft_immediate: drop chain reference counter on error
+    - net: Save and restore msg_namelen in sock_sendmsg
+    - i40e: fix use-after-free in i40e_aqc_add_filters()
+    - [arm64] ASoC: meson: g12a-toacodec: Validate written enum values
+    - [arm64] ASoC: meson: g12a-tohdmitx: Validate written enum values
+    - [arm64] ASoC: meson: g12a-toacodec: Fix event generation
+    - [arm64] ASoC: meson: g12a-tohdmitx: Fix event generation for S/PDIF mux
+    - i40e: Restore VF MSI-X state during PCI reset
+    - igc: Fix hicredit calculation
+    - net/qla3xxx: fix potential memleak in ql_alloc_buffer_queues
+    - net/smc: fix invalid link access in dumping SMC-R connections
+    - asix: Add check for usbnet_get_endpoints
+    - bnxt_en: Remove mis-applied code from bnxt_cfg_ntp_filters()
+    - net: Implement missing SO_TIMESTAMPING_NEW cmsg support
+    - cpu/SMT: Create topology_smt_thread_allowed()
+    - cpu/SMT: Make SMT control more robust against enumeration failures
+    - srcu: Fix callbacks acceleration mishandling
+    - [x86] bpf, x64: Fix tailcall infinite loop
+    - [x86] bpf, x86: Simplify the parsing logic of structure parameters
+    - [x86] bpf, x86: save/restore regs with BPF_DW size
+    - net: Declare MSG_SPLICE_PAGES internal sendmsg() flag
+    - udp: Convert udp_sendpage() to use MSG_SPLICE_PAGES
+    - splice, net: Add a splice_eof op to file-ops and socket-ops
+    - ipv4, ipv6: Use splice_eof() to flush
+    - udp: introduce udp->udp_flags
+    - udp: move udp->no_check6_tx to udp->udp_flags
+    - udp: move udp->no_check6_rx to udp->udp_flags
+    - udp: move udp->gro_enabled to udp->udp_flags
+    - udp: move udp->accept_udp_{l4|fraglist} to udp->udp_flags
+    - udp: lockless UDP_ENCAP_L2TPINUDP / UDP_GRO
+    - udp: annotate data-races around udp->encap_type
+    - wifi: iwlwifi: yoyo: swap cdb and jacket bits values
+    - [arm64] dts: qcom: sdm845: align RPMh regulator nodes with bindings
+    - [arm64] dts: qcom: sdm845: Fix PSCI power domain names
+    - bpf: decouple prune and jump points
+    - bpf: remove unnecessary prune and jump points
+    - bpf: Remove unused insn_cnt argument from visit_[func_call_]insn()
+    - bpf: clean up visit_insn()'s instruction processing
+    - bpf: Support new 32bit offset jmp instruction
+    - bpf: handle ldimm64 properly in check_cfg()
+    - bpf: fix precision backtracking instruction iteration
+    - blk-mq: make sure active queue usage is held for bio_integrity_prep()
+    - net/mlx5: Increase size of irq name buffer
+    - [s390x] mm: add missing arch_set_page_dat() call to vmem_crst_alloc()
+    - [s390x] cpumf: support user space events for counting
+    - f2fs: clean up i_compress_flag and i_compress_level usage
+    - f2fs: convert to use bitmap API
+    - f2fs: assign default compression level
+    - f2fs: set the default compress_level on ioctl
+    - ext4: convert move_extent_per_page() to use folios
+    - khugepage: replace try_to_release_page() with filemap_release_folio()
+    - memory-failure: convert truncate_error_page() to use folio
+    - mm: merge folio_has_private()/filemap_release_folio() call pairs
+    - mm, netfs, fscache: stop read optimisation when folio removed from
+      pagecache
+    - filemap: add a per-mapping stable writes flag
+    - block: update the stable_writes flag in bdev_add
+    - smb: client: fix missing mode bits for SMB symlinks
+    - net: dpaa2-eth: rearrange variable in dpaa2_eth_get_ethtool_stats
+    - dpaa2-eth: recycle the RX buffer only after all processing done
+    - ethtool: don't propagate EOPNOTSUPP from dumps
+    - bpf, sockmap: af_unix stream sockets need to hold ref for pair sock
+    - [arm64] firmware: arm_scmi: Fix frequency truncation by promoting
+      multiplier type
+    - ALSA: hda/realtek: Add quirk for Lenovo Yoga Pro 7
+    - genirq/affinity: Remove the 'firstvec' parameter from
+      irq_build_affinity_masks
+    - genirq/affinity: Pass affinity managed mask array to
+      irq_build_affinity_masks
+    - genirq/affinity: Don't pass irq_affinity_desc array to
+      irq_build_affinity_masks
+    - genirq/affinity: Rename irq_build_affinity_masks as group_cpus_evenly
+    - genirq/affinity: Move group_cpus_evenly() into lib/
+    - lib/group_cpus.c: avoid acquiring cpu hotplug lock in group_cpus_evenly
+    - mm/memory_hotplug: add missing mem_hotplug_lock
+    - mm/memory_hotplug: fix error handling in add_memory_resource()
+    - net: sched: call tcf_ct_params_free to free params in tcf_ct_init
+    - netfilter: flowtable: allow unidirectional rules
+    - netfilter: flowtable: cache info of last offload
+    - net/sched: act_ct: offload UDP NEW connections
+    - net/sched: act_ct: Fix promotion of offloaded unreplied tuple
+    - netfilter: flowtable: GC pushes back packets to classic path
+    - net/sched: act_ct: Take per-cb reference to tcf_ct_flow_table
+    - btrfs: fix qgroup_free_reserved_data int overflow
+    - btrfs: mark the len field in struct btrfs_ordered_sum as unsigned
+    - ring-buffer: Fix 32-bit rb_time_read() race with rb_time_cmpxchg()
+    - firewire: ohci: suppress unexpected system reboot in AMD Ryzen machines
+      and ASM108x/VT630x PCIe cards
+    - [x86] kprobes: fix incorrect return address calculation in
+      kprobe_emulate_call_indirect
+    - mm: fix unmap_mapping_range high bits shift bug
+    - drm/amdgpu: skip gpu_info fw loading on navi12
+    - drm/amd/display: add nv12 bounding box
+    - mmc: rpmb: fixes pause retune on all RPMB partitions.
+    - mmc: core: Cancel delayed work before releasing host
+    - genirq/affinity: Only build SMP-only helper functions on SMP kernels
+    - f2fs: compress: fix to assign compress_level for lz4 correctly
+    - net/sched: act_ct: additional checks for outdated flows
+    - net/sched: act_ct: Always fill offloading tuple iifidx
+    - bpf: Fix a verifier bug due to incorrect branch offset comparison with
+      cpu=v4
+    - bpf: syzkaller found null ptr deref in unix_bpf proto add
+    - smb3: Replace smb2pdu 1-element arrays with flex-arrays
 
   [ Salvatore Bonaccorso ]
   * Refresh "net: mana: Add support for auxiliary device"
