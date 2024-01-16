@@ -1,4 +1,4 @@
-linux (6.1.72-1) UNRELEASED; urgency=medium
+linux (6.1.73-1) UNRELEASED; urgency=medium
 
   * New upstream stable update:
     https://www.kernel.org/pub/linux/kernel/v6.x/ChangeLog-6.1.70
@@ -355,6 +355,11 @@ linux (6.1.72-1) UNRELEASED; urgency=medium
       cpu=v4
     - bpf: syzkaller found null ptr deref in unix_bpf proto add
     - smb3: Replace smb2pdu 1-element arrays with flex-arrays
+    https://www.kernel.org/pub/linux/kernel/v6.x/ChangeLog-6.1.73
+    - Revert "nfsd: call nfsd_last_thread() before final nfsd_put()"
+    - Revert "nfsd: separate nfsd_last_thread() from nfsd_put()"
+    - ipv6: remove max_size check inline with ipv4 (CVE-2023-52340)
+    - cifs: fix flushing folio regression for 6.1 backport (Closes: #1060005)
 
   [ Salvatore Bonaccorso ]
   * Refresh "net: mana: Add support for auxiliary device"
