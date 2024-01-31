@@ -771,6 +771,7 @@ linux (6.1.75-1) UNRELEASED; urgency=medium
   [ Salvatore Bonaccorso ]
   * Refresh "net: mana: Add support for auxiliary device"
   * Bump ABI to 18
+  * netfilter: nf_tables: reject QUEUE/DROP verdict parameters (CVE-2024-1086)
 
  -- Salvatore Bonaccorso <carnil@debian.org>  Mon, 01 Jan 2024 15:07:47 +0100
 
