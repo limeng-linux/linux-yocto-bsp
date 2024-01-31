@@ -678,7 +678,7 @@ linux (6.1.75-1) UNRELEASED; urgency=medium
     - block: add check that partition length needs to be aligned with block size
     - block: Fix iterating over an empty bio with bio_for_each_folio_all
     - netfilter: nf_tables: check if catch-all set element is active in next
-      generation
+      generation (CVE-2024-1085)
     - pwm: Fix out-of-bounds access in of_pwm_single_xlate()
     - md/raid1: Use blk_opf_t for read and write operations
     - rootfs: Fix support for rootfstype= when root= is given
