@@ -1512,7 +1512,7 @@ static int fsl_easrc_hw_params(struct snd_pcm_substream *substream,
 
 	ret = fsl_easrc_m2m_init(easrc);
 	if (ret) {
-		dev_err(&pdev->dev, "failed to init m2m device %d\n", ret);
+		dev_err(dev, "failed to init m2m device %d\n", ret);
 		return ret;
 	}
 
