@@ -2,6 +2,7 @@
 flavours:
  arm64
  cloud-arm64
+ imx-arm64
 default-flavour: arm64
 quick-flavour: cloud-arm64
 
@@ -9,3 +10,7 @@ quick-flavour: cloud-arm64
 configs:
  config.cloud
  arm64/config.cloud-arm64
+
+[imx-arm64_image]
+configs:
+ arm64/config.imx-arm64
