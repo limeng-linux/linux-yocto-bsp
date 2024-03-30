@@ -13,7 +13,7 @@ Index: linux/arch/x86/kernel/cpu/microcode/amd.c
 ===================================================================
 --- linux.orig/arch/x86/kernel/cpu/microcode/amd.c
 +++ linux/arch/x86/kernel/cpu/microcode/amd.c
-@@ -907,10 +907,8 @@ static enum ucode_state request_microcod
+@@ -918,10 +918,8 @@ static enum ucode_state request_microcod
  	if (c->x86 >= 0x15)
  		snprintf(fw_name, sizeof(fw_name), "amd-ucode/microcode_amd_fam%.2xh.bin", c->x86);
  
@@ -161,23 +161,6 @@ Index: linux/drivers/char/dsp56k.c
  	if (fw->size % 3) {
  		printk(KERN_ERR "Bogus length %d in image \"%s\"\n",
  		       fw->size, fw_name);
-Index: linux/drivers/dma/imx-sdma.c
-===================================================================
---- linux.orig/drivers/dma/imx-sdma.c
-+++ linux/drivers/dma/imx-sdma.c
-@@ -1910,11 +1910,8 @@ static void sdma_load_firmware(const str
- 	const struct sdma_script_start_addrs *addr;
- 	unsigned short *ram_code;
- 
--	if (!fw) {
--		dev_info(sdma->dev, "external firmware not found, using ROM firmware\n");
--		/* In this case we just use the ROM firmware. */
-+	if (!fw)
- 		return;
--	}
- 
- 	if (fw->size < sizeof(*header))
- 		goto err_firmware;
 Index: linux/drivers/gpu/drm/mga/mga_warp.c
 ===================================================================
 --- linux.orig/drivers/gpu/drm/mga/mga_warp.c
@@ -1256,7 +1239,7 @@ Index: linux/drivers/net/ethernet/broadcom/tg3.c
 ===================================================================
 --- linux.orig/drivers/net/ethernet/broadcom/tg3.c
 +++ linux/drivers/net/ethernet/broadcom/tg3.c
-@@ -11398,11 +11398,8 @@ static int tg3_request_firmware(struct t
+@@ -11417,11 +11417,8 @@ static int tg3_request_firmware(struct t
  {
  	const struct tg3_firmware_hdr *fw_hdr;
  
@@ -1426,7 +1409,7 @@ Index: linux/drivers/net/wireless/ath/ath9k/hif_usb.c
 ===================================================================
 --- linux.orig/drivers/net/wireless/ath/ath9k/hif_usb.c
 +++ linux/drivers/net/wireless/ath/ath9k/hif_usb.c
-@@ -1222,9 +1222,6 @@ static void ath9k_hif_usb_firmware_cb(co
+@@ -1252,9 +1252,6 @@ static void ath9k_hif_usb_firmware_cb(co
  		if (!ret)
  			return;
  
@@ -1988,7 +1971,7 @@ Index: linux/drivers/scsi/ipr.c
 ===================================================================
 --- linux.orig/drivers/scsi/ipr.c
 +++ linux/drivers/scsi/ipr.c
-@@ -4102,10 +4102,8 @@ static ssize_t ipr_store_update_fw(struc
+@@ -4103,10 +4103,8 @@ static ssize_t ipr_store_update_fw(struc
  	if (endline)
  		*endline = '\0';
  
@@ -2031,7 +2014,7 @@ Index: linux/drivers/scsi/qla2xxx/qla_init.c
 ===================================================================
 --- linux.orig/drivers/scsi/qla2xxx/qla_init.c
 +++ linux/drivers/scsi/qla2xxx/qla_init.c
-@@ -8316,10 +8316,6 @@ qla2x00_load_risc(scsi_qla_host_t *vha,
+@@ -8613,10 +8613,6 @@ qla2x00_load_risc(scsi_qla_host_t *vha,
  	/* Load firmware blob. */
  	blob = qla2x00_request_firmware(vha);
  	if (!blob) {
@@ -2042,7 +2025,7 @@ Index: linux/drivers/scsi/qla2xxx/qla_init.c
  		return QLA_FUNCTION_FAILED;
  	}
  
-@@ -8422,9 +8418,6 @@ qla24xx_load_risc_blob(scsi_qla_host_t *
+@@ -8719,9 +8715,6 @@ qla24xx_load_risc_blob(scsi_qla_host_t *
  
  	blob = qla2x00_request_firmware(vha);
  	if (!blob) {
@@ -2073,7 +2056,7 @@ Index: linux/drivers/scsi/qla2xxx/qla_os.c
 ===================================================================
 --- linux.orig/drivers/scsi/qla2xxx/qla_os.c
 +++ linux/drivers/scsi/qla2xxx/qla_os.c
-@@ -7651,8 +7651,6 @@ qla2x00_request_firmware(scsi_qla_host_t
+@@ -7693,8 +7693,6 @@ qla2x00_request_firmware(scsi_qla_host_t
  		goto out;
  
  	if (request_firmware(&blob->fw, blob->name, &ha->pdev->dev)) {
@@ -2586,7 +2569,7 @@ Index: linux/sound/pci/hda/hda_intel.c
 ===================================================================
 --- linux.orig/sound/pci/hda/hda_intel.c
 +++ linux/sound/pci/hda/hda_intel.c
-@@ -2017,8 +2017,6 @@ static void azx_firmware_cb(const struct
+@@ -2037,8 +2037,6 @@ static void azx_firmware_cb(const struct
  
  	if (fw)
  		chip->fw = fw;
