@@ -43,21 +43,17 @@ build-arch: debian/control
 # mostly affects the output for builds of kernel code, which need
 # different options for hardening anyway.
 	@printf '%s\n' 'blhc: ignore-line-regexp: (.* -o *[^ ]*/perf-read-vdso.*|.* -D__KERNEL__ .*$(if $(filter terse,$(DEB_BUILD_OPTIONS)),| *(CC(LD)?|LD|LINK)\b.*))'
-	$(MAKE) -f debian/rules.gen build-arch_$(DEB_HOST_ARCH)
+	$(MAKE) -f debian/rules.gen build-arch_arm64_none_imx-arm64 build-arch_arm64_rt_imx-arm64
 
-build-indep: debian/control
-	dh_testdir
-	$(MAKE) -f debian/rules.gen build-indep
+build-indep:
 
 binary:	binary-indep binary-arch
 
 binary-arch: build-arch
 	dh_testdir
-	$(MAKE) -f debian/rules.gen binary-arch_$(DEB_HOST_ARCH)
+	$(MAKE) -f debian/rules.gen binary-arch_arm64_none_imx-arm64 binary-arch_arm64_rt_imx-arm64
 
-binary-indep: build-indep
-	dh_testdir
-	$(MAKE) -f debian/rules.gen binary-indep
+binary-indep:
 
 DIR_ORIG = ../orig/$(SOURCE)-$(VERSION_UPSTREAM)
 TAR_ORIG_NAME = $(SOURCE)_$(VERSION_UPSTREAM).orig.tar.xz
