@@ -5,6 +5,9 @@ featuresets:
  none
  rt
 
+[abi]
+ignore-changes: *
+
 [build]
 image-file: arch/arm64/boot/Image
 signed-code: true
