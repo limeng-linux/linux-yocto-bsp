@@ -4,7 +4,7 @@ flavours:
  cloud-arm64
  imx-arm64
 default-flavour: arm64
-quick-flavour: cloud-arm64
+quick-flavour: imx-arm64
 
 [cloud-arm64_image]
 configs:
