@@ -112,7 +112,7 @@ extract-source:
 build:
   stage: build
   timeout: 3 hours
-  image: $SALSA_CI_IMAGES_BASE
+  image: $SALSA_CI_IMAGES_BASE_ARM64
   cache:
     key: "build-${BUILD_ARCH}_${HOST_ARCH}"
     paths:
@@ -127,6 +127,7 @@ build:
     CCACHE_WORK_DIR: ${CI_PROJECT_DIR}/.ccache
     DB_BUILD_PARAM: ${SALSA_CI_DPKG_BUILDPACKAGE_ARGS}
     DB_BUILD_TYPE: full
+    BUILD_ARCH: 'arm64'
   artifacts:
     exclude:
       - ${WORKING_DIR}/${SOURCE_DIR}/**/*
