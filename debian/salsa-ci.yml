@@ -1,5 +1,5 @@
 include:
-  - https://gitlab.com/wr-linux/ci/pipeline/raw/master/salsa-ci.yml
+  - https://gitlab.com/wr-linux/ci/pipeline/raw/wr/salsa-ci.yml
 
 variables:
   RELEASE: 'bookworm'
