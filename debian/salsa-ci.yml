@@ -1,5 +1,5 @@
 include:
-  - https://gitlab.com/wr-linux/ci/pipeline/raw/master/salsa-ci.yml
+  - https://gitlab.com/wr-linux/ci/pipeline/raw/wr/salsa-ci.yml
 
 variables:
   RELEASE: 'bookworm'
@@ -13,6 +13,7 @@ variables:
   # Current runners have 2 CPUs but have slow I/O so 'parallel=4' is
   # a bit faster.
   DEB_BUILD_OPTIONS: 'terse parallel=4'
+  SALSA_CI_GBP_EXPORT_ORIG_ARGS: '--upstream-tree=HEAD'
 
 # Add stages for signed packages
 stages:
@@ -32,23 +33,8 @@ stages:
 # Our modified extract-source and build jobs
 
 extract-source:
-  stage: provisioning
-  image: $SALSA_CI_IMAGES_BASE
-  cache:
-    key: "orig-${RELEASE}"
-    paths:
-      - orig
-  extends:
-    - .artifacts-default-expire
-  except:
-    variables:
-      - $CI_COMMIT_TAG != null
-  script:
-    # Move cache to where genorig.py and orig target want it
-    - mkdir -p orig
-    - rm -rf ../orig
-    - mv orig ../orig
-
+  extends: .provisioning-extract-source
+  after_script:
     # Install dependencies of gencontrol.py, genorig.py, and debian/rules orig
     - apt-get update
     - |
@@ -64,19 +50,7 @@ extract-source:
         quilt \
         rsync
 
-    - version=$(dpkg-parsechangelog -SVersion)
-    - upstream_version=$(echo $version | sed 's/-[^-]*$//')
-
-    # Merge upstream source.  We could use origtargz to download a
-    # tarball fom the archive if available or run uscan if not, but
-    # uscan is currently excessively slow for us (bug #1003251).
-    - |
-      if [ -f ../orig/linux_${upstream_version}.orig.tar.xz ]; then
-          ln -s orig/linux_${upstream_version}.orig.tar.xz ..
-      else
-          debian/bin/genorig.py https://git.kernel.org/pub/scm/linux/kernel/git/stable/linux.git
-      fi
-    - debian/rules orig
+    - cd ${WORKING_DIR}/${SOURCE_DIR}/
 
     # Fudge source version and distribution *before* gencontrol.py
     - sed -i -e '1 s/) [^;]*/+salsaci) UNRELEASED/' debian/changelog
@@ -98,16 +72,6 @@ extract-source:
     - test $rc = 2
     - grep -q 'been generated SUCCESSFULLY' "$log"
 
-    # Put packed source in artifacts
-    - dpkg-buildpackage -uc -us -S -sa -d
-    - mkdir -p ${WORKING_DIR}
-    - cp ../orig/linux_${upstream_version}.orig.tar.xz ${WORKING_DIR}
-    - mv ../linux_${version}.dsc ../linux_${version}.debian.tar.xz ${WORKING_DIR}
-
-    # Move cache back to where GitLab wants it.  Only include
-    # tarballs, not unpacked source.
-    - mkdir orig
-    - mv ../orig/*.tar.xz orig
 
 build:
   stage: build
@@ -132,12 +96,6 @@ build:
     exclude:
       - ${WORKING_DIR}/${SOURCE_DIR}/**/*
   script:
-    # Unpack the source
-    - |
-      apt-get update && eatmydata apt-get install --no-install-recommends -y \
-        dpkg-dev
-    - dpkg-source -x ${WORKING_DIR}/*.dsc ${WORKING_DIR}/${SOURCE_DIR}
-
     # Do the same as the common .build-definition script
     - !reference [.build-before-script]
     - !reference [.build-script]
