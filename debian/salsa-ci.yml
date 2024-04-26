@@ -10,10 +10,11 @@ variables:
   # Currently broken in quick build
   DEBIAN_KERNEL_DISABLE_INSTALLER: 'true'
   # Output is limited to 4 MiB total, so use 'terse'.
-  # Current runners have 2 CPUs but have slow I/O so 'parallel=4' is
-  # a bit faster.
-  DEB_BUILD_OPTIONS: 'terse parallel=4'
+  # 32 is not a particular large value for a build server, it's even acceptable
+  # for a regular PC.
+  DEB_BUILD_OPTIONS: 'terse parallel=32'
   SALSA_CI_GBP_EXPORT_ORIG_ARGS: '--upstream-tree=HEAD'
+  SALSA_CI_BUILD_TIMEOUT_ARGS: '-v 10h'
 
 # Add stages for signed packages
 stages:
@@ -75,7 +76,7 @@ extract-source:
 
 build:
   stage: build
-  timeout: 3 hours
+  timeout: 10 hours
   image: $SALSA_CI_IMAGES_BASE
   cache:
     key: "build-${BUILD_ARCH}_${HOST_ARCH}"
