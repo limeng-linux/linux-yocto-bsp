@@ -2,3 +2,4 @@
 flavours:
  arm64
  imx-arm64
+quick-flavour: imx-arm64
