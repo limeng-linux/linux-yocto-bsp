@@ -102,6 +102,8 @@ build:
     - mv ${CCACHE_TMP_DIR} ${CCACHE_WORK_DIR}
   dependencies:
     - extract-source
+  tags:
+    - arm64
 
 # The folllowing jobs are the standard tests, excluding any that
 # require building again
