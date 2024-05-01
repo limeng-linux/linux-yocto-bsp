@@ -300,3 +300,6 @@ piuparts-signed:
   needs:
     - job: build-signed
       artifacts: true
+
+shared-aptly:
+  extends: .publish-shared-aptly
