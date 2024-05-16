@@ -1,3 +1,10 @@
+linux-imx (6.1.76-2) bookworm; urgency=medium
+
+  * Fix USB issue that there is no reaction when plugging in USB disk(PABEDGE-289).
+    - debian: config: imx-arm64: set CONFIG_USB as y explicitly
+
+ -- Meng Li <Meng.Li@windriver.com>  Thu, 16 May 2024 00:47:29 +0000
+
 linux-imx (6.1.76-1) bookworm; urgency=medium
 
   * New upstream stable update:
