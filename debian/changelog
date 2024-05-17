@@ -1,3 +1,9 @@
+linux-imx (6.1.76-wr1-3) bookworm; urgency=medium
+
+  * debian/config: Disable EFI FB explicitly for imx SoC
+
+ -- Kevin Hao <kexin.hao@windriver.com>  Fri, 17 May 2024 14:51:54 +0000
+
 linux-imx (6.1.76-2) bookworm; urgency=medium
 
   * Fix USB issue that there is no reaction when plugging in USB disk(PABEDGE-289).
