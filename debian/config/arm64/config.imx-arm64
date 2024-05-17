@@ -360,6 +360,7 @@ CONFIG_IMX8MM_THERMAL=y
 # Frame buffer Devices
 #
 CONFIG_FB=y
+CONFIG_FB_EFI=n
 
 #
 # Backlight & LCD device support
