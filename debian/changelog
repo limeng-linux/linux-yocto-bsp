@@ -1,3 +1,10 @@
+linux-imx (6.1.76-wr2-4) bookworm; urgency=medium
+
+  * Fix a warning calltrace(PABEDGE-358)
+    - usb: udc: remove warning when queue disabled ep
+
+ -- Meng Li <Meng.Li@windriver.com>  Mon, 27 May 2024 08:16:49 +0000
+
 linux-imx (6.1.76-wr1-3) bookworm; urgency=medium
 
   * debian/config: Disable EFI FB explicitly for imx SoC
