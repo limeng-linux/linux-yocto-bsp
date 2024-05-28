@@ -178,7 +178,7 @@ kconfig-static:
     - |
       apt-get update && eatmydata apt-get install --no-install-recommends -y \
         debhelper dpkg-dev git python3 quilt
-    - dpkg-source -x ${WORKING_DIR}/*.dsc ${WORKING_DIR}/${SOURCE_DIR}
+    - dpkg-source --before-build ${WORKING_DIR}/${SOURCE_DIR}
     - cd ${WORKING_DIR}/${SOURCE_DIR}
     - debian/rules source
 
