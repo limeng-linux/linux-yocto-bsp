@@ -520,7 +520,7 @@ CONFIG_TEGRA_HOST1X=m
 CONFIG_TEGRA_HOST1X_FIREWALL=y
 
 ##
-## file: drivers/gpu/ipu-v3/Kconfig
+## file: drivers/gpu/imx/ipu-v3/Kconfig
 ##
 CONFIG_IMX_IPUV3_CORE=m
 
@@ -1110,7 +1110,6 @@ CONFIG_PCI_HOST_GENERIC=y
 ## file: drivers/pci/controller/dwc/Kconfig
 ##
 CONFIG_PCI_DRA7XX_HOST=y
-CONFIG_PCI_IMX6=y
 
 ##
 ## file: drivers/phy/allwinner/Kconfig
