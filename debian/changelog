@@ -1,3 +1,9 @@
+linux-imx (6.1.76-wr3-5) bookworm; urgency=medium
+
+  * debian: config: Tidy up the configs
+
+ -- Kevin Hao <kexin.hao@windriver.com>  Tue, 28 May 2024 02:54:54 +0000
+
 linux-imx (6.1.76-wr2-4) bookworm; urgency=medium
 
   * Fix a warning calltrace(PABEDGE-358)
