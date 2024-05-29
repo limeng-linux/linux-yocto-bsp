@@ -109,7 +109,7 @@ class Gencontrol(Base):
     def do_main_packages(self, vars, makeflags, extra):
         # Assume that arch:all packages do not get binNMU'd
         self.packages['source']['Build-Depends'].append(
-            'linux-support-%(abiname)s (= %(imagesourceversion)s)' % vars)
+            '%(source_basename)s-support-%(abiname)s (= %(imagesourceversion)s)' % vars)
 
     def do_main_recurse(self, vars, makeflags, extra):
         # Each signed source package only covers a single architecture

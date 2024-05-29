@@ -226,7 +226,7 @@ sign-code:
     # Sign the code and build a source package
     - |
       "$kernel_team_dir"/scripts/debian-test-sign \
-        ${WORKING_DIR}/linux_*_${BUILD_ARCH}.changes \
+        ${WORKING_DIR}/linux*_${BUILD_ARCH}.changes \
         debian/certs/ci-test-sign/ci-test-sign-key.pem \
         debian/certs/ci-test-sign/ci-test-sign.pem
   artifacts:
@@ -267,7 +267,7 @@ build-signed:
       apt-get install --no-install-recommends -y \
         ${WORKING_DIR}/linux-image-*-unsigned_*_${BUILD_ARCH}.deb \
         ${WORKING_DIR}/linux-kbuild-*[0-9]_*_${BUILD_ARCH}.deb \
-        ${WORKING_DIR}/linux-support-*_all.deb
+        ${WORKING_DIR}/linux*-support-*_all.deb
 
     # Do the same as the common .build-definition script
     - !reference [.build-before-script]
