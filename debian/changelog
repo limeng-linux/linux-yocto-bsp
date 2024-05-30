@@ -1,3 +1,12 @@
+linux-imx (6.1.76-wr4-6) bookworm; urgency=medium
+
+  * salsa-ci.yml: Run sign-code and build-signed jobs in an arm64 environment
+  * debian: Fix the reference of support and changes package name
+  * debian: Add imx infix for the kbuild package
+  * debian/rules: Build the packages needed by sign code
+
+ -- Kevin Hao <kexin.hao@windriver.com>  Thu, 30 May 2024 01:17:01 +0000
+
 linux-imx (6.1.76-wr3-5) bookworm; urgency=medium
 
   * debian: config: Tidy up the configs
