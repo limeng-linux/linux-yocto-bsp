@@ -1,4 +1,4 @@
-Package: linux-kbuild-@version@
+Package: @source_basename@-kbuild-@version@
 Meta-Rules-Target: kbuild
 Build-Profiles: <!stage1 !pkg.linux.notools>
 Architecture: linux-any

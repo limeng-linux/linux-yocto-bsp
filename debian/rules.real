@@ -562,7 +562,7 @@ build_kbuild: $(STAMPS_DIR)/build-tools-headers
 	$(call make-tools,scripts)
 	$(call make-tools,tools/objtool)
 
-binary_kbuild: PREFIX_DIR = /usr/lib/$(PACKAGE_NAME)
+binary_kbuild: PREFIX_DIR = /usr/lib/linux-kbuild-$(VERSION)
 binary_kbuild: build_kbuild
 	dh_testdir
 	dh_testroot
