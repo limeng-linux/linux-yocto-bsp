@@ -51,7 +51,9 @@ binary:	binary-indep binary-arch
 
 binary-arch: build-arch
 	dh_testdir
-	$(MAKE) -f debian/rules.gen binary-arch_arm64_none_imx-arm64 binary-arch_arm64_rt_imx-arm64
+	$(MAKE) -f debian/rules.gen binary-arch_arm64_none_imx-arm64 binary-arch_arm64_rt_imx-arm64 \
+		binary-indep_real_support binary-arch_arm64_real_kbuild \
+		binary-arch_arm64_real_signed-template
 
 binary-indep:
 
