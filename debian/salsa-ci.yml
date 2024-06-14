@@ -310,5 +310,3 @@ piuparts-signed:
 
 shared-aptly:
   extends: .publish-shared-aptly
-  variables:
-    SALSA_CI_DISABLE_PUBLISH_TO_SHARED_APTLY: 1
