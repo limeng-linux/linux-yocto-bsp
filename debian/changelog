@@ -1,3 +1,15 @@
+linux-imx (6.1.76-elxr1-1) bookworm; urgency=medium
+
+  [ Li Zhou ]
+  * Update branding for kernel
+
+  [ Kevin Hao ]
+  * debian/rules.real: Change DISTRIBUTOR from 'eLxr' to 'eLxr Linux'
+  * debian/salsa-ci.yml: Disable publish to shared aptly for base branch
+  * debian/salsa-ci.yml: Enable the shared-aptly job
+
+ -- Kevin Hao <kexin.hao@windriver.com>  Fri, 14 Jun 2024 09:18:56 +0000
+
 linux-imx (6.1.76-wr4-6) bookworm; urgency=medium
 
   * salsa-ci.yml: Run sign-code and build-signed jobs in an arm64 environment
