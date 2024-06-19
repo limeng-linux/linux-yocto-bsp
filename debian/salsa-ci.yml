@@ -36,6 +36,9 @@ stages:
 extract-source:
   extends: .provisioning-extract-source
   after_script:
+    # Temporary workaround to shortcut to package mirror
+    - echo "${SHARED_APTLY_HOST_IP} ${SHARED_APTLY_HOST_NAME}" >> /etc/hosts
+
     # Install dependencies of gencontrol.py, genorig.py, and debian/rules orig
     - apt-get update
     - |
